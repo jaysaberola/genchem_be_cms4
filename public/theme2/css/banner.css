@@ -1,0 +1,154 @@
+/* ===============================
+   MAIN BANNER
+=============================== */
+
+.main-banner {
+  position: relative;
+  min-height: 85vh;
+  overflow: hidden;
+  background: #000;
+}
+
+/* SLIDES */
+.banner-slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transform: scale(1.08);
+  transition:
+    opacity 1.2s ease,
+    transform 1.6s ease;
+  will-change: opacity, transform;
+}
+
+.banner-slide.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* OVERLAY (enhanced depth) */
+.banner-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(0, 0, 0, 0.25),
+      rgba(0, 0, 0, 0.65)
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.35),
+      rgba(0, 0, 0, 0.75)
+    );
+  backdrop-filter: blur(3px);
+  z-index: 1;
+}
+
+/* CONTENT */
+.banner-content {
+  position: relative;
+  z-index: 2;
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; /* 🔥 move to right */
+  text-align: left;          /* 🔥 left-align text */
+  padding: 0 3rem;
+}
+
+.banner-card {
+  max-width: 520px; /* slightly narrower for right layout */
+  padding: 3.25rem 3rem;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.14),
+    rgba(255, 255, 255, 0.04)
+  );
+  border-radius: 22px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  color: #fff;
+  animation: fadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+
+/* TEXT */
+.banner-card h1 {
+  font-size: clamp(2.2rem, 4vw, 3.6rem);
+  font-weight: 800;
+  margin-bottom: 1.1rem;
+  letter-spacing: -0.02em;
+}
+
+.banner-card p {
+  font-size: 1.15rem;
+  line-height: 1.7;
+  opacity: 0.92;
+  margin-bottom: 2.2rem;
+}
+
+/* DOTS */
+.banner-dots {
+  position: absolute;
+  bottom: 26px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 3;
+}
+
+.banner-dots button {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.45);
+  cursor: pointer;
+  transition:
+    width 0.3s ease,
+    background 0.3s ease,
+    transform 0.3s ease;
+}
+
+.banner-dots button:hover {
+  transform: scale(1.2);
+}
+
+.banner-dots button.active {
+  width: 26px;
+  border-radius: 999px;
+  background: #fff;
+}
+
+/* ANIMATION */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 768px) {
+  .banner-content {
+    justify-content: center;
+    text-align: center;
+    padding: 0 1.5rem;
+  }
+
+  .banner-card {
+    max-width: 100%;
+    padding: 2.2rem 1.75rem;
+  }
+}
+

@@ -1,0 +1,102 @@
+/* Custom CSS by Jeff */
+.heading-block {
+    position: relative
+}
+
+.heading-block::before {
+    content: attr(data-heading);
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    color: #e9ecef;
+    z-index: -1;
+    font-weight: bold;
+    font-size: 90px;
+    line-height: .3;
+}
+
+.text-orange {
+    color: #ff7b00;
+}
+
+.heading-block-start {
+    position: relative
+}
+
+.heading-block-start::before {
+    content: attr(data-heading);
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #e9ecef;
+    z-index: -1;
+    font-weight: bold;
+    font-size: 90px;
+    line-height: .3;
+}
+
+.animate-hov {
+    transition: all 0.3s ease;
+    padding: 0px;
+}
+
+.animate-hov:hover {
+    transform: scale(1.05);
+    background-color: #f5f5f5;
+}
+
+.animate-hov:hover h2,
+.animate-hov:hover h3 {
+    color: #ff7b00;
+}
+
+.animate-hov .image-responsive {
+    max-height: 170px;
+    overflow-y: hidden;
+}
+
+img.proj-image {
+    transform: translate(0px, -75px);
+}
+
+.cutter-section {
+    margin-top: 7rem;
+    margin-bottom: 7rem;
+}
+
+.cutter-title {
+    margin-bottom: 4rem;
+}
+
+.projects-gallery img.animate-hov {
+    max-width: 600px;
+}
+
+.products-container-lines .card.rounded-2.shadow-sm.animate-hov {
+    min-height: 305px;
+}
+
+@media only screen and (max-width: 720px) {
+    .base-content .fs-5 {
+        font-size: .9rem !important;
+    } 
+
+    .base-content h2 {
+        font-size: 1.5rem !important;
+    }
+
+    .base-content .fs-6 {
+        font-size: .8rem !important;
+    }
+
+    .base-content .products-container-lines .card.rounded-2.shadow-sm.animate-hov {
+        min-height: 385px;
+    }
+
+    .base-content .about-us-base-section {
+        max-height: unset !important;
+    }
+}

@@ -1,0 +1,232 @@
+.footer {
+  width: 100%;
+  background: linear-gradient(135deg, rgba(139, 0, 0, 0.9) 0%, rgba(204, 51, 0, 0.9) 50%, rgba(255, 107, 53, 0.9) 100%),
+    url("/images/highlights/roofing1.jpg") center/cover no-repeat;
+  color: #f0f0f0;
+  font-family: inherit;
+  position: relative;
+}
+
+.footerContent {
+  max-width: 1441px;
+  margin: 0 auto;
+  padding: 60px 30px 40px;
+}
+
+.footerColumns {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.footerLogo {
+  max-width: 150px;
+  height: auto;
+  margin-bottom: 20px;
+  opacity: 0.95;
+  transition: opacity 0.3s ease;
+}
+
+.footerLogo:hover {
+  opacity: 1;
+}
+
+.companyDescription {
+  color: #f0f0f0;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 25px;
+  opacity: 0.9;
+}
+
+.addressSection {
+  display: flex;
+  flex-direction: column;
+}
+
+.addressLabel {
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  opacity: 0.95;
+}
+
+.addressText {
+  color: #f0f0f0;
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 0;
+  opacity: 0.85;
+}
+
+.columnTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.linksList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.linksList li {
+  margin-bottom: 12px;
+}
+
+.footerLink {
+  color: #f0f0f0;
+  text-decoration: none;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+}
+
+.footerLink:hover {
+  color: #ffffff;
+  padding-left: 5px;
+}
+
+.footerLink::before {
+  content: "→";
+  margin-right: 8px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.footerLink:hover::before {
+  opacity: 1;
+}
+
+/* Social Links Section */
+.socialSection {
+  margin-top: 30px;
+  padding-top: 30px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.socialLinks {
+  display: flex;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.socialLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  color: #ffffff;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-size: 18px;
+}
+
+.socialLink:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-3px);
+}
+
+/* Copyright Banner */
+.copyrightBanner {
+  background: rgba(0, 0, 0, 0.2);
+  border-top: 2px solid rgba(255, 255, 255, 0.1);
+  padding: 25px 30px;
+  width: 100%;
+}
+
+.copyrightContent {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.copyrightText {
+  color: #ffffff;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  margin: 0;
+  opacity: 0.9;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .footerColumns {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .footerContent {
+    padding: 40px 20px 30px;
+  }
+
+  .footerColumns {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .columnTitle {
+    font-size: 16px;
+  }
+
+  .footerLink {
+    font-size: 13px;
+  }
+
+  .socialLinks {
+    gap: 10px;
+  }
+
+  .socialLink {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+
+  .copyrightText {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footerContent {
+    padding: 30px 15px 20px;
+  }
+
+  .footerColumns {
+    gap: 20px;
+  }
+
+  .columnTitle {
+    font-size: 14px;
+    margin-bottom: 15px;
+  }
+
+  .linksList li {
+    margin-bottom: 10px;
+  }
+
+  .copyrightBanner {
+    padding: 20px 15px;
+  }
+
+  .copyrightText {
+    font-size: 11px;
+  }
+}

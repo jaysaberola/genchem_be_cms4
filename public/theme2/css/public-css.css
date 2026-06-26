@@ -1,0 +1,10 @@
+/* Wrapper to load the public template CSS bundle only on GuestLayout.
+   Note: this file is served from /public so it can be included via <link>.
+*/
+@import url('/css/bootstrap.min.css');
+@import url('/css/banner-fonts.css');
+@import url('/css/flatpickr.min.css');
+@import url('/css/glightbox.min.css');
+@import url('/css/main.css');
+@import url('/css/swiper-bundle.min.css');
+@import url('/css/util.css');

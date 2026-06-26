@@ -1,0 +1,421 @@
+/* ===============================
+   GENERIC LAYOUT
+=============================== */
+
+.section {
+  padding: 100px 20px;
+}
+
+.section-soft {
+  background: #f8fafc;
+}
+
+.container-md {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ===============================
+   SECTION HEADER
+=============================== */
+
+.section-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.section-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+
+.section-desc {
+  max-width: 720px;
+  margin: 0 auto;
+  font-size: 1rem;
+  color: #475569;
+  line-height: 1.7;
+}
+
+/* ===============================
+   PILLS / HIGHLIGHTS
+=============================== */
+
+.pill-row {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  margin-bottom: 60px;
+  flex-wrap: wrap;
+}
+
+.pill {
+  background: #ffffff;
+  padding: 14px 22px;
+  border-radius: 999px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+  font-size: 0.9rem;
+  color: #334155;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.pill:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.1);
+}
+
+.pill strong {
+  margin-right: 6px;
+  color: #0d6efd;
+}
+
+/* ===============================
+   GRID SYSTEM
+=============================== */
+
+.grid {
+  display: grid;
+  gap: 28px;
+}
+
+.grid-cards {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+/* ===============================
+   CARD
+=============================== */
+
+.card {
+  background: #ffffff;
+  padding: 34px 32px;
+  border-radius: 14px;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.08);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+}
+
+.card h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+  transition: color 0.3s ease;
+}
+
+.card:hover h3 {
+  color: #0d6efd;
+}
+
+.card p {
+  font-size: 0.95rem;
+  color: #475569;
+  line-height: 1.65;
+}
+
+/* ===============================
+   ACCESSIBILITY
+=============================== */
+
+.card:focus-within,
+.pill:focus-within {
+  outline: none;
+  transform: translateY(-4px);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.12);
+}
+
+/* ===============================
+   MOBILE
+=============================== */
+
+@media (max-width: 768px) {
+  .section {
+    padding: 70px 16px;
+  }
+
+  .section-title {
+    font-size: 1.9rem;
+  }
+}
+
+/* ===============================
+   TinyMCE Public Page Rendering
+   (Break out of GuestLayout .container)
+=============================== */
+
+.public-page-content {
+  /* Public CMS content wrapper (layout renders full-width). */
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* CMS content: remove default anchor underlines (keep on hover) */
+.public-page-content a {
+  text-decoration: none;
+}
+
+.public-page-content a:hover,
+.public-page-content a:focus-visible {
+  text-decoration: none;
+}
+
+/* Keep accessibility without underlines */
+.public-page-content a:focus-visible {
+  outline: 2px solid rgba(236, 29, 37, 0.45);
+  outline-offset: 2px;
+}
+
+/* Fallback: if a play icon font doesn't render, show a triangle */
+.public-page-content .fa-play::before,
+.public-page-content .fa-play-circle::before,
+.public-page-content .fa-circle-play::before,
+.public-page-content .icon-play::before,
+.public-page-content .play-icon::before {
+  content: "\25B6";
+  display: inline-block;
+  line-height: 1;
+}
+
+/* Pato template: video play button uses empty div, icon comes from CSS */
+.public-page-content .btn-play .flex-c-m {
+  position: relative;
+}
+
+.public-page-content .btn-play .flex-c-m::before {
+  content: "\25B6";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 28px;
+  line-height: 1;
+  color: #ec1d25;
+  pointer-events: none;
+}
+
+/* Pato template: gallery overlay button (magnifying glass) */
+.public-page-content .overlay-item-gallery {
+  /* CMS content often has &nbsp; here; hide it so only the icon shows */
+  font-size: 0;
+  line-height: 0;
+}
+
+.public-page-content .overlay-item-gallery::before {
+  content: "";
+  display: block;
+  width: 22px;
+  height: 22px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E") no-repeat center/contain;
+}
+
+@supports (overflow: clip) {
+  .public-page-content {
+    overflow-x: clip;
+  }
+}
+
+/* Prevent accidental horizontal overflow from wide media */
+.public-page-content img,
+.public-page-content video,
+.public-page-content iframe {
+  max-width: 100%;
+}
+
+/* In Next/React, template JS that flips visible-false -> visible-true may not run.
+   Make animated blocks visible so sections like Customer Review render. */
+.public-page-content .animated.visible-false {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Slider arrows: template styles the button but doesn't include glyphs */
+.public-page-content .arrow-slick2::before,
+.public-page-content .arrow-slick3::before,
+.public-page-content .arrow-slick1::before {
+  display: block;
+  font-size: 28px;
+  line-height: 1;
+  font-weight: 1000;
+  color: currentColor;
+}
+
+.public-page-content .prev-slick1::before,
+.public-page-content .prev-slick2::before,
+.public-page-content .prev-slick3::before {
+  content: "\2039"; /* ‹ */
+}
+
+.public-page-content .next-slick1::before,
+.public-page-content .next-slick2::before,
+.public-page-content .next-slick3::before {
+  content: "\203A"; /* › */
+}
+
+
+/* ===============================
+   STEPS / PROCESS
+=============================== */
+
+.grid-steps {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.step-card {
+  background: #ffffff;
+  padding: 36px 32px;
+  border-radius: 14px;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.08);
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.step-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+}
+
+.step-number {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #0d6efd;
+  opacity: 0.15;
+  position: absolute;
+  top: 20px;
+  right: 24px;
+}
+
+.step-card h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.step-card p {
+  font-size: 0.95rem;
+  color: #475569;
+  line-height: 1.65;
+}
+
+/* ===============================
+   SPLIT LAYOUT
+=============================== */
+
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.split-text .section-title {
+  margin-bottom: 16px;
+}
+
+.section-desc.align-left {
+  margin: 0;
+  text-align: left;
+}
+
+.split-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.list-item {
+  background: #ffffff;
+  padding: 24px 26px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.list-item:hover {
+  transform: translateX(6px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
+}
+
+.list-item h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.list-item p {
+  font-size: 0.9rem;
+  color: #475569;
+  line-height: 1.6;
+}
+
+/* ===============================
+   MOBILE
+=============================== */
+
+@media (max-width: 768px) {
+  .split {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .list-item:hover {
+    transform: translateY(-4px);
+  }
+}
+
+
+/* ===============================
+   HORIZONTAL CAROUSEL
+=============================== */
+
+.carousel-wrap {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  padding: 24px 0;
+}
+
+/* IMPORTANT: fixed width trick */
+.carousel-track {
+  display: flex;
+  gap: 24px;
+  width: calc(200%);
+  animation: scroll-left 35s linear infinite;
+}
+
+/* each item */
+.carousel-item {
+  flex: 0 0 auto;
+  background: #ffffff;
+  padding: 20px 32px;
+  border-radius: 999px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #334155;
+  white-space: nowrap;
+}
+
+/* SAFE animation */
+@keyframes scroll-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Pause on hover */
+.carousel-wrap:hover .carousel-track {
+  animation-play-state: paused;
+}
