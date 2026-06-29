@@ -1,0 +1,287 @@
+/* Synced from genchemph static design (index.html inline + page-specific helpers) */
+
+.about-us-low[style*="background-image"]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.68);
+}
+
+.about-us-page .about-us-low:not([style*="background-image"]):not(.home-intro-hero):not(#iz2p)::before {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+}
+
+.about-us-low[style*="background-image"] .about-us-high {
+  position: relative;
+  z-index: 2;
+  color: white;
+}
+
+.about-us-page .about-us-high {
+  position: relative;
+  z-index: 2;
+  color: inherit;
+}
+
+.genchemph .nav-tabs .nav-link .text-uppercase,
+.genchemph .nav-tabs .nav-link h3,
+.genchemph .nav-tabs .nav-link h4 {
+  background-color: #ffffff;
+  padding: 10px;
+  min-width: 210px;
+  border-radius: 20px;
+  color: #9b2d1f;
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  border: solid 4px #9b2d1f;
+}
+
+.genchemph .nav-tabs .nav-link.active .text-uppercase,
+.genchemph .nav-tabs .nav-link.active h3,
+.genchemph .nav-tabs .nav-link.active h4 {
+  background-color: #9b2d1f;
+  color: #ffffff;
+}
+
+#demo-drone-tab .nav-item .nav-link.active::after {
+  border-bottom: 10px solid #9b2d1f !important;
+}
+
+.bg-dark-red {
+  background-color: #9b2d1f !important;
+}
+
+/* Products — last card spacing stays inside red area only; no white gap before footer */
+.genchemph .cms-content .bg-dark-red .rounded-lg.position-relative,
+.genchemph .public-page-content .bg-dark-red .rounded-lg.position-relative,
+.genchem-public-shell .bg-dark-red .rounded-lg.position-relative {
+  margin-bottom: 3rem !important;
+}
+
+.genchemph .cms-content .bg-dark-red .rounded-lg.position-relative:last-child,
+.genchemph .public-page-content .bg-dark-red .rounded-lg.position-relative:last-child,
+.genchem-public-shell .bg-dark-red .rounded-lg.position-relative:last-child {
+  margin-bottom: 0 !important;
+}
+
+.genchem-public-shell main#content {
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+.bg-main-red {
+  background-color: #f60000 !important;
+}
+
+.text-main-red {
+  color: #f60000 !important;
+}
+
+.text-dark-red {
+  color: #9b2d1f !important;
+}
+
+.hover-scale:not(.active):hover {
+  transform: scale(1.02);
+  transition: ease 0.4s all;
+}
+
+.border-2-white {
+  border-width: 3px;
+  border-color: #ffffff;
+  border-style: solid;
+  border-radius: 30px;
+}
+
+.text-shadow {
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.45);
+}
+
+.width-img-control {
+  position: relative;
+  width: 100%;
+}
+
+.map-case iframe {
+  max-width: 100%;
+  width: 100%;
+  min-height: 220px;
+  border: 0;
+}
+
+/* Contact Us page — CMS layout from genchemph reference */
+.about-us-page .about-us-low .bg-dark-red .input-styled,
+.about-us-page .about-us-low .bg-dark-red textarea {
+  width: 100%;
+  background: transparent;
+  outline: none;
+}
+
+.about-us-page .about-us-low .bg-dark-red .bg-white {
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+}
+
+.about-us-page .about-us-low .map-case {
+  width: 100%;
+  max-width: 500px;
+}
+
+.about-us-page .about-us-low .map-case iframe {
+  max-width: 100%;
+  min-height: 280px;
+}
+
+/* Contact Us copyright bar (reference contact-us.html — inline in page content) */
+.public-page-content #footer.dark,
+.cms-content #footer.dark {
+  background-color: #212529 !important;
+  width: 100%;
+  margin: 0;
+}
+
+.public-page-content #footer #copyrights,
+.cms-content #footer #copyrights {
+  background-color: #212529;
+}
+
+.public-page-content #footer #copyrights p,
+.cms-content #footer #copyrights p,
+.public-page-content #footer #copyrights small,
+.cms-content #footer #copyrights small {
+  color: rgba(255, 255, 255, 0.85) !important;
+  margin: 0;
+}
+
+.input-styled {
+  width: 100%;
+  margin-bottom: 0.75rem;
+}
+
+/* Subpage hero — match home banner height */
+.genchem-page-banner {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  margin-top: 0;
+  background: #e9ecef;
+}
+
+.genchem-page-banner__slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: opacity 0.9s ease-in-out;
+}
+
+.genchem-page-banner__overlay {
+  display: none;
+}
+
+.genchem-hero-shell--subpage {
+  min-height: 100vh;
+}
+
+/* CMS home video — genchemph reference: text over full-width drone video */
+.section.dark:has(.video-wrap),
+.genchemph .section.dark:has(.video-wrap),
+.public-page-content .section.dark:has(.video-wrap),
+.cms-content .section.dark:has(.video-wrap) {
+  position: relative;
+  overflow: hidden;
+  background: transparent !important;
+  background-color: transparent !important;
+  min-height: clamp(480px, 62vh, 720px);
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+}
+
+.section.dark:has(.video-wrap) > .container,
+.genchemph .section.dark:has(.video-wrap) > .container,
+.public-page-content .section.dark:has(.video-wrap) > .container,
+.cms-content .section.dark:has(.video-wrap) > .container {
+  position: relative;
+  z-index: 2;
+  min-height: clamp(480px, 62vh, 720px);
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 2.5rem;
+  color: #ffffff;
+}
+
+.section.dark:has(.video-wrap) h3,
+.section.dark:has(.video-wrap) p,
+.genchemph .section.dark:has(.video-wrap) h3,
+.genchemph .section.dark:has(.video-wrap) p,
+.public-page-content .section.dark:has(.video-wrap) h3,
+.public-page-content .section.dark:has(.video-wrap) p,
+.cms-content .section.dark:has(.video-wrap) h3,
+.cms-content .section.dark:has(.video-wrap) p {
+  color: rgba(255, 255, 255, 0.92) !important;
+}
+
+.section.dark:has(.video-wrap) .video-wrap,
+.genchemph .section .video-wrap,
+.public-page-content .section .video-wrap,
+.cms-content .section .video-wrap {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+  background-color: #4a7c59;
+  background-size: cover;
+  background-position: center 42%;
+}
+
+.section.dark:has(.video-wrap) .video-wrap video,
+.genchemph .section .video-wrap video,
+.public-page-content .section .video-wrap video,
+.cms-content .section .video-wrap video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  max-width: none;
+  object-fit: cover;
+  object-position: center 42%;
+  opacity: 1 !important;
+  z-index: 0;
+  display: block;
+}
+
+body:not(.has-plugin-html5video) .section.dark:has(.video-wrap) .video-wrap video,
+body:not(.has-plugin-html5video) .video-wrap video {
+  opacity: 1 !important;
+}
+
+.section.dark:has(.video-wrap) .video-wrap .bg-dark,
+.public-page-content .section .video-wrap .bg-dark,
+.cms-content .section .video-wrap .bg-dark {
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.15 !important;
+  background-color: #000 !important;
+}
+
+.genchemph .cms-content .button,
+.genchemph .public-page-content .button,
+.genchemph .cms-content a.button,
+.genchemph .public-page-content a.button {
+  cursor: pointer;
+  pointer-events: auto;
+  position: relative;
+  z-index: 2;
+  text-decoration: none;
+  display: inline-block;
+}

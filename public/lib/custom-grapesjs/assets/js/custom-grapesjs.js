@@ -105,12 +105,11 @@ const editor = grapesjs.init({
 
     canvas: {
         styles: [
-
-
+            "https://use.typekit.net/jpx0kib.css",
+            app_url + "/css/cooper-fonts.css",
             app_url + "/theme/css/bootstrap.css",
             app_url + "/theme/css/style.css",
             app_url + "/theme/css/swiper.css",
-            app_url + "/theme/css/dark.css",
             app_url + "/theme/css/font-icons.css",
             app_url + "/theme/css/animate.css",
             app_url + "/theme/css/magnific-popup.css",
@@ -121,7 +120,16 @@ const editor = grapesjs.init({
             app_url + "/theme/css/fonts.css",
             app_url + "/theme/css/cafe.css",  
             app_url + "/theme/css/custom.css",
-            app_url + "/css/grapesjs-footer.css",
+            app_url + "/css/genchemph-drone.css",
+            app_url + "/css/genchemph-design.css",
+            app_url + "/css/genchemph-about-us.css",
+            app_url + "/css/genchemph-products.css?v=10",
+            app_url + "/css/genchemph-home-intro.css",
+            app_url + "/css/genchemph-contact-us.css",
+            app_url + "/css/genchem-theme.css",
+            app_url + "/css/genchemph-grapesjs.css",
+            app_url + "/css/genchemph-cms-typography.css",
+            app_url + "/css/cms-footer.css?v=7",
         ],
         scripts: [
             app_url + "/theme/js/slick.js",
@@ -470,40 +478,18 @@ const editor = grapesjs.init({
     colorPicker: { appendTo: "parent", offset: { top: 30, left: -174 } },
 });
 
-function getFooterBackgroundUrl() {
-    if (typeof window.CMS_FOOTER_BG_URL === "string" && window.CMS_FOOTER_BG_URL) {
-        return window.CMS_FOOTER_BG_URL;
-    }
-
-    return app_url + "/images/highlights/roofing1.jpg";
+function syncEditorFormFields() {
+    if (typeof editor === "undefined" || !editor) return;
+    var contentsEl = document.getElementById("contents");
+    var stylesEl = document.getElementById("styles");
+    if (!contentsEl || !stylesEl) return;
+    contentsEl.value = editor.getHtml().replace(/(bounce|fadeIn)\sanimated/g, "");
+    stylesEl.value = editor.getCss();
 }
 
-function injectFooterCanvasBackground() {
-    var frame = editor.Canvas.getFrameEl();
-    if (!frame || !frame.contentDocument) {
-        return;
-    }
-
-    var doc = frame.contentDocument;
-    var bgUrl = getFooterBackgroundUrl();
-    var css =
-        '.footer{background:linear-gradient(135deg,rgba(139,0,0,0.9) 0%,rgba(204,51,0,0.9) 50%,rgba(255,107,53,0.9) 100%),url("' +
-        bgUrl +
-        '") center/cover no-repeat!important;}';
-    var styleEl = doc.getElementById("cms-footer-bg-fix");
-
-    if (styleEl) {
-        styleEl.textContent = css;
-        return;
-    }
-
-    styleEl = doc.createElement("style");
-    styleEl.id = "cms-footer-bg-fix";
-    styleEl.textContent = css;
-    doc.head.appendChild(styleEl);
-}
-
-editor.on("canvas:frame:load", injectFooterCanvasBackground);
+$(document).on("submit", "#editForm", function () {
+    syncEditorFormFields();
+});
 
 editor.StorageManager.add("simpleStorage", {
     store(data, clb, clbErr) {
@@ -565,8 +551,6 @@ window.addEventListener("load", () => {
     } else if (typeof jsHtml !== "undefined") {
         editor.addComponents(jsHtml + "<style>" + (typeof jsStyle !== "undefined" ? jsStyle : "") + "</style>");
     }
-
-    setTimeout(injectFooterCanvasBackground, 300);
 
     $("#desktop-view").on("click", (event) => {
         editor.Commands.run("set-device-desktop");
@@ -994,18 +978,15 @@ editor.on('component:deselected', (component) => {
 })
 
 editor.on("component:remove", (e) => {
-    $("#contents").val(editor.getHtml().replace(/(bounce|fadeIn)\sanimated/g, ""));
-    $("#styles").val(editor.getCss());
+    syncEditorFormFields();
 });
 
 editor.on("component:update", (e) => {
-    $("#contents").val(editor.getHtml().replace(/(bounce|fadeIn)\sanimated/g, ""));
-    $("#styles").val(editor.getCss());
+    syncEditorFormFields();
 });
 
 editor.on("component:styleUpdate", () => {
-    $("#contents").val(editor.getHtml().replace(/(bounce|fadeIn)\sanimated/g, ""));
-    $("#styles").val(editor.getCss());
+    syncEditorFormFields();
 });
 
 // editor.on("storage:start:load", function (e) {
@@ -1049,6 +1030,152 @@ editor.on("run:sw-visibility", () => {
 });
 editor.on("stop:sw-visibility", () => {
     document.querySelector("#sw-visibility").classList.remove("active");
+});
+
+function bindGenchemProductImageHover(img, link) {
+    if (!img || img.dataset.genchemHoverBound === "1") return;
+    img.dataset.genchemHoverBound = "1";
+
+    const onEnter = () => {
+        img.style.setProperty("transform", "scale(0.9)", "important");
+    };
+    const onLeave = () => {
+        img.style.removeProperty("transform");
+    };
+
+    [img, link].filter(Boolean).forEach((el) => {
+        el.addEventListener("mouseenter", onEnter);
+        el.addEventListener("mouseleave", onLeave);
+    });
+}
+
+function initGenchemProductCards(root) {
+    const scope = root && root.querySelectorAll ? root : editor.Canvas.getDocument();
+    if (!scope || !scope.querySelectorAll) return;
+
+    const cards = scope.querySelectorAll(
+        ".bg-dark-red .border-2-white.position-relative, .bg-dark-red .rounded-lg.border-2-white",
+    );
+
+    cards.forEach((card) => {
+        const row = card.parentElement;
+        if (!row) return;
+
+        const siblings = Array.from(row.children).filter((el) =>
+            el.classList.contains("border-2-white"),
+        );
+        const index = siblings.indexOf(card);
+        const isRightImage = index % 2 === 1;
+
+        card.classList.add("width-img-control");
+
+        const link = card.querySelector("a");
+        if (link) {
+            link.style.position = "absolute";
+            link.style.bottom = "0";
+            link.style.zIndex = "5";
+            link.style.display = "block";
+            link.style.lineHeight = "0";
+            link.style.textDecoration = "none";
+            link.style.pointerEvents = "auto";
+        }
+
+        const img = card.querySelector("img");
+        if (!img) return;
+
+        const inline = img.getAttribute("style") || "";
+        const rightFromInline = /right\s*:\s*-?\d/i.test(inline);
+        const leftFromInline = /left\s*:\s*-?\d/i.test(inline);
+        const placeRight = rightFromInline || (!leftFromInline && isRightImage);
+
+        img.classList.add("-hover-scale");
+        bindGenchemProductImageHover(img, link);
+        img.style.position = "absolute";
+        img.style.bottom = "-3px";
+        img.style.maxWidth = "340px";
+        img.style.width = "auto";
+        img.style.height = "auto";
+        img.style.zIndex = "6";
+        img.style.background = "transparent";
+        img.style.cursor = "pointer";
+        img.style.pointerEvents = "auto";
+        img.style.transformOrigin = "center bottom";
+        img.style.transition = "transform 0.4s ease";
+
+        if (placeRight) {
+            if (link) link.style.right = "-100px";
+            img.style.right = "-100px";
+            img.style.left = "auto";
+        } else {
+            if (link) link.style.left = "-95px";
+            img.style.left = "-95px";
+            img.style.right = "auto";
+        }
+    });
+}
+
+function setupGenchemCanvas() {
+    const doc = editor.Canvas.getDocument();
+    if (!doc || !doc.body) return;
+
+    doc.documentElement.classList.add("genchemph-canvas-root");
+    doc.body.classList.add("genchemph", "has-plugin-html5video", "genchemph-canvas", "stretched");
+
+    if (doc.querySelector("#products-tabbings") || doc.querySelector('[id="pvc-resins"]')) {
+        doc.body.classList.add("genchem-products-active");
+    }
+
+    initGenchemProductCards(doc);
+    window.setTimeout(() => initGenchemProductCards(doc), 50);
+    window.setTimeout(() => initGenchemProductCards(doc), 300);
+
+    doc.querySelectorAll(".video-wrap video").forEach((video) => {
+        video.muted = true;
+        video.playsInline = true;
+        video.loop = true;
+        video.autoplay = true;
+        video.controls = false;
+        video.setAttribute("playsinline", "");
+        video.removeAttribute("controls");
+
+        const directSrc = video.getAttribute("src") || "";
+        if (directSrc.startsWith("data:") || directSrc.includes("svg+xml")) {
+            video.removeAttribute("src");
+        }
+
+        if (!video.getAttribute("poster")) {
+            video.poster = app_url + "/images/genchemph/banners/HOMEPAGE_ABOUT_US.png";
+        }
+
+        let source = video.querySelector("source");
+        if (!source) {
+            source = doc.createElement("source");
+            source.type = "video/mp4";
+            video.appendChild(source);
+        }
+
+        const raw = source.getAttribute("src") || "";
+        if (!raw || raw.startsWith("data:") || raw.includes("video.mp4")) {
+            source.src = app_url + "/images/genchemph/video.mp4";
+            source.setAttribute("type", "video/mp4");
+        } else if (raw.startsWith("/images/")) {
+            source.src = app_url + raw;
+        }
+
+        video.load();
+        video.play().catch(() => {});
+    });
+}
+
+editor.on("load", setupGenchemCanvas);
+editor.on("canvas:frame:load", setupGenchemCanvas);
+editor.on("component:update", () => {
+    window.setTimeout(() => initGenchemProductCards(editor.Canvas.getDocument()), 0);
+});
+editor.on("component:add", (component) => {
+    if (component && component.get("type") === "video") {
+        setupGenchemCanvas();
+    }
 });
 
 window.addEventListener("fullscreenchange", fullScreenChange);

@@ -1,0 +1,368 @@
+/* About Us / subpage layout — matches genchemph about-us.html reference */
+
+/* Canvas theme extended Bootstrap spacers (GrapesJS uses spacer 6 = 5rem) */
+.genchemph .pt-6 {
+  padding-top: 5rem !important;
+}
+
+.genchemph .pb-6 {
+  padding-bottom: 5rem !important;
+}
+
+.genchemph .py-6 {
+  padding-top: 5rem !important;
+  padding-bottom: 5rem !important;
+}
+
+.genchemph .pe-6 {
+  padding-right: 5rem !important;
+}
+
+.genchemph .ps-6 {
+  padding-left: 5rem !important;
+}
+
+.genchemph .px-6 {
+  padding-left: 5rem !important;
+  padding-right: 5rem !important;
+}
+
+.genchemph .mt-6 {
+  margin-top: 5rem !important;
+}
+
+.genchemph .mb-6 {
+  margin-bottom: 5rem !important;
+}
+
+.genchemph .my-6 {
+  margin-top: 5rem !important;
+  margin-bottom: 5rem !important;
+}
+
+.genchemph .clear {
+  clear: both;
+}
+
+.about-us-page,
+.genchem-public-shell {
+  background: #ffffff;
+  overflow-x: clip;
+  max-width: 100%;
+}
+
+.genchemph .cms-content,
+.genchemph .public-page-content {
+  overflow-x: clip;
+  max-width: 100%;
+}
+
+.about-us-page .about-us-low {
+  position: relative;
+  background: #ffffff;
+  overflow: visible;
+  padding-bottom: 0;
+}
+
+.about-us-page .width-img-control {
+  position: relative;
+  width: 100%;
+  overflow: visible;
+}
+
+@media only screen and (max-width: 1440px) {
+  .about-us-page .width-img-control {
+    min-height: 470px;
+  }
+}
+
+@media only screen and (min-width: 1441px) {
+  .about-us-page .width-img-control {
+    min-height: 630px;
+  }
+}
+
+/* Last block — flush to footer, no extra margin; min-height keeps absolute images in flow */
+.about-us-page .width-img-control:last-of-type {
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+.about-us-page > .floating-logo,
+.about-us-page > .floating-logo--subpage {
+  background-color: #ffffff;
+}
+
+/* Home intro block — dark overlay + white text (reference index.html / GrapesJS) */
+.cms-content .about-us-low[style*="background-image"],
+.cms-content .home-intro-hero,
+.cms-content #iz2p.about-us-low,
+.public-page-content .about-us-low[style*="background-image"],
+.public-page-content .home-intro-hero,
+.public-page-content #iz2p.about-us-low {
+  position: relative;
+  background-size: cover !important;
+  background-position: center !important;
+}
+
+.cms-content .about-us-low[style*="background-image"]::before,
+.cms-content .home-intro-hero#iz2p::before,
+.cms-content #iz2p.home-intro-hero::before,
+.cms-content #iz2p.about-us-low::before,
+.public-page-content .about-us-low[style*="background-image"]::before,
+.public-page-content .home-intro-hero#iz2p::before,
+.public-page-content #iz2p.home-intro-hero::before,
+.public-page-content #iz2p.about-us-low::before {
+  content: "" !important;
+  display: block !important;
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.68) !important;
+  z-index: 1;
+}
+
+.cms-content .about-us-low[style*="background-image"] .about-us-high,
+.cms-content .home-intro-hero .about-us-high,
+.cms-content #iz2p .about-us-high,
+.public-page-content .about-us-low[style*="background-image"] .about-us-high,
+.public-page-content .home-intro-hero .about-us-high,
+.public-page-content #iz2p .about-us-high {
+  position: relative;
+  z-index: 2;
+  color: #ffffff !important;
+}
+
+.cms-content .about-us-low[style*="background-image"] .about-us-high p,
+.cms-content .about-us-low[style*="background-image"] .about-us-high li,
+.cms-content .home-intro-hero .about-us-high p,
+.cms-content .home-intro-hero .about-us-high li,
+.cms-content #iz2p .about-us-high p,
+.cms-content #iz2p .about-us-high li,
+.public-page-content .about-us-low[style*="background-image"] .about-us-high p,
+.public-page-content .about-us-low[style*="background-image"] .about-us-high li,
+.public-page-content .home-intro-hero .about-us-high p,
+.public-page-content .home-intro-hero .about-us-high li,
+.public-page-content #iz2p .about-us-high p,
+.public-page-content #iz2p .about-us-high li {
+  color: #ffffff !important;
+}
+
+.cms-content .home-intro-hero .about-us-high p.fs-3,
+.cms-content #iz2p .about-us-high p.fs-3,
+.public-page-content .home-intro-hero .about-us-high p.fs-3,
+.public-page-content #iz2p .about-us-high p.fs-3 {
+  font-size: 1.75rem !important;
+  line-height: 1.5 !important;
+  text-align: center;
+}
+
+.cms-content .home-intro-hero ul.fs-4,
+.cms-content .home-intro-hero ul.fs-4 li,
+.cms-content #iz2p ul.fs-4,
+.cms-content #iz2p ul.fs-4 li,
+.public-page-content .home-intro-hero ul.fs-4,
+.public-page-content .home-intro-hero ul.fs-4 li,
+.public-page-content #iz2p ul.fs-4,
+.public-page-content #iz2p ul.fs-4 li {
+  font-size: 1.5rem !important;
+  line-height: 1.65 !important;
+}
+
+.cms-content .about-us-low[style*="background-image"] .bi-check2-circle,
+.cms-content .home-intro-hero .bi-check2-circle,
+.cms-content #iz2p .bi-check2-circle,
+.public-page-content .about-us-low[style*="background-image"] .bi-check2-circle,
+.public-page-content .home-intro-hero .bi-check2-circle,
+.public-page-content #iz2p .bi-check2-circle {
+  color: #ffffff !important;
+}
+
+.about-us-page .about-us-low:not([style*="background-image"]):not(.home-intro-hero):not(#iz2p)::before {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+}
+
+.about-us-page .floating-logo .floating-logo__mark,
+.about-us-page .floating-logo--subpage .floating-logo__mark {
+  top: -122px;
+}
+
+.about-us-page .floating-logo img,
+.about-us-page .floating-logo__img {
+  max-width: 250px;
+  width: auto;
+  height: auto;
+  background: transparent !important;
+  object-fit: contain;
+}
+
+.about-us-page .about-us-high {
+  position: relative;
+  z-index: 2;
+  color: inherit;
+}
+
+.about-us-page .width-img-control .about-us-high .text-dark,
+.about-us-page .width-img-control .about-us-high p.text-dark,
+.about-us-page .width-img-control .about-us-high li,
+.about-us-page .width-img-control .text-dark {
+  color: #333333 !important;
+}
+
+/* Typography — match reference Bootstrap / Canvas sizes */
+.about-us-page .display-4 {
+  font-size: clamp(2rem, 3.5vw, 2.75rem) !important;
+  font-weight: 500 !important;
+  line-height: 1.2;
+}
+
+.about-us-page h1.text-main-red {
+  color: #f60000 !important;
+}
+
+.about-us-page .about-us-high p.fs-4,
+.about-us-page p.fs-4 {
+  font-size: 1.5rem !important;
+  line-height: 1.65;
+}
+
+.about-us-page .fs-5,
+.about-us-page .about-us-high .fs-5,
+.about-us-page ul.fs-5 {
+  font-size: 1.25rem !important;
+  line-height: 1.65;
+}
+
+.about-us-page h4.display-6 {
+  font-size: clamp(1.65rem, 2.5vw, 2.5rem) !important;
+  font-weight: 600 !important;
+  line-height: 1.25;
+}
+
+.about-us-page .btn.fs-5 {
+  font-size: 1.25rem !important;
+}
+
+/* Staggered banner + image rows — match GrapesJS / reference about-us.html */
+.genchemph .cms-content .about-us-low,
+.genchemph .public-page-content .about-us-low,
+.about-us-page .about-us-low {
+  display: block !important;
+}
+
+.genchemph .cms-content .width-img-control,
+.genchemph .public-page-content .width-img-control,
+.about-us-page .width-img-control {
+  display: block !important;
+  width: 100% !important;
+  clear: both;
+}
+
+.genchemph .cms-content .width-img-control > .d-flex.flex-row,
+.genchemph .public-page-content .width-img-control > .d-flex.flex-row,
+.about-us-page .width-img-control > .d-flex.flex-row {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: flex-start !important;
+  width: 100% !important;
+}
+
+@media (min-width: 768px) {
+  .genchemph .cms-content .width-img-control > .d-flex.flex-row > [class*="col-md-6"],
+  .genchemph .public-page-content .width-img-control > .d-flex.flex-row > [class*="col-md-6"],
+  .about-us-page .width-img-control > .d-flex.flex-row > [class*="col-md-6"] {
+    flex: 0 0 50% !important;
+    width: 50% !important;
+    max-width: 50% !important;
+  }
+}
+
+.genchemph .cms-content .width-img-control .col-md-6.position-relative,
+.genchemph .public-page-content .width-img-control .col-md-6.position-relative,
+.about-us-page .width-img-control .col-md-6.position-relative {
+  position: relative !important;
+  min-height: 1px;
+}
+
+.genchemph .cms-content .width-img-control .position-absolute,
+.genchemph .public-page-content .width-img-control .position-absolute,
+.about-us-page .width-img-control .position-absolute {
+  position: absolute !important;
+  top: -125px !important;
+  left: 0;
+  right: auto;
+  z-index: 4;
+  width: auto;
+  max-width: 100%;
+}
+
+/* Resins block — image on the right column */
+.genchemph .cms-content .width-img-control > .d-flex.flex-row > .col-md-6.position-relative:last-child .position-absolute,
+.genchemph .public-page-content .width-img-control > .d-flex.flex-row > .col-md-6.position-relative:last-child .position-absolute,
+.about-us-page .width-img-control > .d-flex.flex-row > .col-md-6.position-relative:last-child .position-absolute {
+  left: auto;
+  right: 0;
+}
+
+.genchemph .cms-content .width-img-control .position-absolute img.shadow,
+.genchemph .public-page-content .width-img-control .position-absolute img.shadow,
+.about-us-page .width-img-control .position-absolute img.shadow {
+  display: block;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  max-width: 100%;
+  width: auto;
+  height: auto;
+}
+
+.genchemph .cms-content .width-img-control .bg-dark-red,
+.genchemph .public-page-content .width-img-control .bg-dark-red,
+.about-us-page .width-img-control .bg-dark-red {
+  position: relative;
+  z-index: 2;
+}
+
+.genchemph .cms-content .about-us-high > .row,
+.genchemph .public-page-content .about-us-high > .row,
+.about-us-page .about-us-high > .row {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  width: 100% !important;
+  margin-left: calc(var(--bs-gutter-x, 1.5rem) * -0.5);
+  margin-right: calc(var(--bs-gutter-x, 1.5rem) * -0.5);
+}
+
+@media (min-width: 768px) {
+  .genchemph .cms-content .about-us-high > .row > [class*="col-md-6"],
+  .genchemph .public-page-content .about-us-high > .row > [class*="col-md-6"],
+  .about-us-page .about-us-high > .row > [class*="col-md-6"] {
+    flex: 0 0 50% !important;
+    width: 50% !important;
+    max-width: 50% !important;
+  }
+}
+
+.about-us-page #content,
+.about-us-page main#content {
+  background: #ffffff;
+  position: relative;
+  z-index: 1;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+/* Footer must sit below about-us content (reference: footer inside #wrapper) */
+.cms-footer-content {
+  position: relative;
+  z-index: 50;
+  isolation: isolate;
+  clear: both;
+  width: 100%;
+  max-width: 100%;
+  margin-top: 0;
+}
+
+.cms-footer-content .footer-widgets-wrap > .bg-white img {
+  background: transparent !important;
+}

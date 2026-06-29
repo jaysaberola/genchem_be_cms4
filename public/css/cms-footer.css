@@ -1,0 +1,295 @@
+/* CMS footer — genchemph reference (GrapesJS canvas + public site) */
+
+.cms-footer-content {
+  width: 100%;
+  max-width: 100%;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 50;
+  isolation: isolate;
+  margin-top: 0;
+  padding-top: 0;
+}
+
+/* Live site + GrapesJS canvas (footer page has no .cms-footer-content wrapper) */
+.cms-footer-content #footer,
+.genchemph-canvas #footer,
+.genchemph .cms-footer-content #footer {
+  width: 100%;
+  overflow: hidden;
+  margin: 0;
+  border-top: 0;
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+.cms-footer-content #footer.dark,
+.cms-footer-content #footer.dark.bg-dark,
+.genchemph-canvas #footer.dark,
+.genchemph-canvas #footer.dark.bg-dark,
+.genchemph .cms-footer-content #footer.dark,
+.genchemph .cms-footer-content #footer.dark.bg-dark {
+  color: rgba(255, 255, 255, 0.85);
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* White + red columns — side-by-side split; spacing comes from GrapesJS/CMS */
+.cms-footer-content .footer-widgets-wrap,
+.genchemph-canvas .footer-widgets-wrap,
+.genchemph .cms-footer-content .footer-widgets-wrap {
+  display: flex !important;
+  flex-direction: column !important;
+  flex-wrap: nowrap !important;
+  width: 100%;
+  align-items: stretch;
+}
+
+@media (min-width: 768px) {
+  .cms-footer-content .footer-widgets-wrap,
+  .genchemph-canvas .footer-widgets-wrap,
+  .genchemph .cms-footer-content .footer-widgets-wrap {
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: stretch;
+  }
+
+  .cms-footer-content .footer-widgets-wrap > .col-lg-4,
+  .cms-footer-content .footer-widgets-wrap > .bg-white,
+  .genchemph-canvas .footer-widgets-wrap > .col-lg-4,
+  .genchemph-canvas .footer-widgets-wrap > .bg-white,
+  .genchemph .cms-footer-content .footer-widgets-wrap > .bg-white {
+    flex: 0 0 33.333333% !important;
+    width: 33.333333% !important;
+    max-width: 33.333333% !important;
+    min-width: 0;
+  }
+
+  .cms-footer-content .footer-widgets-wrap > .col-lg-8,
+  .cms-footer-content .footer-widgets-wrap > .bg-dark-red,
+  .genchemph-canvas .footer-widgets-wrap > .col-lg-8,
+  .genchemph-canvas .footer-widgets-wrap > .bg-dark-red,
+  .genchemph .cms-footer-content .footer-widgets-wrap > .bg-dark-red {
+    flex: 0 0 66.666667% !important;
+    width: 66.666667% !important;
+    max-width: 66.666667% !important;
+    min-width: 0;
+  }
+}
+
+.cms-footer-content .bg-dark-red,
+.genchemph-canvas .bg-dark-red,
+.genchemph .cms-footer-content .bg-dark-red {
+  background-color: #9b2d1f;
+}
+
+.cms-footer-content .bg-white,
+.genchemph-canvas .footer-widgets-wrap > .bg-white,
+.genchemph .cms-footer-content .footer-widgets-wrap > .bg-white {
+  background-color: #ffffff;
+}
+
+.cms-footer-content .bg-white .widget,
+.genchemph-canvas .bg-white .widget {
+  width: 100%;
+}
+
+.cms-footer-content .footer-widgets-wrap > .bg-white img,
+.cms-footer-content .bg-white img,
+.genchemph-canvas .footer-widgets-wrap > .bg-white img,
+.genchemph-canvas .bg-white img {
+  width: 200px;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  background: transparent !important;
+  object-fit: contain;
+}
+
+.cms-footer-content .bg-white h4.text-danger,
+.genchemph-canvas .bg-white h4.text-danger {
+  color: #dc3545 !important;
+  text-align: center;
+  font-weight: 700;
+  line-height: 1.45;
+  font-size: 1rem;
+}
+
+.cms-footer-content .bg-white p.text-dark,
+.genchemph-canvas .bg-white p.text-dark {
+  color: #212529 !important;
+  text-align: center;
+}
+
+.cms-footer-content .bg-dark-red h4,
+.cms-footer-content .bg-dark-red .widget h4,
+.genchemph-canvas .bg-dark-red h4,
+.genchemph-canvas .bg-dark-red .widget h4 {
+  color: #ffffff !important;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.cms-footer-content .bg-dark-red p,
+.cms-footer-content .bg-dark-red .widget p,
+.genchemph-canvas .bg-dark-red p,
+.genchemph-canvas .bg-dark-red .widget p {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+.cms-footer-content .bg-dark-red .border-light,
+.genchemph-canvas .bg-dark-red .border-light {
+  border-color: rgba(255, 255, 255, 0.45) !important;
+}
+
+/* Inner row: maps (left) + links/contact (right) */
+.cms-footer-content .bg-dark-red > .row,
+.genchemph-canvas .bg-dark-red > .row {
+  width: 100%;
+  --bs-gutter-x: 1.5rem;
+  --bs-gutter-y: 0;
+}
+
+/* Widget section spacing (reference index.html) */
+.cms-footer-content .bg-dark-red .widget,
+.genchemph-canvas .bg-dark-red .widget {
+  margin-bottom: 1.75rem;
+}
+
+.cms-footer-content .bg-dark-red .widget:last-child,
+.genchemph-canvas .bg-dark-red .widget:last-child {
+  margin-bottom: 0;
+}
+
+.cms-footer-content .bg-dark-red .widget h4,
+.genchemph-canvas .bg-dark-red .widget h4 {
+  margin-bottom: 0.5rem;
+}
+
+.cms-footer-content .bg-dark-red .widget p,
+.genchemph-canvas .bg-dark-red .widget p {
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 992px) {
+  .cms-footer-content .bg-dark-red > .row > .col-lg-7,
+  .genchemph-canvas .bg-dark-red > .row > .col-lg-7 {
+    flex: 0 0 58.333333%;
+    width: 58.333333%;
+    max-width: 58.333333%;
+  }
+
+  .cms-footer-content .bg-dark-red > .row > .col-lg-5,
+  .genchemph-canvas .bg-dark-red > .row > .col-lg-5 {
+    flex: 0 0 41.666667%;
+    width: 41.666667%;
+    max-width: 41.666667%;
+  }
+}
+
+/* Widget lists */
+.cms-footer-content .widget_links ul,
+.cms-footer-content .widget_links li,
+.genchemph-canvas .widget_links ul,
+.genchemph-canvas .widget_links li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cms-footer-content .widget_links li,
+.genchemph-canvas .widget_links li {
+  padding: 5px 0;
+}
+
+.cms-footer-content .widget_links li a,
+.genchemph-canvas .widget_links li a {
+  color: rgba(255, 255, 255, 0.85) !important;
+  text-decoration: none;
+  font-size: 14px;
+  display: inline-block;
+}
+
+.cms-footer-content .widget_links li a:hover,
+.genchemph-canvas .widget_links li a:hover {
+  color: #ffffff !important;
+}
+
+.cms-footer-content .widget_links:not(.widget-li-noicon) li a,
+.genchemph-canvas .widget_links:not(.widget-li-noicon) li a {
+  padding-left: 1.1rem;
+  position: relative;
+}
+
+.cms-footer-content .widget_links:not(.widget-li-noicon) li a::before,
+.genchemph-canvas .widget_links:not(.widget-li-noicon) li a::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.cms-footer-content .widget_links.widget-li-noicon li a,
+.genchemph-canvas .widget_links.widget-li-noicon li a {
+  padding-left: 0;
+  border: none !important;
+}
+
+.cms-footer-content .widget_links.widget-li-noicon li img,
+.genchemph-canvas .widget_links.widget-li-noicon li img {
+  width: 30px !important;
+  height: auto;
+  flex-shrink: 0;
+}
+
+/* Maps */
+.cms-footer-content .bg-dark-red iframe,
+.genchemph-canvas .bg-dark-red iframe {
+  width: 100% !important;
+  max-width: 500px;
+  max-height: 300px;
+  height: auto;
+  min-height: 220px;
+  margin-bottom: 1.5rem;
+  border: 0;
+  display: block;
+}
+
+/* Copyright bar — GrapesJS/CMS styles win; these are fallbacks only */
+.cms-footer-content #footer.dark #copyrights,
+.cms-footer-content #copyrights,
+.genchemph-canvas #footer.dark #copyrights,
+.genchemph-canvas #copyrights,
+.genchemph .cms-footer-content #footer.dark #copyrights,
+.genchemph .cms-footer-content #copyrights {
+  padding: 0;
+  width: 100%;
+}
+
+.cms-footer-content #copyrights .container,
+.genchemph-canvas #copyrights .container {
+  max-width: 100%;
+}
+
+@media (max-width: 767px) {
+  .cms-footer-content .footer-widgets-wrap > .col-lg-4,
+  .cms-footer-content .footer-widgets-wrap > .col-lg-8,
+  .cms-footer-content .footer-widgets-wrap > .bg-white,
+  .cms-footer-content .footer-widgets-wrap > .bg-dark-red,
+  .genchemph-canvas .footer-widgets-wrap > .col-lg-4,
+  .genchemph-canvas .footer-widgets-wrap > .col-lg-8,
+  .genchemph-canvas .footer-widgets-wrap > .bg-white,
+  .genchemph-canvas .footer-widgets-wrap > .bg-dark-red {
+    flex: 0 0 100% !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .cms-footer-content .bg-dark-red iframe,
+  .genchemph-canvas .bg-dark-red iframe {
+    max-width: 100%;
+  }
+}

@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-//use App\Mail\ContactMessageMail;
+use App\Helpers\Setting;
+use App\Mail\InquiryAdminMail;
+use App\Mail\InquiryMail;
 use App\Models\Article;
+use App\Models\EmailRecipient;
 use App\Models\ArticleCategory;
 use App\Models\Menu;
 use App\Models\MenusHasPages;
@@ -333,24 +336,51 @@ class PublicPageController extends Controller
 
         return response()->json($archive);
     }
-    /*
     public function send(Request $request)
     {
         $data = $request->validate([
-            'inquiry_type'   => 'required|string',
-            'first_name'     => 'required|string|max:100',
-            'last_name'      => 'required|string|max:100',
-            'email'          => 'required|email',
-            'contact_number' => 'required|string|max:30',
-            'message'        => 'required|string|max:2000',
+            'name'    => 'required|string|max:200',
+            'company' => 'nullable|string|max:200',
+            'email'   => 'required|email|max:255',
+            'contact' => 'required|string|max:30',
+            'message' => 'required|string|max:2000',
         ]);
 
-        Mail::to(config('mail.from.address'))
-            ->send(new ContactMessageMail($data));
+        $client = array_merge($data, [
+            'subject'  => 'Contact Us' . (! empty($data['company']) ? ' — ' . $data['company'] : ''),
+            'services' => $data['company'] ?? 'Contact Us',
+        ]);
+
+        if (! empty($data['company'])) {
+            $client['message'] = "Company: {$data['company']}\n\n" . $data['message'];
+        }
+
+        $setting = Setting::info();
+        $emailRecipients = EmailRecipient::all();
+
+        if ($emailRecipients->isEmpty()) {
+            $fallback = $setting->email ?? config('mail.from.address');
+            if ($fallback) {
+                $emailRecipients = collect([(object) ['name' => 'Admin', 'email' => $fallback]]);
+            }
+        }
+
+        try {
+            Mail::to($client['email'])->send(new InquiryMail($setting, $client));
+
+            foreach ($emailRecipients as $recipient) {
+                Mail::to($recipient->email)->send(new InquiryAdminMail($setting, $client, $recipient));
+            }
+        } catch (\Throwable $e) {
+            report($e);
+
+            return response()->json([
+                'message' => 'Failed to send your message. Please try again later.',
+            ], 500);
+        }
 
         return response()->json([
-            'message' => 'Message sent successfully'
+            'message' => 'Your message has been sent successfully.',
         ]);
     }
-    */
 }

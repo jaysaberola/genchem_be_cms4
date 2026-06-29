@@ -1,0 +1,159 @@
+/* GrapesJS Manage Pages canvas — match public genchemph preview */
+
+.genchemph-canvas-root,
+.genchemph-canvas,
+.genchemph-canvas * {
+  font-family: "Cooper", sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body.genchemph-canvas,
+body.genchemph-canvas .section.dark:has(.video-wrap) {
+  background-color: #ffffff !important;
+}
+
+.about-us-page .about-us-low:not([style*="background-image"]):not(.home-intro-hero):not(#iz2p)::before,
+.genchemph-canvas .about-us-page .about-us-low:not(.home-intro-hero):not(#iz2p)::before {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+}
+
+.about-us-low[style*="background-image"]::before,
+.home-intro-hero#iz2p::before,
+#iz2p.home-intro-hero::before,
+#iz2p.about-us-low::before,
+.genchemph-canvas .about-us-low[style*="background-image"]::before,
+.genchemph-canvas .home-intro-hero#iz2p::before,
+.genchemph-canvas #iz2p.about-us-low::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.68);
+}
+
+.genchemph-canvas .floating-logo {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  min-height: 80px;
+  background-color: #ffffff;
+  z-index: 50;
+  overflow: visible;
+}
+
+.genchemph-canvas .floating-logo .position-absolute,
+.genchemph-canvas .floating-logo__mark {
+  position: absolute;
+  z-index: 51;
+  top: -23px;
+  display: flex;
+  justify-content: center;
+  background: transparent;
+}
+
+.genchemph-canvas .floating-logo img,
+.genchemph-canvas .floating-logo__img {
+  max-width: 250px;
+  height: auto;
+  background: transparent;
+}
+
+/* Load-last overrides — normal bright banners (no dark overlay) */
+.genchem-page-banner__overlay,
+.genchemph .genchem-page-banner__overlay {
+  display: none !important;
+}
+
+.genchemph > .floating-logo,
+.floating-logo {
+  position: relative !important;
+  z-index: 50 !important;
+  background-color: #ffffff !important;
+  overflow: visible !important;
+}
+
+.floating-logo__mark,
+.floating-logo .position-absolute {
+  z-index: 51 !important;
+}
+
+/* Beat theme dark.css (#282828) on the drone video block */
+.section.dark:has(.video-wrap),
+.genchemph .section.dark:has(.video-wrap),
+.genchemph-canvas .section.dark:has(.video-wrap) {
+  position: relative !important;
+  overflow: hidden !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  min-height: clamp(480px, 62vh, 720px) !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+}
+
+.section.dark:has(.video-wrap) > .container,
+.genchemph-canvas .section.dark:has(.video-wrap) > .container {
+  position: relative !important;
+  z-index: 2 !important;
+  min-height: clamp(480px, 62vh, 720px) !important;
+  display: flex !important;
+  align-items: flex-end !important;
+  padding-bottom: 2.5rem !important;
+  color: #ffffff !important;
+}
+
+.section.dark:has(.video-wrap) h3,
+.section.dark:has(.video-wrap) p,
+.genchemph-canvas .section.dark:has(.video-wrap) h3,
+.genchemph-canvas .section.dark:has(.video-wrap) p {
+  color: rgba(255, 255, 255, 0.92) !important;
+}
+
+.section.dark:has(.video-wrap) .video-wrap,
+.genchemph-canvas .section.dark:has(.video-wrap) .video-wrap {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 0 !important;
+  overflow: hidden !important;
+  background-color: #3d6b2e !important;
+  background-size: cover !important;
+  background-position: center 42% !important;
+}
+
+.section.dark:has(.video-wrap) .video-wrap video,
+.genchemph-canvas .section.dark:has(.video-wrap) .video-wrap video {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  min-width: 100% !important;
+  min-height: 100% !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: cover !important;
+  object-position: center 42% !important;
+  opacity: 1 !important;
+  z-index: 0 !important;
+  display: block !important;
+}
+
+body:not(.has-plugin-html5video) .section.dark:has(.video-wrap) .video-wrap video {
+  opacity: 1 !important;
+}
+
+/* Footer layout + colors — see cms-footer.css (loaded before this file) */
+.genchemph-canvas .footer-stick.dark {
+  background-color: #212529 !important;
+  color: #ffffff !important;
+}
+
+.genchemph-canvas .footer-stick.dark span,
+.genchemph-canvas .footer-stick.dark i {
+  color: #ffffff !important;
+}

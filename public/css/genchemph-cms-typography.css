@@ -1,0 +1,108 @@
+/* CMS page typography — load last; beats Pato main.css p { 15px Montserrat } */
+
+.genchemph .cms-content,
+.genchemph .public-page-content,
+.genchemph-canvas .cms-content,
+.genchemph-canvas .public-page-content,
+.genchemph-canvas-root {
+  font-family: "Cooper", sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.genchemph .cms-content p,
+.genchemph .public-page-content p,
+.genchemph .cms-content li,
+.genchemph .public-page-content li,
+.genchemph .cms-content ul,
+.genchemph .public-page-content ul,
+.genchemph-canvas .cms-content p,
+.genchemph-canvas .public-page-content p,
+.genchemph-canvas .cms-content li,
+.genchemph-canvas .public-page-content li {
+  font-family: inherit !important;
+  font-size: inherit !important;
+  line-height: inherit !important;
+  color: inherit !important;
+}
+
+.genchemph .cms-content a:not(.btn),
+.genchemph .public-page-content a:not(.btn),
+.genchemph-canvas .cms-content a:not(.btn),
+.genchemph-canvas .public-page-content a:not(.btn) {
+  font-family: inherit !important;
+  font-size: inherit !important;
+}
+
+.genchemph .cms-content h1,
+.genchemph .cms-content h2,
+.genchemph .cms-content h3,
+.genchemph .cms-content h4,
+.genchemph .cms-content h5,
+.genchemph .cms-content h6,
+.genchemph .public-page-content h1,
+.genchemph .public-page-content h2,
+.genchemph .public-page-content h3,
+.genchemph .public-page-content h4,
+.genchemph .public-page-content h5,
+.genchemph .public-page-content h6,
+.genchemph-canvas h1,
+.genchemph-canvas h2,
+.genchemph-canvas h3,
+.genchemph-canvas h4,
+.genchemph-canvas h5,
+.genchemph-canvas h6 {
+  font-family: inherit !important;
+}
+
+.genchemph .cms-content .fs-4,
+.genchemph .public-page-content .fs-4,
+.genchemph-canvas .fs-4 {
+  font-size: 1.5rem !important;
+  line-height: 1.65 !important;
+}
+
+.genchemph .cms-content .fs-5,
+.genchemph .public-page-content .fs-5,
+.genchemph-canvas .fs-5 {
+  font-size: 1.25rem !important;
+  line-height: 1.65 !important;
+}
+
+.genchemph .cms-content .fs-6,
+.genchemph .public-page-content .fs-6,
+.genchemph-canvas .fs-6 {
+  font-size: 1rem !important;
+  line-height: 1.5 !important;
+}
+
+.genchemph .cms-content .display-4,
+.genchemph .public-page-content .display-4,
+.genchemph-canvas .display-4 {
+  font-size: clamp(2rem, 3.5vw, 2.75rem) !important;
+  font-weight: 500 !important;
+  line-height: 1.2 !important;
+}
+
+.genchemph .cms-content .display-6,
+.genchemph .public-page-content .display-6,
+.genchemph .cms-content h4.display-6,
+.genchemph .public-page-content h4.display-6,
+.genchemph-canvas .display-6,
+.genchemph-canvas h4.display-6 {
+  font-size: clamp(1.65rem, 2.5vw, 2.5rem) !important;
+  font-weight: 600 !important;
+  line-height: 1.25 !important;
+}
+
+.genchemph .cms-content .btn.fs-5,
+.genchemph .public-page-content .btn.fs-5,
+.genchemph-canvas .btn.fs-5 {
+  font-size: 1.25rem !important;
+}
+
+.genchemph .cms-content h1.text-main-red,
+.genchemph .public-page-content h1.text-main-red,
+.genchemph-canvas h1.text-main-red {
+  color: #f60000 !important;
+}

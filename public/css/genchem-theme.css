@@ -1,0 +1,1006 @@
+/* GenChem PH – matches genchemph reference (Canvas / drone demo) */
+
+:root {
+  --genchem-font: "Cooper", sans-serif;
+  --genchem-red: #9b2d1f;
+  --genchem-red-bright: #f60000;
+  --genchem-nav-highlight: #BE1A1A;
+}
+
+.genchemph,
+.genchemph * {
+  font-family: var(--genchem-font);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Single page scroll — beat main.css height:100% + flex min-vh trap */
+html,
+body {
+  height: auto;
+  min-height: 100%;
+  overflow-x: clip;
+}
+
+.genchemph.stretched {
+  display: block;
+  min-height: 100vh;
+  overflow: visible;
+}
+
+.genchemph #wrapper.about-us-page,
+.genchemph #wrapper.genchem-public-shell,
+.genchemph #wrapper.about-us-page main#content,
+.genchemph #wrapper.genchem-public-shell main#content,
+.genchemph main#content {
+  display: block;
+  height: auto;
+  max-height: none;
+  overflow: visible;
+  width: 100%;
+  max-width: 100%;
+  float: none;
+  clear: both;
+}
+
+.genchemph #wrapper.about-us-page > .cms-footer-content,
+.genchemph #wrapper.genchem-public-shell > .cms-footer-content {
+  width: 100%;
+  max-width: 100%;
+  clear: both;
+}
+
+/* Shared public page shell — same scroll/footer/content rules as About Us */
+.genchem-public-shell,
+.genchem-public-shell .cms-content,
+.genchem-public-shell .public-page-content {
+  overflow-x: clip;
+  max-width: 100%;
+}
+
+.genchem-hero-shell {
+  position: relative;
+  overflow: visible;
+}
+
+.genchem-hero-shell--overlay {
+  min-height: 100vh;
+  z-index: 0;
+}
+
+.genchem-hero-shell--subpage {
+  min-height: 100vh;
+}
+
+.genchem-main-with-header-offset {
+  padding-top: 96px;
+}
+
+.genchemph main.flex-grow-1 {
+  background: #ffffff;
+  position: relative;
+  z-index: 1;
+}
+
+/* Hide legacy decorative heading letters (e.g. "W" behind What's New) */
+.genchemph .heading-block::before,
+.genchemph .heading-block-start::before {
+  display: none !important;
+}
+
+/* ---- Floating pill header (drone.css + reference HTML) ---- */
+.genchemph #header {
+  --cnvs-header-height: 60px;
+  position: relative;
+  z-index: 999;
+  background: transparent;
+  border-bottom: 0;
+}
+
+.genchemph #header #header-wrap {
+  position: fixed !important;
+  top: 15px;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  pointer-events: none;
+  transition: top 0.25s ease, box-shadow 0.25s ease;
+}
+
+.genchemph #header.sticky-header #header-wrap {
+  top: 10px;
+}
+
+.genchemph #header.sticky-header.transparent-header.floating-header .container {
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.18);
+}
+
+.genchemph #header.genchem-header-static #header-wrap {
+  top: 12px;
+}
+
+.genchemph #header #header-wrap .container,
+.genchemph #header #header-wrap .container * {
+  pointer-events: auto;
+}
+
+.genchemph #header.transparent-header.floating-header .container {
+  background: #ffffff;
+  border-radius: 23rem;
+  max-width: calc(100% - 30px);
+  padding: 0 24px 0 28px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.14);
+}
+
+.genchemph #header .header-row,
+.genchemph .genchem-header-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  min-height: var(--cnvs-header-height);
+  gap: 0.25rem;
+}
+
+@media (min-width: 992px) {
+  .genchemph .genchem-header-row {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.25rem 1.25rem;
+  }
+
+  .genchemph #logo {
+    flex: 0 0 auto;
+    justify-self: unset;
+  }
+
+  .genchemph .genchem-header-nav {
+    flex: 0 1 auto;
+    order: unset;
+    justify-self: unset;
+    margin: 0 !important;
+  }
+
+  .genchemph .genchem-header-right {
+    flex: 0 0 auto;
+    order: unset;
+    justify-self: unset;
+    margin-left: auto !important;
+  }
+}
+
+.genchemph .genchem-header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+
+.genchemph .primary-menu {
+  flex: 0 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-width: 0;
+}
+
+.genchemph .genchem-header-nav .menu-container {
+  justify-content: flex-start;
+}
+
+.genchemph .header-misc {
+  order: unset;
+  margin-left: 0;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.genchemph #logo.gemchem-logo a {
+  display: inline-flex;
+  align-items: center;
+}
+
+.genchemph #logo.gemchem-logo img,
+.genchemph .genchem-brand-logo,
+.floating-logo__img,
+.floating-logo img {
+  display: block;
+  object-fit: contain;
+  background: transparent;
+}
+
+.genchemph #logo.gemchem-logo img,
+.genchemph .genchem-brand-logo {
+  height: var(--cnvs-header-height);
+  max-height: var(--cnvs-header-height);
+  max-width: 200px;
+  width: auto;
+  transition: transform 0.5s ease;
+}
+
+.genchemph #logo.gemchem-logo:hover img {
+  transform: rotate(360deg);
+}
+
+.genchemph #logo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.genchemph .primary-menu-trigger {
+  display: none;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.genchemph .cnvs-hamburger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  cursor: pointer;
+  color: var(--genchem-nav-highlight);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.genchemph .cnvs-hamburger:hover,
+.genchemph .primary-menu-trigger-active .cnvs-hamburger {
+  background: transparent;
+}
+
+.genchemph .cnvs-hamburger-box {
+  width: 22px;
+  height: 16px;
+  position: relative;
+  display: inline-block;
+}
+
+.genchemph .cnvs-hamburger-inner,
+.genchemph .cnvs-hamburger-inner::before,
+.genchemph .cnvs-hamburger-inner::after {
+  position: absolute;
+  left: 0;
+  width: 22px;
+  height: 2.5px;
+  background-color: var(--genchem-nav-highlight);
+  border-radius: 999px;
+  transition: transform 0.22s ease, opacity 0.22s ease, top 0.22s ease, bottom 0.22s ease;
+}
+
+.genchemph .cnvs-hamburger-inner {
+  top: 50%;
+  margin-top: -1.25px;
+}
+
+.genchemph .cnvs-hamburger-inner::before,
+.genchemph .cnvs-hamburger-inner::after {
+  content: "";
+}
+
+.genchemph .cnvs-hamburger-inner::before {
+  top: -7px;
+}
+
+.genchemph .cnvs-hamburger-inner::after {
+  bottom: -7px;
+}
+
+.genchemph .primary-menu-trigger-active .cnvs-hamburger-inner {
+  transform: rotate(45deg);
+}
+
+.genchemph .primary-menu-trigger-active .cnvs-hamburger-inner::before {
+  top: 0;
+  opacity: 0;
+}
+
+.genchemph .primary-menu-trigger-active .cnvs-hamburger-inner::after {
+  bottom: 0;
+  transform: rotate(-90deg);
+}
+
+.genchemph .primary-menu .menu-container {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 2px;
+}
+
+.genchemph .primary-menu .menu-item {
+  position: relative;
+  list-style: none;
+}
+
+.genchemph .primary-menu {
+  --cnvs-primary-menu-submenu-hover-font-weight: 400;
+}
+
+.genchemph .primary-menu .menu-link {
+  display: block;
+  padding: 12px 13px !important;
+  text-decoration: none !important;
+  font-family: "Cooper", var(--genchem-font);
+  font-weight: 400;
+  font-size: 1.25rem;
+  color: #333333 !important;
+  text-transform: none;
+  letter-spacing: 0;
+  transition: color 0.2s ease;
+}
+
+.genchemph .primary-menu .menu-link div {
+  display: block;
+}
+
+.genchemph .primary-menu .menu-container > .menu-item:hover > .menu-link,
+.genchemph .primary-menu .menu-container > .menu-item > .menu-link:hover {
+  color: var(--genchem-nav-highlight) !important;
+  font-weight: 400 !important;
+}
+
+.genchemph .primary-menu .menu-item.current > .menu-link,
+.genchemph .primary-menu .menu-link.active {
+  color: var(--genchem-nav-highlight) !important;
+  font-weight: 400 !important;
+}
+
+.genchemph .primary-menu .menu-container > .menu-item > .menu-link:active,
+.genchemph .primary-menu .sub-menu-container .menu-link:active {
+  color: var(--genchem-nav-highlight) !important;
+  font-weight: 400 !important;
+}
+
+.genchemph .primary-menu.with-arrows .menu-item:has(> .sub-menu-container) > .menu-link div::after {
+  content: "";
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-left: 8px;
+  vertical-align: middle;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid currentColor;
+}
+
+.genchemph .primary-menu .sub-menu-container {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  min-width: 220px;
+  list-style: none;
+  margin: 0;
+  padding: 8px 0;
+  background: #ffffff;
+  border: 0;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s ease;
+  z-index: 400;
+}
+
+.genchemph .primary-menu .menu-item:hover > .sub-menu-container {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.genchemph .primary-menu .sub-menu-container .menu-link {
+  color: #333333 !important;
+  padding: 10px 18px !important;
+  font-size: 0.95rem;
+  font-weight: 400 !important;
+  transition: color 0.2s ease;
+}
+
+.genchemph .primary-menu .sub-menu-container > .menu-item:hover > .menu-link,
+.genchemph .primary-menu .sub-menu-container .menu-link:hover,
+.genchemph .primary-menu .sub-menu-container .menu-link:focus-visible {
+  color: var(--genchem-nav-highlight) !important;
+  font-weight: 400 !important;
+  background: rgba(190, 26, 26, 0.08);
+}
+
+.genchemph .primary-menu .sub-menu-container .menu-link.active,
+.genchemph .primary-menu .sub-menu-container .menu-item.current > .menu-link {
+  color: var(--genchem-nav-highlight) !important;
+  font-weight: 400 !important;
+}
+
+.genchemph #top-call {
+  color: #333333;
+  gap: 0.5rem;
+}
+
+.genchemph #top-call .genchem-header-phones {
+  line-height: 1.15;
+}
+
+.genchemph #top-call .genchem-header-phone {
+  display: block;
+  font-family: "Cooper", var(--genchem-font);
+  font-size: 0.9375rem;
+  line-height: 1.25;
+  font-weight: 400;
+  color: #333333;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.2s ease;
+}
+
+.genchemph #top-call .genchem-header-phone:first-child {
+  margin-bottom: -4px;
+}
+
+.genchemph #top-call .genchem-header-phone:hover {
+  color: var(--genchem-nav-highlight);
+}
+
+.genchemph #top-call .calling-icon {
+  width: 36px;
+  height: auto;
+  object-fit: contain;
+  flex-shrink: 0;
+  transition: transform 0.5s ease;
+}
+
+.genchemph div#top-call:hover img.py-2.calling-icon {
+  transform: rotate(360deg);
+  transition: transform 0.5s ease;
+  animation-iteration-count: infinite;
+}
+
+/* Hero CTA – red default; dark pill + white border on hover */
+.genchemph .genchem-hero-cta {
+  background: #f60000 !important;
+  color: #ffffff !important;
+  border: 2px solid transparent !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18) !important;
+  font-weight: 300 !important;
+  line-height: 1.25 !important;
+}
+
+.genchemph .genchem-hero-cta:hover,
+.genchemph .genchem-hero-cta:focus,
+.genchemph .genchem-hero-cta:focus-visible {
+  background: rgba(0, 0, 0, 0.55) !important;
+  color: #ffffff !important;
+  border-color: #ffffff !important;
+  outline: 2px solid #ffffff;
+  outline-offset: 3px;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Page hero sits under floating header */
+.genchem-page-banner {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  margin-top: 0;
+  background: #e9ecef;
+}
+
+.genchem-page-banner__slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: opacity 0.9s ease-in-out;
+}
+
+.genchem-page-banner__overlay {
+  display: none;
+}
+
+.public-page-content {
+  margin-top: 0;
+}
+
+.public-page-content .about-us-page {
+  margin-top: 0;
+}
+
+.genchemph .genchem-mobile-menu-backdrop {
+  display: none;
+}
+
+@media (max-width: 991px) {
+  .genchemph #header #header-wrap {
+    top: 10px;
+  }
+
+  .genchemph #header.transparent-header.floating-header .container {
+    border-radius: 16px;
+    max-width: calc(100% - 16px);
+    padding: 0 12px 0 16px;
+  }
+
+  .genchemph #header .header-row,
+  .genchemph .genchem-header-row {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    min-height: 64px;
+  }
+
+  .genchemph #logo.gemchem-logo img {
+    max-height: 48px;
+    height: 48px;
+  }
+
+  .genchemph .genchem-header-right {
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+
+  .genchemph .primary-menu-trigger {
+    display: flex;
+    margin-left: 0;
+  }
+
+  .genchemph .header-misc {
+    display: none !important;
+  }
+
+  .genchemph .genchem-mobile-menu-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 997;
+    cursor: pointer;
+  }
+
+  .genchemph nav.genchem-header-nav.primary-menu {
+    display: none;
+    position: fixed !important;
+    left: 12px;
+    right: 12px;
+    top: 78px;
+    margin: 0;
+    padding: 8px 0;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+    max-height: calc(100vh - 96px);
+    overflow-y: auto;
+    z-index: 998;
+    flex: none;
+    order: unset;
+  }
+
+  body.primary-menu-open .genchemph nav.genchem-header-nav.primary-menu {
+    display: block !important;
+  }
+
+  .genchemph .genchem-header-nav .menu-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .genchemph .genchem-header-nav .menu-link {
+    color: #333333 !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    font-size: 1.05rem;
+    font-weight: 400 !important;
+    transition: color 0.2s ease;
+  }
+
+  .genchemph .genchem-header-nav .menu-container > .menu-item:last-child > .menu-link {
+    border-bottom: 0;
+  }
+
+  .genchemph .genchem-header-nav .menu-container > .menu-item:hover > .menu-link,
+  .genchemph .genchem-header-nav .menu-container > .menu-item > .menu-link:hover,
+  .genchemph .genchem-header-nav .menu-container > .menu-item > .menu-link:active,
+  .genchemph .genchem-header-nav .sub-menu-container > .menu-item:hover > .menu-link,
+  .genchemph .genchem-header-nav .sub-menu-container .menu-link:hover,
+  .genchemph .genchem-header-nav .sub-menu-container .menu-link:active {
+    color: var(--genchem-nav-highlight) !important;
+    font-weight: 400 !important;
+  }
+
+  .genchemph .genchem-header-nav .menu-item.current > .menu-link,
+  .genchemph .genchem-header-nav .menu-link.active {
+    color: var(--genchem-nav-highlight) !important;
+    font-weight: 400 !important;
+  }
+
+  .genchemph .genchem-header-nav .sub-menu-container {
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    display: none;
+    box-shadow: none;
+    background: rgba(0, 0, 0, 0.03);
+    border-radius: 0;
+    padding: 0;
+    margin: 0;
+  }
+
+  .genchemph .genchem-header-nav .menu-item.open > .sub-menu-container {
+    display: block;
+  }
+
+  .genchemph .genchem-header-nav .sub-menu-container .menu-link {
+    padding-left: 32px !important;
+    color: #555555 !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  }
+
+  .genchemph .genchem-header-nav .sub-menu-container .menu-link.active {
+    color: var(--genchem-nav-highlight) !important;
+  }
+}
+
+/* ---- GenChem page theme styles ---- */
+.about-us-low[style*="background-image"]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.68);
+}
+
+.about-us-page .about-us-low:not([style*="background-image"]):not(.home-intro-hero):not(#iz2p)::before {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+}
+
+.about-us-low[style*="background-image"] .about-us-high,
+.home-intro-hero .about-us-high,
+#iz2p .about-us-high {
+  position: relative;
+  z-index: 2;
+  color: white;
+}
+
+.about-us-page .about-us-high {
+  position: relative;
+  z-index: 2;
+  color: inherit;
+}
+
+.genchemph .nav-tabs .nav-link .text-uppercase {
+  background-color: #ffffff;
+  padding: 10px;
+  min-width: 210px;
+  border-radius: 20px;
+  color: #9b2d1f;
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  border: solid 4px #9b2d1f;
+}
+
+.genchemph .nav-tabs .nav-link.active .text-uppercase {
+  background-color: #9b2d1f;
+  padding: 10px;
+  min-width: 210px;
+  border-radius: 20px;
+  color: white;
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  border: solid 4px #9b2d1f;
+}
+
+#demo-drone-tab .nav-item .nav-link.active::after {
+  border-bottom: 10px solid #9b2d1f !important;
+}
+
+#demo-drone-tab .nav-link {
+  cursor: pointer;
+  border: 0;
+  background: transparent;
+}
+
+#gc-tab-content > .tab-pane:not(.show):not(.active) {
+  display: none;
+}
+
+#gc-tab-content > .tab-pane.active {
+  display: block;
+}
+
+/* Canvas CMS buttons (GrapesJS Learn More etc.) */
+.cms-content .button,
+.public-page-content .button {
+  display: inline-block;
+  cursor: pointer;
+  padding: 0.625rem 1.625rem;
+  font-family: "Cooper", var(--genchem-font, sans-serif);
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.6;
+  text-align: center;
+  text-decoration: none !important;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  transition: background 0.2s ease, color 0.2s ease, outline-offset 0.1s ease;
+}
+
+.cms-content .button.rounded,
+.public-page-content .button.rounded {
+  border-radius: 999px;
+}
+
+.cms-content .button.button-light,
+.public-page-content .button.button-light {
+  background-color: rgba(255, 255, 255, 0.92);
+  color: #212529 !important;
+}
+
+.cms-content .button.button-light:hover,
+.cms-content .button.button-light:focus,
+.cms-content .button.button-light:focus-visible,
+.public-page-content .button.button-light:hover,
+.public-page-content .button.button-light:focus,
+.public-page-content .button.button-light:focus-visible {
+  background-color: #9b2d1f !important;
+  color: #ffffff !important;
+}
+
+.cms-content .button.button-light:hover.text-dark,
+.cms-content .button.button-light:focus.text-dark,
+.public-page-content .button.button-light:hover.text-dark,
+.public-page-content .button.button-light:focus.text-dark,
+.cms-content .button.bg-white:hover,
+.cms-content .button.bg-white:focus,
+.public-page-content .button.bg-white:hover,
+.public-page-content .button.bg-white:focus {
+  color: #ffffff !important;
+}
+
+.cms-content .button.button-offset:is(:hover, :focus),
+.public-page-content .button.button-offset:is(:hover, :focus) {
+  outline: 2px solid #ffffff;
+  outline-offset: 3px;
+}
+
+.cms-content .bg-dark-red .text-white,
+.cms-content .bg-dark-red p,
+.cms-content .bg-dark-red h1,
+.cms-content .bg-dark-red h2,
+.cms-content .bg-dark-red h3,
+.public-page-content .bg-dark-red .text-white,
+.public-page-content .bg-dark-red p,
+.public-page-content .bg-dark-red h1,
+.public-page-content .bg-dark-red h2,
+.public-page-content .bg-dark-red h3,
+.cms-footer-content .bg-dark-red .text-white,
+.cms-footer-content .bg-dark-red p,
+.cms-footer-content .bg-dark-red h1,
+.cms-footer-content .bg-dark-red h2,
+.cms-footer-content .bg-dark-red h3,
+.cms-footer-content .bg-dark-red h4 {
+  color: #ffffff !important;
+}
+
+.genchemph #demo-drone-tab .nav-link {
+  cursor: pointer;
+  border: 0;
+  background: transparent;
+}
+
+.genchemph #demo-drone-tab .nav-link h3 {
+  background-color: #ffffff;
+  padding: 10px;
+  min-width: 210px;
+  border-radius: 20px;
+  color: #9b2d1f;
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  border: solid 4px #9b2d1f;
+  pointer-events: none;
+}
+
+.genchemph #demo-drone-tab .nav-link.active h3 {
+  background-color: #9b2d1f;
+  color: #ffffff;
+}
+
+.bg-dark-red {
+  background-color: #9b2d1f;
+}
+
+.bg-main-red {
+  background-color: #f60000;
+}
+
+.text-main-red {
+  color: #f60000;
+}
+
+.text-dark-red {
+  color: #9b2d1f;
+}
+
+.hover-scale:not(.active):hover {
+  transform: scale(1.02);
+  transition: ease 0.4s all;
+}
+
+/* Trust bar (home page) sits directly above the CMS footer */
+.public-page-content .footer-stick.dark,
+.cms-content .footer-stick.dark {
+  background-color: #212529 !important;
+  color: #ffffff !important;
+  width: 100%;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.public-page-content .footer-stick.dark span,
+.cms-content .footer-stick.dark span,
+.public-page-content .footer-stick.dark i,
+.cms-content .footer-stick.dark i {
+  color: #ffffff !important;
+}
+
+/* Seam bar + logo floating on top of banner (all pages) */
+.floating-logo {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 80px;
+  background-color: #ffffff;
+  z-index: 50;
+  overflow: visible;
+  flex-shrink: 0;
+}
+
+.floating-logo__inner {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 80px;
+  overflow: visible;
+}
+
+.floating-logo__mark,
+.floating-logo .position-absolute {
+  position: absolute;
+  z-index: 51;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: auto;
+  background: transparent;
+}
+
+.floating-logo--home .floating-logo__mark,
+.floating-logo--home .position-absolute,
+.floating-logo:not(.floating-logo--subpage) .position-absolute {
+  top: -23px;
+}
+
+.floating-logo--subpage .floating-logo__mark {
+  top: -122px;
+}
+
+.floating-logo__img,
+.floating-logo img {
+  display: block;
+  width: auto;
+  max-width: 250px;
+  height: auto;
+  object-fit: contain;
+  background: transparent !important;
+}
+
+.about-us-page .about-us-low {
+  position: relative;
+}
+
+.about-us-page .width-img-control .about-us-high .text-dark,
+.about-us-page .width-img-control .text-dark {
+  color: #333333 !important;
+}
+
+/* ----------------------------------------------------------------
+   Go To Top — genchemph #gotoTop (rounded red circle, bottom-right)
+----------------------------------------------------------------- */
+#gotoTop,
+.genchem-goto-top {
+  --cnvs-gotoTop-size: 2rem;
+  --cnvs-gotoTop-bg: #9b2d1f;
+  --cnvs-gotoTop-hover-color: #f60000;
+  --cnvs-gotoTop-icon-color: #ffffff;
+  --cnvs-gotoTop-position-boxed-right: 30px;
+  --cnvs-gotoTop-position-boxed-bottom: 50px;
+
+  position: fixed;
+  top: auto;
+  left: auto;
+  right: var(--cnvs-gotoTop-position-boxed-right);
+  bottom: var(--cnvs-gotoTop-position-boxed-bottom);
+  z-index: -999;
+  width: var(--cnvs-gotoTop-size);
+  height: var(--cnvs-gotoTop-size);
+  padding: 0;
+  border: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--cnvs-gotoTop-bg);
+  color: var(--cnvs-gotoTop-icon-color);
+  border-radius: 50%;
+  cursor: pointer;
+  opacity: 0;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+  transition: background-color 0.2s linear, opacity 0.4s ease, transform 0.2s ease;
+}
+
+.genchem-goto-top__icon {
+  width: 1rem;
+  height: 1rem;
+  display: block;
+}
+
+.gototop-active #gotoTop,
+body.gototop-active .genchem-goto-top {
+  z-index: 599;
+  opacity: 1;
+}
+
+.genchemph.stretched #gotoTop,
+.genchemph.stretched .genchem-goto-top {
+  right: var(--cnvs-gotoTop-position-boxed-right);
+  bottom: var(--cnvs-gotoTop-position-boxed-bottom);
+}
+
+#gotoTop:hover,
+#gotoTop:focus-visible,
+.genchem-goto-top:hover,
+.genchem-goto-top:focus-visible {
+  background-color: var(--cnvs-gotoTop-hover-color);
+  outline: none;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 767px) {
+  #gotoTop,
+  .genchem-goto-top {
+    --cnvs-gotoTop-position-boxed-right: 20px;
+    --cnvs-gotoTop-position-boxed-bottom: 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #gotoTop,
+  .genchem-goto-top {
+    transition: none;
+  }
+}

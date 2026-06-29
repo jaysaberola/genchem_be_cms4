@@ -1,0 +1,129 @@
+/* Home intro hero (#iz2p) — dark overlay + crisp white text (loads after CMS styles on home) */
+
+.cms-content .about-us-low[style*="background-image"]::before,
+.cms-content .home-intro-hero#iz2p::before,
+.cms-content #iz2p.home-intro-hero::before,
+.cms-content #iz2p.about-us-low::before,
+.public-page-content .about-us-low[style*="background-image"]::before,
+.public-page-content .home-intro-hero#iz2p::before,
+.public-page-content #iz2p.home-intro-hero::before,
+.public-page-content #iz2p.about-us-low::before,
+.about-us-low[style*="background-image"]::before,
+.home-intro-hero#iz2p::before,
+#iz2p.home-intro-hero::before,
+#iz2p.about-us-low::before {
+  content: "" !important;
+  display: block !important;
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.68) !important;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.cms-content .about-us-low[style*="background-image"] .about-us-high,
+.cms-content .home-intro-hero .about-us-high,
+.cms-content #iz2p .about-us-high,
+.public-page-content .about-us-low[style*="background-image"] .about-us-high,
+.public-page-content .home-intro-hero .about-us-high,
+.public-page-content #iz2p .about-us-high,
+#iz2p .about-us-high {
+  position: relative;
+  z-index: 2;
+  color: #ffffff !important;
+}
+
+.cms-content .about-us-low[style*="background-image"] .about-us-high p,
+.cms-content .about-us-low[style*="background-image"] .about-us-high li,
+.cms-content .home-intro-hero .about-us-high p,
+.cms-content .home-intro-hero .about-us-high li,
+.cms-content #iz2p .about-us-high p,
+.cms-content #iz2p .about-us-high li,
+.cms-content #iz2p ul li,
+.public-page-content .about-us-low[style*="background-image"] .about-us-high p,
+.public-page-content .about-us-low[style*="background-image"] .about-us-high li,
+.public-page-content .home-intro-hero .about-us-high p,
+.public-page-content .home-intro-hero .about-us-high li,
+.public-page-content #iz2p .about-us-high p,
+.public-page-content #iz2p .about-us-high li,
+.public-page-content #iz2p ul li,
+#iz2p .about-us-high p,
+#iz2p .about-us-high li,
+#iz2p ul li,
+#iz2p .text-light {
+  color: #ffffff !important;
+}
+
+.cms-content .about-us-low[style*="background-image"] .bi-check2-circle,
+.cms-content .home-intro-hero .bi-check2-circle,
+.cms-content #iz2p .bi-check2-circle,
+.public-page-content .about-us-low[style*="background-image"] .bi-check2-circle,
+.public-page-content .home-intro-hero .bi-check2-circle,
+.public-page-content #iz2p .bi-check2-circle,
+#iz2p .bi-check2-circle {
+  color: #ffffff !important;
+}
+
+/* Read More — keep dark text on white; white text on maroon hover */
+.cms-content #iz2p a.button.button-light,
+.cms-content #iz2p a.button.bg-white,
+.public-page-content #iz2p a.button.button-light,
+.public-page-content #iz2p a.button.bg-white,
+#iz2p a.button.button-light,
+#iz2p a.button.bg-white {
+  background-color: #ffffff !important;
+  color: #212529 !important;
+  border: 0 !important;
+}
+
+.cms-content #iz2p a.button.button-light:hover,
+.cms-content #iz2p a.button.button-light:focus,
+.cms-content #iz2p a.button.button-light:focus-visible,
+.cms-content #iz2p a.button.bg-white:hover,
+.cms-content #iz2p a.button.bg-white:focus,
+.public-page-content #iz2p a.button.button-light:hover,
+.public-page-content #iz2p a.button.button-light:focus,
+.public-page-content #iz2p a.button.bg-white:hover,
+.public-page-content #iz2p a.button.bg-white:focus,
+#iz2p a.button.button-light:hover,
+#iz2p a.button.button-light:focus,
+#iz2p a.button.bg-white:hover,
+#iz2p a.button.bg-white:focus {
+  background-color: #9b2d1f !important;
+  color: #ffffff !important;
+  outline-color: #ffffff !important;
+}
+
+#iz2p a.button:hover,
+#iz2p a.button:focus,
+#iz2p a.button:hover *,
+#iz2p a.button:focus * {
+  color: #ffffff !important;
+}
+
+/* Trust bar above footer — white text + icons */
+.cms-content .footer-stick.dark,
+.public-page-content .footer-stick.dark,
+.footer-stick.dark {
+  background-color: #212529 !important;
+  color: #ffffff !important;
+}
+
+.cms-content .footer-stick.dark span,
+.cms-content .footer-stick.dark i,
+.public-page-content .footer-stick.dark span,
+.public-page-content .footer-stick.dark i,
+.footer-stick.dark span,
+.footer-stick.dark i {
+  color: #ffffff !important;
+}
+
+.cms-content .footer-stick.dark span,
+.footer-stick.dark i,
+.footer-stick.dark .fa-solid {
+  color: #ffffff !important;
+}
+
+.footer-stick.dark .fa-shield-halved::before {
+  display: inline-block;
+}
