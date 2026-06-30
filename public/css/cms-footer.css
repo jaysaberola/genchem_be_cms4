@@ -258,15 +258,32 @@
   display: block;
 }
 
-/* Copyright bar — GrapesJS/CMS styles win; these are fallbacks only */
+/* Copyright bar — dark strip (beats theme body:not(.dark) #copyrights { background: #eee }) */
 .cms-footer-content #footer.dark #copyrights,
+.cms-footer-content #footer #copyrights,
 .cms-footer-content #copyrights,
 .genchemph-canvas #footer.dark #copyrights,
+.genchemph-canvas #footer #copyrights,
 .genchemph-canvas #copyrights,
 .genchemph .cms-footer-content #footer.dark #copyrights,
+.genchemph .cms-footer-content #footer #copyrights,
 .genchemph .cms-footer-content #copyrights {
   padding: 0;
   width: 100%;
+  background-color: #212529 !important;
+  border-top: 0;
+}
+
+.cms-footer-content #copyrights p,
+.cms-footer-content #copyrights small,
+.cms-footer-content #footer #copyrights p,
+.cms-footer-content #footer #copyrights small,
+.genchemph-canvas #copyrights p,
+.genchemph-canvas #copyrights small,
+.genchemph .cms-footer-content #copyrights p,
+.genchemph .cms-footer-content #copyrights small {
+  color: rgba(255, 255, 255, 0.85) !important;
+  margin: 0;
 }
 
 .cms-footer-content #copyrights .container,

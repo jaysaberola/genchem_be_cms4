@@ -21,7 +21,7 @@ class GenchemphDesignSeeder extends Seeder
     {
         $this->sourceRoot = env(
             'GENCHEMPH_SOURCE_PATH',
-            'C:\\Users\\jamsaberola\\Downloads\\genchemph\\genchemph'
+            'C:\\Users\\saber\\Downloads\\genchemph\\genchemph'
         );
 
         if (!is_dir($this->sourceRoot)) {
@@ -43,6 +43,10 @@ class GenchemphDesignSeeder extends Seeder
             $html = $this->readFile($file);
             $contents = $this->extractContentSection($html);
             $contents = $this->normalizeHtml($contents);
+
+            if ($slug === 'home') {
+                $contents = $this->patchHomeContent($contents);
+            }
 
             if ($slug === 'contact-us') {
                 $contents .= "\n" . $this->extractContactCopyright($html);
@@ -175,7 +179,7 @@ class GenchemphDesignSeeder extends Seeder
         $html = preg_replace('/\ssrc=(["\'])data:[^"\']*\1/i', '', $html);
         $html = preg_replace('/\scontrols(=(["\'])[^"\']*\2)?/i', '', $html);
 
-        $html = preg_replace('/<div\s+id="copyrights"[^>]*>/i', '<div id="copyrights" class="p-0">', $html);
+        $html = preg_replace('/<div\s+id="copyrights"[^>]*>/i', '<div id="copyrights" class="p-0 dark bg-dark">', $html);
 
         $html = preg_replace(
             '/<!--\s*floating logo\s*-->[\s\S]*?<!--\s*floating logo\s*-->[\s\S]*?<\/div>\s*<\/div>\s*<\/div>/i',
@@ -189,6 +193,50 @@ class GenchemphDesignSeeder extends Seeder
         );
 
         return $html;
+    }
+
+    /** Home-only: intro hero id, product tabs, drone video source (genchemph reference). */
+    private function patchHomeContent(string $html): string
+    {
+        $html = preg_replace(
+            '/<div class="position-relative py-6 about-us-low"/',
+            '<div id="iz2p" class="position-relative py-6 about-us-low home-intro-hero"',
+            $html,
+            1
+        );
+
+        $html = str_replace(
+            'id="canvas-tab-1" data-genchem-tab="pvc-resins"',
+            'id="canvas-tab-1" data-genchem-tab="pvc-resins" type="button" onclick="gcSwitchTab(1)"',
+            $html
+        );
+        $html = str_replace(
+            'id="canvas-tab-2" data-genchem-tab="pvc-stabilizers"',
+            'id="canvas-tab-2" data-genchem-tab="pvc-stabilizers" type="button" onclick="gcSwitchTab(2)"',
+            $html
+        );
+
+        $html = preg_replace(
+            '/<source\s+src=(["\'])[^"\']*video\.mp4\1/i',
+            '<source src="/images/genchemph/video.mp4"',
+            $html
+        );
+
+        $html = str_replace(
+            '<i class="me-3 fs-4 bi-shield-fill-check"></i>',
+            '<i class="me-3 fs-4 fa-solid fa-shield-halved" aria-hidden="true"></i>',
+            $html
+        );
+
+        if (!str_contains($html, 'class="video-wrap')) {
+            return $html;
+        }
+
+        return preg_replace(
+            '/<video([^>]*?)>/i',
+            '<video$1 muted autoplay loop playsinline preload="auto" poster="/images/genchemph/banners/HOMEPAGE_ABOUT_US.png">',
+            $html
+        );
     }
 
     private function buildPageStyles(string $slug, string $html): string

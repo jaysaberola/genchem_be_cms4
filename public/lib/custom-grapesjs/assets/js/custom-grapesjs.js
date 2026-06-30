@@ -105,8 +105,7 @@ const editor = grapesjs.init({
 
     canvas: {
         styles: [
-            "https://use.typekit.net/jpx0kib.css",
-            app_url + "/css/cooper-fonts.css",
+            app_url + "/css/cooper-fonts.css?v=3",
             app_url + "/theme/css/bootstrap.css",
             app_url + "/theme/css/style.css",
             app_url + "/theme/css/swiper.css",
@@ -124,12 +123,12 @@ const editor = grapesjs.init({
             app_url + "/css/genchemph-design.css",
             app_url + "/css/genchemph-about-us.css",
             app_url + "/css/genchemph-products.css?v=10",
-            app_url + "/css/genchemph-home-intro.css",
+            app_url + "/css/genchemph-home-intro.css?v=5",
             app_url + "/css/genchemph-contact-us.css",
             app_url + "/css/genchem-theme.css",
-            app_url + "/css/genchemph-grapesjs.css",
-            app_url + "/css/genchemph-cms-typography.css",
-            app_url + "/css/cms-footer.css?v=7",
+            app_url + "/css/genchemph-grapesjs.css?v=3",
+            app_url + "/css/genchemph-cms-typography.css?v=3",
+            app_url + "/css/cms-footer.css?v=8",
         ],
         scripts: [
             app_url + "/theme/js/slick.js",
@@ -1113,6 +1112,49 @@ function initGenchemProductCards(root) {
         }
     });
 }
+
+/** Home "Our Products" tabs — same handler as public frontend (onclick in CMS HTML). */
+function gcSwitchTab(tab) {
+    const doc = editor.Canvas.getDocument();
+    if (!doc) return;
+
+    const tabIndex = typeof tab === "number" ? tab : parseInt(tab, 10);
+    if (!tabIndex || tabIndex < 1) return;
+
+    const tabSlug = tabIndex === 1 ? "pvc-resins" : tabIndex === 2 ? "pvc-stabilizers" : "tab-" + tabIndex;
+    const tabId = tabSlug;
+
+    const tabContent =
+        doc.getElementById("gc-tab-content") ||
+        doc.querySelector(".tab-content");
+
+    if (tabContent) {
+        tabContent.querySelectorAll(".tab-pane").forEach((pane) => {
+            pane.classList.remove("show", "active");
+        });
+
+        const target =
+            doc.getElementById(tabId) ||
+            doc.getElementById("tab-" + tabIndex) ||
+            tabContent.querySelector("#" + tabId);
+
+        if (target) {
+            target.classList.add("show", "active");
+        }
+    }
+
+    const tabNav = doc.getElementById("demo-drone-tab");
+    if (tabNav) {
+        const links = tabNav.querySelectorAll(".nav-item > .nav-link, .nav-item > button.nav-link");
+        links.forEach((link, index) => {
+            const isActive = index + 1 === tabIndex;
+            link.classList.toggle("active", isActive);
+            link.setAttribute("aria-selected", isActive ? "true" : "false");
+        });
+    }
+}
+
+window.gcSwitchTab = gcSwitchTab;
 
 function setupGenchemCanvas() {
     const doc = editor.Canvas.getDocument();

@@ -2,6 +2,7 @@
 
 .genchemph .cms-content,
 .genchemph .public-page-content,
+.genchemph .about-us-page #content,
 .genchemph-canvas .cms-content,
 .genchemph-canvas .public-page-content,
 .genchemph-canvas-root {
@@ -46,13 +47,41 @@
 .genchemph .public-page-content h4,
 .genchemph .public-page-content h5,
 .genchemph .public-page-content h6,
+.genchemph .about-us-page #content h1,
+.genchemph .about-us-page #content h2,
+.genchemph .about-us-page #content h3,
+.genchemph .about-us-page #content h4,
+.genchemph .about-us-page #content h5,
+.genchemph .about-us-page #content h6,
 .genchemph-canvas h1,
 .genchemph-canvas h2,
 .genchemph-canvas h3,
 .genchemph-canvas h4,
 .genchemph-canvas h5,
-.genchemph-canvas h6 {
-  font-family: inherit !important;
+.genchemph-canvas h6,
+.genchemph .cms-content .btn,
+.genchemph .public-page-content .btn,
+.genchemph .about-us-page #content .btn,
+.genchemph .cms-content .nav-link,
+.genchemph .public-page-content .nav-link,
+.genchemph .about-us-page #content .nav-link {
+  font-family: "Cooper", sans-serif !important;
+}
+
+.genchemph .cms-content .display-3,
+.genchemph .public-page-content .display-3,
+.genchemph .about-us-page #content .display-3,
+.genchemph-canvas .display-3 {
+  font-size: clamp(2.5rem, 4vw, 4rem) !important;
+  font-weight: 500 !important;
+  line-height: 1.15 !important;
+}
+
+.genchemph .cms-content .fs-3,
+.genchemph .public-page-content .fs-3,
+.genchemph-canvas .fs-3 {
+  font-size: 1.75rem !important;
+  line-height: 1.5 !important;
 }
 
 .genchemph .cms-content .fs-4,

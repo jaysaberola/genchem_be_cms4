@@ -15,8 +15,6 @@ class GenchemphBannerSeeder extends Seeder
 {
     public function run(): void
     {
-        $frontend = rtrim(env('FRONTEND_URL', 'http://127.0.0.1:3000'), '/');
-
         $map = [
             'home'       => ['type' => 'main_banner', 'name' => 'Home Banner',       'image' => 'banners/home_header.png'],
             'about-us'   => ['type' => 'sub_banner',  'name' => 'About Us Banner',   'image' => 'banners/about_us.png'],
@@ -60,7 +58,8 @@ class GenchemphBannerSeeder extends Seeder
                     'title'       => $page->name,
                     'description' => '',
                     'alt'         => $page->name,
-                    'image_path'  => "{$frontend}/images/genchemph/{$cfg['image']}",
+                    // Site-relative path — survives zip/deploy; frontend resolves via /images/
+                    'image_path'  => "/images/genchemph/{$cfg['image']}",
                     'button_text' => '',
                     'url'         => '',
                     'user_id'     => 1,

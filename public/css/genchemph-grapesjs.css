@@ -1,8 +1,14 @@
-/* GrapesJS Manage Pages canvas — match public genchemph preview */
+/* GrapesJS canvas + public frontend — identical Cooper typography */
 
 .genchemph-canvas-root,
 .genchemph-canvas,
-.genchemph-canvas * {
+.genchemph-canvas *,
+.genchemph .about-us-page #content,
+.genchemph .about-us-page #content *,
+.genchemph .about-us-page .cms-content,
+.genchemph .about-us-page .cms-content *,
+.genchemph .about-us-page .public-page-content,
+.genchemph .about-us-page .public-page-content * {
   font-family: "Cooper", sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

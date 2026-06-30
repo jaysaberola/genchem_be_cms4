@@ -144,14 +144,21 @@
 }
 
 .public-page-content #footer #copyrights,
-.cms-content #footer #copyrights {
-  background-color: #212529;
+.cms-content #footer #copyrights,
+.cms-footer-content #footer #copyrights,
+.cms-footer-content #copyrights,
+.genchemph .cms-footer-content #copyrights {
+  background-color: #212529 !important;
 }
 
 .public-page-content #footer #copyrights p,
 .cms-content #footer #copyrights p,
 .public-page-content #footer #copyrights small,
-.cms-content #footer #copyrights small {
+.cms-content #footer #copyrights small,
+.cms-footer-content #copyrights p,
+.cms-footer-content #copyrights small,
+.genchemph .cms-footer-content #copyrights p,
+.genchemph .cms-footer-content #copyrights small {
   color: rgba(255, 255, 255, 0.85) !important;
   margin: 0;
 }

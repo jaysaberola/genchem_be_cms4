@@ -80,23 +80,7 @@
         </li> 
     @endif
 
-    <li class="nav-item with-sub @if (request()->routeIs('products*') || request()->routeIs('product-categories*')) active show @endif">
-        <a href="" class="nav-link"><i data-feather="shopping-bag"></i> <span>Products</span></a>
-        <ul>
-            <li @if (\Route::current()->getName() == 'products.index' || \Route::current()->getName() == 'products.edit') class="active" @endif><a href="{{ route('products.index') }}">Manage Products</a></li>
-            <li @if (\Route::current()->getName() == 'products.create') class="active" @endif><a href="{{ route('products.create') }}">Create a Product</a></li>
-            <li @if (\Route::current()->getName() == 'product-categories.index' || \Route::current()->getName() == 'product-categories.edit') class="active" @endif><a href="{{ route('product-categories.index') }}">Manage Brands</a></li>
-            <li @if (\Route::current()->getName() == 'product-categories.create') class="active" @endif><a href="{{ route('product-categories.create') }}">Create Brand</a></li>
-        </ul>
-    </li>
-
-    <li class="nav-item with-sub @if (request()->routeIs('testimonials*')) active show @endif">
-        <a href="" class="nav-link"><i data-feather="message-square"></i> <span>Testimonials</span></a>
-        <ul>
-            <li @if (\Route::current()->getName() == 'testimonials.index' || \Route::current()->getName() == 'testimonials.edit') class="active" @endif><a href="{{ route('testimonials.index') }}">Manage Testimonials</a></li>
-            <li @if (\Route::current()->getName() == 'testimonials.create') class="active" @endif><a href="{{ route('testimonials.create') }}">Add a Testimonial</a></li>
-        </ul>
-    </li>
+    {{-- Products & Testimonials hidden for GenChem PH CMS --}}
 
     @if (auth()->user()->is_an_admin() || auth()->user()->has_access_to('settings'))
         <li class="nav-item with-sub @if (request()->routeIs('account*') || request()->routeIs('website-settings*') || request()->routeIs('audit*')) active show @endif">

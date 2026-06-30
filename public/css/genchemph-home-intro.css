@@ -127,3 +127,38 @@
 .footer-stick.dark .fa-shield-halved::before {
   display: inline-block;
 }
+
+/* GrapesJS sometimes saves broken icon <img> placeholders — hide if any remain */
+.footer-stick.dark img {
+  display: none !important;
+}
+
+/* Home “Our Products” category cards (Films / Cables / Packaging) */
+.public-page-content .hover-scale .card-body,
+.cms-content .hover-scale .card-body,
+.genchemph-canvas .hover-scale .card-body {
+  position: relative;
+  overflow: visible;
+}
+
+.public-page-content .hover-scale .card-body > a.position-absolute,
+.cms-content .hover-scale .card-body > a.position-absolute,
+.genchemph-canvas .hover-scale .card-body > a.position-absolute {
+  z-index: 2;
+  line-height: 0;
+}
+
+.public-page-content .hover-scale .card-body img,
+.cms-content .hover-scale .card-body img,
+.genchemph-canvas .hover-scale .card-body img {
+  display: block !important;
+  max-width: 100%;
+  height: auto;
+}
+
+.footer-stick.dark i.fa-solid {
+  display: inline-block;
+  width: 1.25em;
+  text-align: center;
+  flex-shrink: 0;
+}
