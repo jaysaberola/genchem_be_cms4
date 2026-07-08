@@ -21,6 +21,7 @@ use Response;
 use Storage;
 use Auth;
 use DB;
+use Illuminate\Support\Facades\File;
 
 class ArticleController extends Controller
 {
@@ -102,8 +103,12 @@ class ArticleController extends Controller
 
         $newData['slug'] = ModelHelper::convert_to_slug(Article::class, $newData['name']);
         $newData['status'] = $request->has('visibility') ? 'Published' : 'Private';
-        $newData['image_url'] = $request->hasFile('news_image') ? FileHelper::move_to_folder($request->file('news_image'), 'news_image')['url'] : null;
-        $newData['thumbnail_url'] = $request->hasFile('news_thumbnail') ? FileHelper::move_to_folder($request->file('news_thumbnail'), 'news_image/news_thumbnail')['url'] : null;
+        $newData['image_url'] = $request->hasFile('news_image')
+            ? '/'.ltrim(FileHelper::move_to_product_file_folder($request->file('news_image'), 'news_image')['url'], '/')
+            : null;
+        $newData['thumbnail_url'] = $request->hasFile('news_thumbnail')
+            ? '/'.ltrim(FileHelper::move_to_product_file_folder($request->file('news_thumbnail'), 'news_image/news_thumbnail')['url'], '/')
+            : null;
         $newData['is_featured'] = Article::can_set_featured() && $request->has('is_featured');
         $newData['user_id'] = auth()->id();
 
@@ -140,18 +145,24 @@ class ArticleController extends Controller
         $updateData['user_id'] = auth()->id();
 
         if (isset($request->delete_image) || $request->hasFile('news_image')) {
-            FileHelper::delete_file($news->get_image_url_storage_path());
+            $this->deleteNewsMediaFile((string) ($news->getRawOriginal('image_url') ?? ''));
             $updateData['image_url'] = null;
             if ($request->hasFile('news_image')) {
-                $updateData['image_url'] = FileHelper::move_to_folder($request->file('news_image'), 'news_image')['url'];
+                $updateData['image_url'] = '/'.ltrim(
+                    FileHelper::move_to_product_file_folder($request->file('news_image'), 'news_image')['url'],
+                    '/'
+                );
             }
         }
 
         if (isset($request->delete_thumbnail) || $request->hasFile('news_thumbnail')) {
-            FileHelper::delete_file($news->get_thumbnail_url_storage_path());
+            $this->deleteNewsMediaFile((string) ($news->getRawOriginal('thumbnail_url') ?? ''));
             $updateData['thumbnail_url'] = null;
             if ($request->hasFile('news_thumbnail')) {
-                $updateData['thumbnail_url'] = FileHelper::move_to_folder($request->file('news_thumbnail'), 'news_image/news_thumbnail')['url'];
+                $updateData['thumbnail_url'] = '/'.ltrim(
+                    FileHelper::move_to_product_file_folder($request->file('news_thumbnail'), 'news_image/news_thumbnail')['url'],
+                    '/'
+                );
             }
         }
 
@@ -206,5 +217,33 @@ class ArticleController extends Controller
     public function get_slug(Request $request)
     {
         return ModelHelper::convert_to_slug(Article::class, $request->url);
+    }
+
+    private function deleteNewsMediaFile(string $url): void
+    {
+        $raw = trim($url);
+        if ($raw === '') {
+            return;
+        }
+
+        $path = parse_url($raw, PHP_URL_PATH) ?: $raw;
+        $path = str_replace('\\', '/', $path);
+
+        $storagePos = stripos($path, '/storage/news_image/');
+        if ($storagePos !== false) {
+            $relative = substr($path, $storagePos + strlen('/storage/'));
+            if ($relative !== false && $relative !== '') {
+                Storage::disk('public')->delete($relative);
+            }
+        }
+
+        $publicPos = stripos($path, '/news_image/');
+        if ($publicPos !== false) {
+            $publicRelative = ltrim(substr($path, $publicPos), '/');
+            $fullPath = public_path($publicRelative);
+            if (File::exists($fullPath)) {
+                File::delete($fullPath);
+            }
+        }
     }
 }

@@ -81,8 +81,9 @@ class Article extends Model
     public function get_image_url_storage_path()
     {
         $delimiter = 'storage/';
-        if (strpos($this->image_url, $delimiter) !== false) {
-            $paths = explode($delimiter, $this->image_url);
+        $rawImageUrl = $this->attributes['image_url'] ?? '';
+        if (strpos($rawImageUrl, $delimiter) !== false) {
+            $paths = explode($delimiter, $rawImageUrl);
             return $paths[1];
         }
 
@@ -92,8 +93,9 @@ class Article extends Model
     public function get_thumbnail_url_storage_path()
     {
         $delimiter = 'storage/';
-        if (strpos($this->thumbnail_url, $delimiter) !== false) {
-            $paths = explode($delimiter, $this->thumbnail_url);
+        $rawThumbnailUrl = $this->attributes['thumbnail_url'] ?? '';
+        if (strpos($rawThumbnailUrl, $delimiter) !== false) {
+            $paths = explode($delimiter, $rawThumbnailUrl);
             return $paths[1];
         }
 
@@ -102,12 +104,82 @@ class Article extends Model
 
     public function get_image_file_name()
     {
-        $path = explode('/', $this->image_url);
+        $rawImageUrl = (string) ($this->attributes['image_url'] ?? '');
+        $path = explode('/', $rawImageUrl);
         $nameIndex = count($path) - 1;
         if ($nameIndex < 0)
             return '';
 
         return $path[$nameIndex];
+    }
+
+    public function getImageUrlAttribute($value)
+    {
+        return $this->normalizeMediaUrl($value);
+    }
+
+    public function getThumbnailUrlAttribute($value)
+    {
+        return $this->normalizeMediaUrl($value);
+    }
+
+    private function normalizeMediaUrl($value)
+    {
+        $value = trim((string) $value);
+        if ($value === '') {
+            return $value;
+        }
+
+        if (preg_match('#^data:#i', $value)) {
+            return $value;
+        }
+
+        if (preg_match('#^https?://#i', $value)) {
+            $parsedPath = (string) parse_url($value, PHP_URL_PATH);
+            if ($parsedPath !== '') {
+                $value = $parsedPath;
+            }
+        }
+
+        $value = str_replace('\\', '/', $value);
+        $storagePos = stripos($value, '/storage/');
+        if ($storagePos !== false) {
+            $value = substr($value, $storagePos);
+        } elseif (stripos($value, 'storage/') === 0) {
+            $value = '/'.$value;
+        } elseif (stripos($value, '/news_image/') !== false || stripos($value, 'news_image/') === 0) {
+            $newsPos = stripos($value, '/news_image/');
+            $value = $newsPos !== false ? substr($value, $newsPos) : '/'.ltrim($value, '/');
+        }
+
+        if (!str_starts_with($value, '/')) {
+            $value = '/'.$value;
+        }
+
+        $appBasePath = parse_url((string) config('app.url', ''), PHP_URL_PATH) ?: '';
+        $appBasePath = rtrim($appBasePath, '/');
+        if ($appBasePath !== '' && str_starts_with($value, $appBasePath.'/')) {
+            $value = substr($value, strlen($appBasePath));
+            if (!str_starts_with($value, '/')) {
+                $value = '/'.$value;
+            }
+        }
+
+        $baseUrl = '';
+        try {
+            if (app()->bound('request')) {
+                $request = request();
+                $baseUrl = rtrim($request->getSchemeAndHttpHost().$request->getBaseUrl(), '/');
+            }
+        } catch (\Throwable $e) {
+            $baseUrl = '';
+        }
+
+        if ($baseUrl !== '') {
+            return $baseUrl.$value;
+        }
+
+        return url($value);
     }
 
     public function featured_news_limit()

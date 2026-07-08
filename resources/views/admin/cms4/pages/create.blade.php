@@ -74,7 +74,7 @@
                     @enderror
                 </div>
 
-                <div class="form-group d-none">
+                <div class="form-group">
                     <label class="d-block">Page Banner</label>
                     <div class="btn-group" role="group" aria-label="Basic example">
                         <button type="button" id="banner_slider" class="btn page_banner_btn btn-secondary
@@ -86,7 +86,7 @@
                         <input type="hidden" name="banner_type" id="banner_type" value="{{ old('banner_type','banner_slider') }}">
                     </div>
                 </div>
-                <div class="form-group banner-image d-none" @if(old('banner_type') != 'banner_image') style="display:none;" @endif>
+                <div class="form-group banner-image" @if(old('banner_type') != 'banner_image') style="display:none;" @endif>
                     <div class="custom-file">
                         <input type="file" class="custom-file-input @error('image_url') is-invalid @enderror" name="image_url" id="image_url" accept="image/*">
                         <label class="custom-file-label" for="image_url" id="img_name">Choose file</label>
@@ -104,7 +104,7 @@
                     </div>
                 </div>
 
-                <div class="form-group banner-slider d-none" @if(old('banner_type') == 'banner_image') style="display:none;" @endif>
+                <div class="form-group banner-slider" @if(old('banner_type') == 'banner_image') style="display:none;" @endif>
                     <div class="row">
                         <div class="col-md-10">
                             <select class="selectpicker mg-b-5 @error('album_id') is-invalid @enderror" id="album_id" name="album_id" data-style="btn btn-outline-light btn-md btn-block tx-left" title="- None -" data-width="100%">

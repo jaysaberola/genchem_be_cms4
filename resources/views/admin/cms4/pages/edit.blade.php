@@ -101,7 +101,7 @@
                     }
                 @endphp
 
-                <div class="form-group d-none">
+                <div class="form-group">
                     <label class="d-block">Page Banner</label>
                     <div class="btn-group" role="group" aria-label="Basic example">
                         <button type="button" id="banner_slider" class="btn page_banner_btn btn-secondary {{ $album_active }}">Slider</button>
@@ -111,7 +111,7 @@
                     </div>
                 </div>
 
-                <div class="form-group banner-image d-none" style="{{($banner_type == 'banner_slider' ? 'display:none;':'')}}">
+                <div class="form-group banner-image" style="{{($banner_type == 'banner_slider' ? 'display:none;':'')}}">
                     <div class="custom-file">
                         <input type="file" class="custom-file-input @error('image_url') is-invalid @enderror"  id="image_url" name="image_url" @if (!empty($page->image_url)) title="{{$page->get_image_file_name()}}" @endif>
                         <label class="custom-file-label" for="customFile" id="img_name">@if (empty($page->image_url)) Choose file @else {{$page->get_image_file_name()}} @endif</label>
@@ -129,7 +129,7 @@
                     </div>
                 </div>
 
-                <div class="form-group banner-slider d-none" style="{{($banner_type == 'banner_image' ? 'display:none;':'')}}">
+                <div class="form-group banner-slider" style="{{($banner_type == 'banner_image' ? 'display:none;':'')}}">
                     <div class="row">
                         <div class="col-md-10">
                             <select class="selectpicker mg-b-5 @error('album_id') is-invalid @enderror" id="album_id" name="album_id" data-style="btn btn-outline-light btn-md btn-block tx-left" title="Select album" data-width="100%">
