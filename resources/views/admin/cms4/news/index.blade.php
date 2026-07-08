@@ -152,10 +152,19 @@ Manage News
                                                 <label class="custom-control-label" for="cb{{$new->id}}"></label>
                                             </div>
                                         </th>
+                                        @php
+                                            $isPrivateNews = strtolower((string) $new->status) === 'private';
+                                            $frontendBase = rtrim((string) env('FRONTEND_URL', url('/')), '/');
+                                            $displayNewsUrl = $frontendBase.'/public/news/'.$new->slug;
+                                            $previewToken = rtrim(strtr(base64_encode('preview:news:'.$new->slug), '+/', '-_'), '=');
+                                            $previewNewsUrl = $isPrivateNews
+                                                ? $displayNewsUrl.'?preview_token='.$previewToken
+                                                : $displayNewsUrl;
+                                        @endphp
                                         <td style="overflow: hidden;" title="{{$new->name}}">
                                             <strong @if($new->trashed()) style="text-decoration:line-through;" @endif> {{$new->name}}</strong>
                                             <p class="mg-b-0 tx-gray-500 tx-11">
-                                               <a target="_blank" href="{{ env('FRONTEND_URL') }}/public/news/{{$new->slug}}">{{ env('FRONTEND_URL') }}/public/news/{{$new->slug}}</a>
+                                               <a target="_blank" href="{{ $previewNewsUrl }}">{{ $displayNewsUrl }}</a>
                                             </p>
                                         </td>
                                         <td>
@@ -163,7 +172,17 @@ Manage News
                                         </td>
                                         <td>
                                             @if($new->is_featured=='1')<span class="badge badge-success">Featured</span>@endif</td>
-                                        <td style="text-transform:capitalize !important;">{!! ($new->trashed() ? '<span class="badge badge-danger">Deleted</span>':strtolower($new->status)) !!}</td>
+                                        <td>
+                                            @if($new->trashed())
+                                                <span class="badge badge-danger">Deleted</span>
+                                            @elseif(strtolower((string) $new->status) === 'published')
+                                                <span class="badge badge-success">Published</span>
+                                            @elseif(in_array(strtolower((string) $new->status), ['private', 'inactive'], true))
+                                                <span class="badge badge-secondary">Private</span>
+                                            @else
+                                                <span class="badge badge-light text-dark border">{{ ucfirst(strtolower($new->status)) }}</span>
+                                            @endif
+                                        </td>
                                         <td><span class="text-nowrap">{{ Setting::date_for_listing($new->updated_at) }}</span></td>
                                         <td>
                                             @if($new->trashed())
@@ -174,7 +193,7 @@ Manage News
                                                 @endif
                                             @else
                                                 <nav class="nav table-options justify-content-end flex-nowrap">
-                                                    <a class="nav-link" target="_blank" href="{{ env('FRONTEND_URL') }}/public/news/{{$new->slug}}" title="View News"><i data-feather="eye"></i></a>
+                                                    <a class="nav-link" target="_blank" href="{{ $previewNewsUrl }}" title="View News"><i data-feather="eye"></i></a>
 
                                                     @if(auth()->user()->has_access_to_route('news.edit'))
                                                         <a class="nav-link" href="{{ route('news.edit', $new->id) }}" title="Edit News"><i data-feather="edit"></i></a>

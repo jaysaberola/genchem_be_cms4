@@ -14,6 +14,13 @@
 @section('content')
 
     <div class="container pd-x-0">
+        @php
+            $isPrivatePage = strtoupper((string) $page->status) === 'PRIVATE';
+            $frontendBase = rtrim((string) env('FRONTEND_URL', url('/')), '/');
+            $displayUrl = $frontendBase.'/public/'.$page->slug;
+            $previewToken = rtrim(strtr(base64_encode('preview:page:'.$page->slug), '+/', '-_'), '=');
+            $previewUrl = $isPrivatePage ? $displayUrl.'?preview_token='.$previewToken : $displayUrl;
+        @endphp
         <div class="d-sm-flex align-items-center justify-content-between mg-b-20 mg-lg-b-25 mg-xl-b-30">
             <div>
                 <nav aria-label="breadcrumb">
@@ -26,7 +33,7 @@
                 <h4 class="mg-b-0 tx-spacing--1">Edit a Page</h4>
             </div>
             <div>
-                <a class="btn btn-outline-primary btn-sm" href="{{$page->get_url()}}" target="_blank">Preview Page</a>
+                <a class="btn btn-outline-primary btn-sm" href="{{ $previewUrl }}" target="_blank">Preview Page</a>
             </div>
         </div>
         <form id="editForm" action="{{ route('pages.update-customize',$page->id) }}" method="post" enctype="multipart/form-data">
@@ -39,7 +46,7 @@
                         <label class="d-block">{{ $page->name }}</label>
                         <label>
                             <small id="page_slug">
-                                <a target="_blank" href="{{ $page->get_url() }}">{{ $page->get_url() }}</a>
+                                <a target="_blank" href="{{ $previewUrl }}">{{ $displayUrl }}</a>
                             </small>
                         </label>
                     </div>

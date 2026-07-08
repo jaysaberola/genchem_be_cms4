@@ -20,6 +20,13 @@
 @section('content')
 
 <div class="container pd-x-0">
+    @php
+        $isPrivateNews = strtolower((string) $news->status) === 'private';
+        $frontendBase = rtrim((string) env('FRONTEND_URL', url('/')), '/');
+        $displayNewsUrl = $frontendBase.'/public/news/'.$news->slug;
+        $previewToken = rtrim(strtr(base64_encode('preview:news:'.$news->slug), '+/', '-_'), '=');
+        $previewNewsUrl = $isPrivateNews ? $displayNewsUrl.'?preview_token='.$previewToken : $displayNewsUrl;
+    @endphp
     <div class="d-sm-flex align-items-center justify-content-between mg-b-20 mg-lg-b-25 mg-xl-b-30">
         <div>
             <nav aria-label="breadcrumb">
@@ -32,7 +39,7 @@
             <h4 class="mg-b-0 tx-spacing--1">Edit a News</h4>
         </div>
         <div>
-            <a class="btn btn-outline-primary btn-sm" href="{{ env('FRONTEND_URL') }}/public/news/{{$news->slug}}" target="_blank">Preview News</a>
+            <a class="btn btn-outline-primary btn-sm" href="{{ $previewNewsUrl }}" target="_blank">Preview News</a>
         </div>
     </div>
     <form id="editForm" method="post" action="{{ route('news.update',$news->id) }}" enctype="multipart/form-data">
@@ -43,7 +50,7 @@
                 <div class="form-group">
                     <label class="d-block">Title *</label>
                     <input type="text" class="form-control @error('name') is-invalid @enderror" maxlength="150"  name="name" id="name" value="{{ old('name',$news->name) }}" required>
-                    <small id="news_slug">{{ env('FRONTEND_URL') }}/public/news/{{$news->slug}}</small>
+                    <small id="news_slug"><a target="_blank" href="{{ $previewNewsUrl }}">{{ $displayNewsUrl }}</a></small>
                     @error('name')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror

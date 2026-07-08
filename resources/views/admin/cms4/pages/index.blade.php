@@ -150,14 +150,33 @@
                                             <label class="custom-control-label" for="cb{{$page->id}}"></label>
                                         </div>
                                     </th>
+                                    @php
+                                        $isPrivatePage = strtoupper((string) $page->status) === 'PRIVATE';
+                                        $frontendBase = rtrim((string) env('FRONTEND_URL', url('/')), '/');
+                                        $displayUrl = $frontendBase.'/public/'.$page->slug;
+                                        $previewToken = rtrim(strtr(base64_encode('preview:page:'.$page->slug), '+/', '-_'), '=');
+                                        $previewUrl = $isPrivatePage
+                                            ? $displayUrl.'?preview_token='.$previewToken
+                                            : $displayUrl;
+                                    @endphp
                                     <td style="overflow: hidden;text-overflow: ellipsis;" title="{{$page->name}}">
                                         <strong @if($page->trashed()) style="text-decoration:line-through;" @endif title="{{$page->name}}"> {{$page->name}}</strong>
                                         <p class="mg-b-0 tx-gray-500 tx-11">
-                                            <a target="_blank" href="{{ $page->get_url() }}">{{ $page->get_url() }}</a>
+                                            <a target="_blank" href="{{ $previewUrl }}">{{ $displayUrl }}</a>
                                         </p>
                                     </td>
                                     <td>{{ $page->label }}</td>
-                                    <td>{!! ($page->trashed() ? '<span class="badge badge-danger">Deleted</span>':ucfirst(strtolower($page->status))) !!}</td>
+                                    <td>
+                                        @if($page->trashed())
+                                            <span class="badge badge-danger">Deleted</span>
+                                        @elseif(strtoupper((string) $page->status) === 'PUBLISHED')
+                                            <span class="badge badge-success">Published</span>
+                                        @elseif(strtoupper((string) $page->status) === 'PRIVATE')
+                                            <span class="badge badge-secondary">Private</span>
+                                        @else
+                                            <span class="badge badge-light text-dark border">{{ ucfirst(strtolower($page->status)) }}</span>
+                                        @endif
+                                    </td>
                                     <td><span class="text-nowrap">{{ Setting::date_for_listing($page->updated_at) }}</span></td>
                                     <td>
                                         @if($page->trashed())
@@ -169,7 +188,7 @@
                                         @else
                                             <nav class="nav table-options justify-content-end flex-nowrap">
                                                 @if(auth()->user()->has_access_to_route('pages.show'))
-                                                    <a class="nav-link" target="_blank" href="{{ $page->get_url() }}" title="View Page"><i data-feather="eye"></i></a>
+                                                    <a class="nav-link" target="_blank" href="{{ $previewUrl }}" title="View Page"><i data-feather="eye"></i></a>
                                                 @endif
                                                 @if(auth()->user()->has_access_to_route('pages.edit'))
                                                     <a class="nav-link" href="{{route('pages.edit',$page->id)}}" title="Edit Page"><i data-feather="edit"></i></a>

@@ -19,6 +19,21 @@ use Illuminate\Support\Facades\Storage;
 
 class PublicPageController extends Controller
 {
+    private function validPrivatePreviewToken(string $type, string $slug, ?string $token): bool
+    {
+        if (!$token) {
+            return false;
+        }
+
+        $legacyExpected = hash_hmac('sha256', $type.':'.$slug, (string) config('app.key'));
+        if (hash_equals($legacyExpected, $token)) {
+            return true;
+        }
+
+        $expected = rtrim(strtr(base64_encode('preview:'.$type.':'.$slug), '+/', '-_'), '=');
+        return hash_equals($expected, $token);
+    }
+
     public function show(string $slug)
     {
         $page = Page::with([
@@ -27,8 +42,21 @@ class PublicPageController extends Controller
                 }
             ])
             ->where('slug', $slug)
-            ->where('status', 'PUBLISHED')
-            ->firstOrFail();
+            ->first();
+
+        if (!$page) {
+            return response()->json(['message' => 'Page not found.'], 404);
+        }
+
+        if (strtoupper((string) $page->status) !== 'PUBLISHED' && !$this->validPrivatePreviewToken('page', $slug, request('preview_token'))) {
+            return response()->json([
+                'message' => 'This page is not published.',
+                'status'  => 'private',
+                'slug'    => $page->slug,
+                'title'   => $page->name,
+                'label'   => $page->label,
+            ], 403);
+        }
 
         return response()->json([
             'id'        => $page->id,
@@ -297,8 +325,20 @@ class PublicPageController extends Controller
     {
         $article = Article::with(['category:id,name,slug', 'user:id,firstname,lastname'])
             ->where('slug', $slug)
-            ->where('status', 'published')
-            ->firstOrFail();
+            ->first();
+
+        if (!$article) {
+            return response()->json(['message' => 'Article not found.'], 404);
+        }
+
+        if (strtolower((string) $article->status) !== 'published' && !$this->validPrivatePreviewToken('news', $slug, request('preview_token'))) {
+            return response()->json([
+                'message' => 'This article is not published.',
+                'status'  => 'private',
+                'slug'    => $article->slug,
+                'title'   => $article->name,
+            ], 403);
+        }
 
         return response()->json($article);
     }
