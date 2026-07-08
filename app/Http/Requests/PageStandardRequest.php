@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Helpers\ModelHelper;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PageStandardRequest extends FormRequest
@@ -14,6 +15,21 @@ class PageStandardRequest extends FormRequest
     public function authorize()
     {
         return auth()->check();
+    }
+
+    protected function prepareForValidation(): void
+    {
+        if ($this->has('contents')) {
+            $this->merge([
+                'contents' => ModelHelper::patchCmsHtml((string) $this->input('contents')),
+            ]);
+        }
+
+        if ($this->filled('json')) {
+            $this->merge([
+                'json' => ModelHelper::patchCmsHtml((string) $this->input('json')),
+            ]);
+        }
     }
 
     /**

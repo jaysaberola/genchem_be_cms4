@@ -528,12 +528,16 @@
     </script>
     <script>
         @php
-            $jsPage = json_encode(old('json', $page->json));
+            $pageJson = old('json', $page->json);
+            if ($pageJson && $pageJson !== 'null') {
+                $pageJson = \App\Helpers\ModelHelper::patchCmsHtml((string) $pageJson);
+            }
+            $jsPage = json_encode($pageJson);
             echo "var jsPage = $jsPage;\n";
         @endphp
         @if(!old('json', $page->json) || old('json', $page->json) == "null")
             @php
-                $jsHtml = old('contents', $page->contents);
+                $jsHtml = \App\Helpers\ModelHelper::patchCmsHtml(old('contents', $page->contents));
                 echo "var jsHtml = `$jsHtml`;\n";
                 $jsStyle = str_replace(array("'", "&#039;"), "", old('styles', $page->styles) );
                 echo "var jsStyle = `$jsStyle`;";
@@ -567,7 +571,7 @@
     <script src="{{ asset('lib/custom-grapesjs/grapesjs-plugins/grapesjs-plugin-animation.js') }}"></script>
     <script src="{{ asset('lib/custom-grapesjs/grapesjs-plugins/grapesjs-swiper-slider.min.js') }}"></script>
     <script src="{{ asset('lib/custom-grapesjs/ckeditor/ckeditor.js') }}"></script>
-    <script src="{{ asset('lib/custom-grapesjs/assets/js/custom-grapesjs.js') }}"></script>
+    <script src="{{ asset('lib/custom-grapesjs/assets/js/custom-grapesjs.js') }}?v=15"></script>
     <script src="{{ asset('lib/custom-grapesjs/assets/js/bamburgh.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.0/typed.min.js"></script>
     <script src="{{ asset('lib/bootstrap-tagsinput/bootstrap-tagsinput.min.js') }}"></script>

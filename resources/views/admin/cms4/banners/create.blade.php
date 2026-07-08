@@ -28,7 +28,11 @@
         if ($nameIndex < 0)
             return '';
 
-        return $path[$nameIndex];
+        return rawurldecode($path[$nameIndex]);
+    }
+
+    function banner_preview_url($url) {
+        return \App\Helpers\BannerStorageHelper::normalizePublicUrl((string) $url);
     }
 @endphp
 
@@ -111,7 +115,7 @@
                                         <div class="card-body">
                                             <div class="row row-sm">
                                                 <div class="col-lg-12">
-                                                    <div class="form-group upload-image mg-b-0" style="background: url('{{ $banner['image_path'] }}');background-size: cover;">
+                                                    <div class="form-group upload-image mg-b-0" style="background: url('{{ banner_preview_url($banner['image_path']) }}');background-size: cover;">
                                                         <div class="marker pos-absolute t-10 l-20 p-0 bg-transparent">
                                                             {{--                                                    <button class="btn btn-light btn-xs btn-uppercase" type="submit"><i data-feather="upload"></i> Upload image</button>--}}
                                                             <button type="button" class="btn btn-danger btn-xs btn-uppercase remove-upload" type="button" data-id="{{ $banner['id'] }}"><i data-feather="x"></i> Remove image</button>
@@ -166,6 +170,7 @@
 @endsection
 
 @section('customjs')
+    @include('admin.cms4.banners._upload_preview_js')
     <script>
         $(function() {
             let image_count = 1;
@@ -207,7 +212,7 @@
                                                     <div class="card-body">
                                                         <div class="row row-sm">
                                                             <div class="col-lg-12">
-                                                                <div class="form-group upload-image mg-b-0" style="background: url('`+returnData.image_url+`');background-size: cover;">
+                                                                <div class="form-group upload-image mg-b-0" style="background: url('`+bannerCssUrl(returnData.image_url)+`');background-size: cover;">
                                                                     <div class="marker pos-absolute t-10 l-20 p-0 bg-transparent">
                                                                     <button type="button" class="btn btn-danger btn-xs btn-uppercase remove-upload" type="submit" data-image-path="`+returnData.image_url+`"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> Remove image</button>
                                                                     <input name="banners[`+image_count+`][image_path]" class="image_path" type="text" value="`+returnData.image_url+`" required onvalid="this.setCustomValidity('')" oninvalid="this.setCustomValidity('Please upload image.')" oninput="this.setCustomValidity('')"/>

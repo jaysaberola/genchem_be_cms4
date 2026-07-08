@@ -11,7 +11,10 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <script>window.CMS_PUBLIC_URL = @json(rtrim(url('/'), '/'));</script>
+    @php
+        $cmsPublicUrl = rtrim(request()->getSchemeAndHttpHost() . request()->getBaseUrl(), '/');
+    @endphp
+    <script>window.CMS_PUBLIC_URL = @json($cmsPublicUrl);</script>
     <title>{{ Setting::info()->company_name }}</title>
     @php($faviconUrl = \App\Helpers\Setting::resolve_favicon_url())
     @if($faviconUrl)
@@ -140,7 +143,7 @@
     </div>
 
     <script>
-        var app_url = window.CMS_PUBLIC_URL || "{{ rtrim(url('/'), '/') }}";
+        var app_url = window.CMS_PUBLIC_URL || @json($cmsPublicUrl);
         var app__url_prefix = app_url;
         window.CMS_FOOTER_BG_URL = @json(rtrim(env('FRONTEND_URL', url('/')), '/') . '/images/highlights/roofing1.jpg');
     </script>

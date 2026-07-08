@@ -131,11 +131,8 @@ const editor = grapesjs.init({
             app_url + "/css/cms-footer.css?v=8",
         ],
         scripts: [
-            app_url + "/theme/js/slick.js",
-            app_url + "/theme/js/slick.extension.js",
-            app_url + "/theme/js/cookiealert.js",
-            app_url + "/theme/js/functions.js"
-
+            app_url + "/lib/jquery/jquery.min.js",
+            app_url + "/theme/js/jquery-migrate.min.js",
         ],
     },
 
@@ -533,11 +530,11 @@ window.addEventListener("load", () => {
         var jsStyles = parsedPage["gjs-styles"];
 
         if (jsComponents) {
-            editor.addComponents(JSON.parse(jsComponents));
+            editor.addComponents(JSON.parse(patchGenchemEditorContentString(jsComponents)));
         }
 
         if (jsStyles) {
-            editor.setStyle(JSON.parse(jsStyles));
+            editor.setStyle(JSON.parse(patchGenchemEditorContentString(jsStyles)));
         }
 
         if (!savedPageStyles && parsedPage["gjs-css"]) {
@@ -545,11 +542,20 @@ window.addEventListener("load", () => {
         }
 
         if (savedPageStyles) {
-            editor.addComponents('<style data-cms-page-styles="1">' + savedPageStyles + "</style>");
+            editor.addComponents(
+                '<style data-cms-page-styles="1">' +
+                    patchGenchemEditorContentString(savedPageStyles) +
+                    "</style>",
+            );
         }
     } else if (typeof jsHtml !== "undefined") {
-        editor.addComponents(jsHtml + "<style>" + (typeof jsStyle !== "undefined" ? jsStyle : "") + "</style>");
+        const patchedHtml = patchGenchemEditorContentString(jsHtml);
+        const patchedStyle =
+            typeof jsStyle !== "undefined" ? patchGenchemEditorContentString(String(jsStyle)) : "";
+        editor.addComponents(patchedHtml + "<style>" + patchedStyle + "</style>");
     }
+
+    patchAllGenchemEditorComponents();
 
     $("#desktop-view").on("click", (event) => {
         editor.Commands.run("set-device-desktop");
@@ -1156,6 +1162,273 @@ function gcSwitchTab(tab) {
 
 window.gcSwitchTab = gcSwitchTab;
 
+function getCmsPublicBase() {
+    let base = (typeof app_url === "string" ? app_url : "").replace(/\/$/, "");
+    const origin = window.location.origin;
+    const pathname = window.location.pathname || "";
+    const adminIdx = pathname.indexOf("/admin-panel/");
+    const derived = adminIdx > 0 ? origin + pathname.slice(0, adminIdx).replace(/\/$/, "") : "";
+
+    if (derived && (!base || base === origin || !/\/public\b|\/genchem_be_cms4\b/i.test(base))) {
+        base = derived;
+    }
+
+    return base || derived || origin;
+}
+
+function fixTripProductFilename(url) {
+    if (!url || /trio_product/i.test(url)) {
+        return url;
+    }
+
+    return url
+        .replace(/trip_product2/gi, "trio_product2")
+        .replace(/trip_product\.(png|jpe?g|gif|webp)/gi, "trio_product.$1");
+}
+
+const GENCHEM_PRODUCT_IMAGE_FIXES = {
+    "AL51.png": "ALST.png",
+    "B45T.png": "BAST.png",
+    "C45T.png": "CAST.png",
+    "COST.png": "CDST.png",
+    "AIST.png": "ALST.png",
+    "trip_product2.png": "trio_product2.png",
+    "trip_product.png": "trio_product.png",
+};
+
+const GENCHEM_CANVAS_IMAGE_ALIASES = {
+    "genchem-res-trip-product2.png": "/images/genchemph/products/trio_product2.png",
+    "genchem-res_trip-product2.png": "/images/genchemph/products/trio_product2.png",
+    "genchem-res-trip-product.png": "/images/genchemph/products/trio_product.png",
+    "genchem-res_trip-product.png": "/images/genchemph/products/trio_product.png",
+    "trip_product2.png": "/images/genchemph/products/trio_product2.png",
+    "trip_product.png": "/images/genchemph/products/trio_product.png",
+};
+
+const GENCHEM_BANNER_FILES = new Set([
+    "HOMEPAGE_ABOUT_US.png",
+    "home_header.png",
+    "about_us.png",
+    "our_products.png",
+    "contact_us.png",
+]);
+
+const GENCHEM_ICON_FILES = new Set([
+    "call.png",
+    "call_red.png",
+    "mobile.png",
+    "email.png",
+    "globe.png",
+    "c-call.png",
+    "c-mobile.png",
+    "c-mail.png",
+]);
+
+function patchGenchemProductFilename(url) {
+    if (!url) return url;
+    let output = url;
+    Object.keys(GENCHEM_PRODUCT_IMAGE_FIXES).forEach((wrong) => {
+        const right = GENCHEM_PRODUCT_IMAGE_FIXES[wrong];
+        output = output.replace("/products/" + wrong, "/products/" + right);
+        output = output.replace("products/" + wrong, "products/" + right);
+    });
+    return output;
+}
+
+function normalizeGenchemCanvasPath(url) {
+    if (!url) return url;
+
+    url = fixTripProductFilename(patchGenchemProductFilename(url.trim()));
+
+    const basename = url.split("/").pop().split("?")[0].split("#")[0];
+    if (GENCHEM_CANVAS_IMAGE_ALIASES[basename]) {
+        return GENCHEM_CANVAS_IMAGE_ALIASES[basename];
+    }
+
+    if (/genchem[-_]?res[-_]?trip[-_]?product2/i.test(url)) {
+        return "/images/genchemph/products/trio_product2.png";
+    }
+
+    if (/genchem[-_]?res[-_]?trip[-_]?product/i.test(url)) {
+        return "/images/genchemph/products/trio_product.png";
+    }
+
+    if (url.startsWith("/images/genchemph/")) {
+        return url;
+    }
+
+    if (url.startsWith("/images/")) {
+        return "/images/genchemph/" + url.slice("/images/".length);
+    }
+
+    if (url.startsWith("images/genchemph/")) {
+        return "/" + url;
+    }
+
+    if (url.startsWith("images/")) {
+        return "/images/genchemph/" + url.slice("images/".length);
+    }
+
+    if (!url.includes("/") && /\.(png|jpe?g|gif|webp|svg|ico|mp4)$/i.test(url)) {
+        if (GENCHEM_BANNER_FILES.has(url)) {
+            return "/images/genchemph/banners/" + url;
+        }
+        if (GENCHEM_ICON_FILES.has(url)) {
+            return "/images/genchemph/icons/" + url;
+        }
+        if (/logo/i.test(url) || url.endsWith(".ico")) {
+            return "/images/genchemph/logos/" + url;
+        }
+        if (url === "video.mp4") {
+            return "/images/genchemph/video.mp4";
+        }
+        return "/images/genchemph/products/" + url;
+    }
+
+    return url;
+}
+
+function resolveGenchemCanvasAssetUrl(url) {
+    if (!url) return url;
+
+    if (url.startsWith("data:") || url.startsWith("blob:")) {
+        return url;
+    }
+
+    const base = getCmsPublicBase();
+    let path = normalizeGenchemCanvasPath(url);
+
+    if (path.startsWith("http://") || path.startsWith("https://")) {
+        const genchemPath = path.replace(/^https?:\/\/[^/]+/i, "");
+        if (genchemPath.startsWith("/images/genchemph/")) {
+            return base + fixTripProductFilename(genchemPath);
+        }
+        return path;
+    }
+
+    if (path.startsWith("/images/")) {
+        return base + path;
+    }
+
+    if (path.startsWith("images/")) {
+        return base + "/" + path;
+    }
+
+    return url;
+}
+
+function patchGenchemEditorContentString(content) {
+    if (!content || typeof content !== "string") {
+        return content;
+    }
+
+    let output = content;
+
+    output = output.replace(
+        /(\s(?:src|poster)=)(["'])([^"']+)\2/gi,
+        (_, prefix, quote, url) => prefix + quote + resolveGenchemCanvasAssetUrl(url) + quote,
+    );
+
+    output = output.replace(
+        /"(src|poster)"\s*:\s*"((?:\\.|[^"\\])*)"/gi,
+        (match, attr, url) => {
+            const decoded = url.replace(/\\\//g, "/");
+            const resolved = resolveGenchemCanvasAssetUrl(decoded);
+            return resolved === decoded ? match : `"${attr}":"${resolved.replace(/\//g, "\\/")}"`;
+        },
+    );
+
+    output = output.replace(/url\(\s*(['"]?)([^'")]+)\1\s*\)/gi, (_, quote, url) => {
+        const resolved = resolveGenchemCanvasAssetUrl(url.trim());
+        return "url(" + quote + resolved + quote + ")";
+    });
+
+    return output;
+}
+
+function patchGenchemComponentTree(component) {
+    if (!component) return;
+
+    const attrs = component.getAttributes ? component.getAttributes() : {};
+    ["src", "poster"].forEach((attr) => {
+        if (!attrs[attr]) return;
+        const resolved = resolveGenchemCanvasAssetUrl(attrs[attr]);
+        if (resolved !== attrs[attr]) {
+            component.addAttributes({ [attr]: resolved });
+        }
+    });
+
+    const style = component.getStyle ? component.getStyle() : null;
+    if (style && typeof style === "object") {
+        const next = { ...style };
+        let changed = false;
+        Object.keys(next).forEach((key) => {
+            const val = String(next[key] || "");
+            if (!val.includes("url(")) return;
+            const updated = val.replace(/url\(\s*(['"]?)([^'")]+)\1\s*\)/gi, (match, quote, rawUrl) => {
+                const resolved = resolveGenchemCanvasAssetUrl(rawUrl.trim());
+                return resolved === rawUrl.trim() ? match : "url(" + quote + resolved + quote + ")";
+            });
+            if (updated !== val) {
+                next[key] = updated;
+                changed = true;
+            }
+        });
+        if (changed) component.setStyle(next);
+    }
+
+    const children = component.components ? component.components() : null;
+    if (children && children.forEach) {
+        children.forEach((child) => patchGenchemComponentTree(child));
+    }
+}
+
+function patchAllGenchemEditorComponents() {
+    const wrapper = editor.getWrapper();
+    if (!wrapper) return;
+    patchGenchemComponentTree(wrapper);
+}
+
+function patchGenchemCanvasImages(doc) {
+    if (!doc) return;
+
+    doc.querySelectorAll("img[src]").forEach((img) => {
+        const current = img.getAttribute("src") || "";
+        const resolved = resolveGenchemCanvasAssetUrl(current);
+        if (resolved && resolved !== current) {
+            img.setAttribute("src", resolved);
+        }
+    });
+
+    doc.querySelectorAll("video[poster], source[src]").forEach((el) => {
+        const attr = el.hasAttribute("poster") ? "poster" : "src";
+        const current = el.getAttribute(attr) || "";
+        const resolved = resolveGenchemCanvasAssetUrl(current);
+        if (resolved && resolved !== current) {
+            el.setAttribute(attr, resolved);
+        }
+    });
+
+    doc.querySelectorAll("[style*='background'], [style*='url(']").forEach((el) => {
+        const style = el.getAttribute("style") || "";
+        const updated = style.replace(/url\((['"]?)([^'")]+)\1\)/gi, (match, quote, rawUrl) => {
+            const resolved = resolveGenchemCanvasAssetUrl(rawUrl.trim());
+            return resolved === rawUrl.trim() ? match : "url(" + (quote || "") + resolved + (quote || "") + ")";
+        });
+        if (updated !== style) {
+            el.setAttribute("style", updated);
+        }
+    });
+
+    doc.querySelectorAll("style").forEach((styleEl) => {
+        const css = styleEl.textContent || "";
+        const patched = patchGenchemEditorContentString(css);
+        if (patched !== css) {
+            styleEl.textContent = patched;
+        }
+    });
+}
+
 function setupGenchemCanvas() {
     const doc = editor.Canvas.getDocument();
     if (!doc || !doc.body) return;
@@ -1167,9 +1440,19 @@ function setupGenchemCanvas() {
         doc.body.classList.add("genchem-products-active");
     }
 
+    patchGenchemCanvasImages(doc);
+    patchAllGenchemEditorComponents();
     initGenchemProductCards(doc);
-    window.setTimeout(() => initGenchemProductCards(doc), 50);
-    window.setTimeout(() => initGenchemProductCards(doc), 300);
+    window.setTimeout(() => {
+        patchGenchemCanvasImages(doc);
+        patchAllGenchemEditorComponents();
+        initGenchemProductCards(doc);
+    }, 50);
+    window.setTimeout(() => {
+        patchGenchemCanvasImages(doc);
+        patchAllGenchemEditorComponents();
+        initGenchemProductCards(doc);
+    }, 300);
 
     doc.querySelectorAll(".video-wrap video").forEach((video) => {
         video.muted = true;
@@ -1186,7 +1469,9 @@ function setupGenchemCanvas() {
         }
 
         if (!video.getAttribute("poster")) {
-            video.poster = app_url + "/images/genchemph/banners/HOMEPAGE_ABOUT_US.png";
+            video.poster = getCmsPublicBase() + "/images/genchemph/banners/HOMEPAGE_ABOUT_US.png";
+        } else {
+            video.poster = resolveGenchemCanvasAssetUrl(video.getAttribute("poster") || "");
         }
 
         let source = video.querySelector("source");
@@ -1198,10 +1483,10 @@ function setupGenchemCanvas() {
 
         const raw = source.getAttribute("src") || "";
         if (!raw || raw.startsWith("data:") || raw.includes("video.mp4")) {
-            source.src = app_url + "/images/genchemph/video.mp4";
+            source.src = getCmsPublicBase() + "/images/genchemph/video.mp4";
             source.setAttribute("type", "video/mp4");
         } else if (raw.startsWith("/images/")) {
-            source.src = app_url + raw;
+            source.src = getCmsPublicBase() + raw;
         }
 
         video.load();
@@ -1212,9 +1497,20 @@ function setupGenchemCanvas() {
 editor.on("load", setupGenchemCanvas);
 editor.on("canvas:frame:load", setupGenchemCanvas);
 editor.on("component:update", () => {
-    window.setTimeout(() => initGenchemProductCards(editor.Canvas.getDocument()), 0);
+    const doc = editor.Canvas.getDocument();
+    window.setTimeout(() => {
+        patchGenchemCanvasImages(doc);
+        patchAllGenchemEditorComponents();
+        initGenchemProductCards(doc);
+    }, 0);
 });
 editor.on("component:add", (component) => {
+    if (component) {
+        patchGenchemComponentTree(component);
+        if (component.get("type") === "image" || component.get("tagName") === "img") {
+            window.setTimeout(() => patchGenchemCanvasImages(editor.Canvas.getDocument()), 0);
+        }
+    }
     if (component && component.get("type") === "video") {
         setupGenchemCanvas();
     }

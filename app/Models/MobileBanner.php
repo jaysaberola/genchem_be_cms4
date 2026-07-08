@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Helpers\BannerStorageHelper;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Validator;
@@ -14,6 +16,13 @@ class MobileBanner extends Model
 
     protected $table = 'mobile_banners';
     protected $fillable = ['album_id', 'title', 'description', 'alt','image_path', 'button_text', 'url', 'order', 'user_id'];
+
+    protected function imagePath(): Attribute
+    {
+        return Attribute::make(
+            get: fn (?string $value) => BannerStorageHelper::normalizePublicUrl($value),
+        );
+    }
 
     public function album()
     {

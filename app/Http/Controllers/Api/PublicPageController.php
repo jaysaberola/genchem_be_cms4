@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Helpers\ModelHelper;
 use App\Helpers\Setting;
 use App\Mail\InquiryAdminMail;
 use App\Mail\InquiryMail;
@@ -34,8 +35,10 @@ class PublicPageController extends Controller
             'title'     => $page->name,
             'label'     => $page->label,
             'slug'      => $page->slug,
-            'content'   => $page->contents,
-            'json'      => $page->json,
+            'content'   => ModelHelper::patchCmsHtml((string) $page->contents),
+            'json'      => $page->json
+                ? ModelHelper::patchCmsHtml((string) $page->json)
+                : $page->json,
             'styles'    => $page->styles,
             'page_type' => $page->page_type,
             'template'  => $page->template,

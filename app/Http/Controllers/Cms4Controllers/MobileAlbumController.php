@@ -12,6 +12,7 @@ use App\Models\MobileAlbum;
 use App\Models\MobileBanner;
 use App\Models\Option;
 
+use App\Helpers\BannerStorageHelper;
 use Storage;
 
 class MobileAlbumController extends Controller
@@ -32,8 +33,6 @@ class MobileAlbumController extends Controller
         
         $filter = ListingHelper::get_filter($this->searchFields);
         $searchType = 'simple_search';
-
-        $this->delete_temporary_banner_folder();
 
         return view('admin.cms4.mobile-banners.index', compact('mobile_albums', 'animations', 'filter', 'searchType'));
     }
@@ -76,7 +75,7 @@ class MobileAlbumController extends Controller
 
         $banners = $this->move_banner_to_official_folder($banners);
 
-        $this->delete_temporary_banner_folder();
+        BannerStorageHelper::deleteTemporaryFolder((int) auth()->id());
 
         $mobile_album->addBanners($banners);
 
@@ -154,6 +153,8 @@ class MobileAlbumController extends Controller
         $newBanners = $this->move_banner_to_official_folder($newBanners);
 
         $mobile_album->addBanners($newBanners);
+
+        BannerStorageHelper::deleteTemporaryFolder((int) auth()->id());
 
         return back()->with('success', __('standard.banner.update_success'));
     }
@@ -319,20 +320,7 @@ class MobileAlbumController extends Controller
 
     public function upload_file_to_temporary_storage($file)
     {
-        $temporaryFolder = 'temporary_banners'.auth()->id();
-        $fileName = $file->getClientOriginalName();
-        if (Storage::disk('public')->exists($temporaryFolder.'/'.$fileName)) {
-            $fileName = $this->make_unique_file_name($temporaryFolder, $fileName);
-        }
-
-        $path = Storage::disk('public')->putFileAs($temporaryFolder, $file, $fileName);
-        $url = Storage::disk('public')->url($path);
-
-        return [
-            'path' => $temporaryFolder.'/'.$fileName,
-            'name' => $fileName,
-            'url' => $url
-        ];
+        return BannerStorageHelper::uploadToTemporary($file, (int) auth()->id());
     }
 
 
@@ -365,52 +353,26 @@ class MobileAlbumController extends Controller
 
     public function move_banner_to_official_folder($banners)
     {
-        foreach ($banners as $key => $banner) {
-            $temporaryPath = $this->get_banner_path_in_storage($banners[$key]['image_path']);
-            $fileName = $this->get_banner_file_name($banners[$key]['image_path']);
-            $bannerFolder = '';
-
-            $banners[$key]['image_path'] = $this->move_to_banners_folder($temporaryPath, $bannerFolder.$fileName);
-        }
-
-        return $banners;
+        return BannerStorageHelper::moveBannersToOfficialFolder($banners, (int) auth()->id());
     }
 
     public function move_to_banners_folder($temporaryPath, $fileName)
     {
-        $folder = 'banners/';
-        if (Storage::disk('public')->exists($folder.$fileName)) {
-            $fileName = $this->make_unique_file_name($folder, $fileName);
-        }
-
-        $newPath = $folder.$fileName;
-        Storage::disk('public')->move($temporaryPath, $newPath);
-        return Storage::disk('public')->url($newPath);
+        return BannerStorageHelper::moveToBannersFolder($temporaryPath, $fileName);
     }
 
     public function get_banner_path_in_storage($path)
     {
-        $paths = explode('storage/', $path);
-
-        if (count($paths) == 1) {
-            return '';
-        }
-
-        return explode('storage/', $path)[1];
+        return BannerStorageHelper::pathInStorage($path);
     }
 
     public function get_banner_file_name($path)
     {
-        $temporaryFolder = 'temporary_banners'.auth()->id();
-        return explode($temporaryFolder, $path)[1];
+        return BannerStorageHelper::fileNameFromPath($path);
     }
 
     public function delete_temporary_banner_folder()
     {
-        $temporaryFolder = 'temporary_banners'.auth()->id();
-        $files = Storage::disk('public')->allFiles($temporaryFolder);
-        $directories = Storage::disk('public')->allDirectories($temporaryFolder);
-        Storage::disk('public')->delete($files);
-        Storage::disk('public')->delete($directories);
+        BannerStorageHelper::deleteTemporaryFolder((int) auth()->id());
     }
 }

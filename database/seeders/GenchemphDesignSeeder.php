@@ -192,7 +192,7 @@ class GenchemphDesignSeeder extends Seeder
             $html
         );
 
-        return $html;
+        return \App\Helpers\ModelHelper::patchCmsProductImageFilenames($html);
     }
 
     /** Home-only: intro hero id, product tabs, drone video source (genchemph reference). */
