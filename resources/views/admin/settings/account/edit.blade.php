@@ -19,6 +19,10 @@
     $showTab2 = ($errors->has('email') || $errors->has('current_password') ||$errors->has('new_password') ||$errors->has('confirm_password')) ? true : false;
     $showPassword = ($errors->has('current_password') ||$errors->has('new_password') ||$errors->has('confirm_password')) ? true : false;
 @endphp
+@php
+    $avatarUrl = \App\Helpers\Setting::resolve_user_avatar_url($user->avatar) ?? asset('images/user.png');
+    $avatarVersion = optional($user->updated_at)->timestamp ?? time();
+@endphp
 @section('content')
     <div class="container pd-x-0">
         <div class="d-sm-flex align-items-center justify-content-between mg-b-20 mg-lg-b-25 mg-xl-b-30">
@@ -53,11 +57,7 @@
                             @csrf
                             @method('PUT')
                             <div class="media mg-b-30 mg-t-20">
-                                @if(Auth::user()->avatar == '')
-                                    <img src="{{ asset('images/user.png') }}" id="userLogo" class="wd-100 rounded-circle mg-r-20" alt="">
-                                @else
-                                    <img src="{{ $user->avatar }}" id="userLogo" class="wd-100 rounded-circle mg-r-20" alt="">
-                                @endif
+                                <img src="{{ $avatarUrl }}?v={{ $avatarVersion }}" id="userLogo" class="wd-100 rounded-circle mg-r-20" alt="" onerror="this.onerror=null;this.src='{{ asset('images/user.png') }}';">
                                 <div class="media-body pd-t-30">
                                     <h5 class="mg-b-0 tx-inverse tx-bold">{{ $user->fullname }}</h5>
                                     <p>{{ User::userRole($user->role_id) }}</p>

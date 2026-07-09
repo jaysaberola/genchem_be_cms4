@@ -314,13 +314,22 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function get_image_url_storage_path()
     {
-        $delimiter = 'storage/';
-        if (strpos($this->avatar, $delimiter) !== false) {
-            $paths = explode($delimiter, $this->avatar);
-            return $paths[1];
+        $avatar = (string) $this->avatar;
+        if (trim($avatar) === '') {
+            return '';
         }
 
-        return '';
+        $delimiter = 'storage/';
+        if (strpos($avatar, $delimiter) !== false) {
+            $paths = explode($delimiter, $avatar);
+            return $paths[1] ?? '';
+        }
+
+        if (str_starts_with($avatar, '/')) {
+            return ltrim($avatar, '/');
+        }
+
+        return $avatar;
     }
 
     public function get_image_file_name()

@@ -153,6 +153,14 @@ class Setting {
             return asset($value);
         }
 
+        if (str_starts_with($value, '/images/')) {
+            return asset(ltrim($value, '/'));
+        }
+
+        if (str_starts_with($value, 'images/')) {
+            return asset($value);
+        }
+
         if (str_starts_with($value, '/')) {
             return asset(ltrim($value, '/'));
         }
@@ -216,7 +224,42 @@ class Setting {
             return null;
         }
 
-        return self::resolve_managed_asset_url($avatar) ?? asset(ltrim($avatar, '/'));
+        $value = trim(str_replace('\\', '/', $avatar));
+
+        if (str_starts_with($value, 'http://') || str_starts_with($value, 'https://')) {
+            return $value;
+        }
+
+        if (str_starts_with($value, '/storage/')) {
+            return asset(ltrim($value, '/'));
+        }
+
+        if (str_starts_with($value, 'storage/')) {
+            return asset($value);
+        }
+
+        if (str_starts_with($value, '/images/')) {
+            return asset(ltrim($value, '/'));
+        }
+
+        if (str_starts_with($value, 'images/')) {
+            return asset($value);
+        }
+
+        if (str_starts_with($value, '/')) {
+            return asset(ltrim($value, '/'));
+        }
+
+        if (str_starts_with($value, 'avatars/')) {
+            return asset('storage/'.$value);
+        }
+
+        if (! str_contains($value, '/')) {
+            // Legacy avatar values may be stored as bare filename at storage root.
+            return asset('storage/'.$value);
+        }
+
+        return asset('storage/'.$value);
     }
 
     public static function EcommerceCartTotalItems()

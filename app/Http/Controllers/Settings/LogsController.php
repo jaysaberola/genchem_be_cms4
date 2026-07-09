@@ -14,7 +14,7 @@ use App\Models\Permission;
 
 class LogsController extends Controller
 {
-    private $searchFields = ['db_table', 'activity_date',];
+    private $searchFields = ['db_table', 'activity_date', 'old_value', 'new_value'];
 
     public function __construct()
     {

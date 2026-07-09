@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Settings;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 use App\Mail\UpdatePasswordMail;
 use Illuminate\Http\Request;
@@ -30,6 +32,7 @@ class AccountController extends Controller
         Validator::make($request->all(), [
             'firstname' => 'required|max:150',
             'lastname' => 'required|max:150',
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:1024',
         ],[],[
             'firstname' => 'first name',
             'lastname' => 'last name',
@@ -41,8 +44,33 @@ class AccountController extends Controller
         ];
 
         if ($request->hasFile('avatar')) {
-            Storage::disk('public')->delete(auth()->user()->get_image_url_storage_path());
-            $updateData['avatar'] = $this->upload_file_to_storage('avatars', $request->file('avatar'), 'url');
+            $oldAvatar = (string) auth()->user()->avatar;
+            if (!empty($oldAvatar)) {
+                $normalizedOldAvatar = ltrim(str_replace('\\', '/', $oldAvatar), '/');
+                if (str_starts_with($normalizedOldAvatar, 'images/')) {
+                    $oldPublicPath = public_path($normalizedOldAvatar);
+                    if (File::exists($oldPublicPath)) {
+                        File::delete($oldPublicPath);
+                    }
+                } else {
+                    $oldAvatarPath = auth()->user()->get_image_url_storage_path();
+                    if (!empty($oldAvatarPath)) {
+                        Storage::disk('public')->delete($oldAvatarPath);
+                    }
+                }
+            }
+
+            $avatarFile = $request->file('avatar');
+            $avatarExt = strtolower($avatarFile->getClientOriginalExtension());
+            $avatarFileName = 'avatar-'.auth()->id().'-'.time().'-'.Str::random(6).'.'.$avatarExt;
+            $avatarDirectory = public_path('images/avatars');
+            if (!File::exists($avatarDirectory)) {
+                File::makeDirectory($avatarDirectory, 0755, true);
+            }
+            $avatarFile->move($avatarDirectory, $avatarFileName);
+
+            // Store as direct public asset path for guaranteed web access.
+            $updateData['avatar'] = 'images/avatars/'.$avatarFileName;
         }
 
         $is_updated = auth()->user()->update($updateData);

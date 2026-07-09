@@ -37,6 +37,8 @@ class PublicPageController extends Controller
     public function show(string $slug)
     {
         $page = Page::with([
+                'album.animationIn',
+                'album.animationOut',
                 'album.banners' => function ($q) {
                     $q->orderBy('order');
                 }
@@ -82,9 +84,11 @@ class PublicPageController extends Controller
                 'name'           => $page->album->name,
                 'type'           => $page->album->type,
                 'banner_type'    => $page->album->banner_type,
-                'transition'     => $page->album->transition,
-                'transition_in'  => $page->album->transition_in,
-                'transition_out' => $page->album->transition_out,
+                'transition'     => (int) $page->album->transition,
+                'transition_in'  => optional($page->album->animationIn)->value
+                    ?? Setting::bannerTransition($page->album->transition_in),
+                'transition_out' => optional($page->album->animationOut)->value
+                    ?? Setting::bannerTransition($page->album->transition_out),
                 'banners' => $page->album->banners->map(function ($banner) {
                     return [
                         'id'          => $banner->id,
