@@ -122,7 +122,7 @@ const editor = grapesjs.init({
             app_url + "/css/genchemph-drone.css",
             app_url + "/css/genchemph-design.css",
             app_url + "/css/genchemph-about-us.css",
-            app_url + "/css/genchemph-products.css?v=10",
+            app_url + "/css/genchemph-products.css?v=12",
             app_url + "/css/genchemph-home-intro.css?v=5",
             app_url + "/css/genchemph-contact-us.css",
             app_url + "/css/genchem-theme.css",
@@ -1162,6 +1162,56 @@ function gcSwitchTab(tab) {
 
 window.gcSwitchTab = gcSwitchTab;
 
+function resolveGenchemTabNumberFromNav(tabNav, tabBtn) {
+    const links = Array.from(
+        tabNav.querySelectorAll(".nav-item > .nav-link, .nav-item > button.nav-link"),
+    );
+    const idx = links.indexOf(tabBtn);
+    if (idx >= 0) return idx + 1;
+
+    const fromData = tabBtn.dataset && tabBtn.dataset.genchemTab;
+    if (fromData === "pvc-resins") return 1;
+    if (fromData === "pvc-stabilizers") return 2;
+
+    if (tabBtn.id === "canvas-tab-2") return 2;
+    if (tabBtn.id === "canvas-tab-1") return 1;
+
+    return null;
+}
+
+function handleGenchemProductTabClick(event) {
+    const target = event.target;
+    if (!target || !target.closest) return;
+
+    const tabNav = target.closest("#demo-drone-tab");
+    if (!tabNav) return;
+
+    const tabBtn = target.closest(".nav-link, button.nav-link");
+    if (!tabBtn || !tabNav.contains(tabBtn)) return;
+
+    const tabNumber = resolveGenchemTabNumberFromNav(tabNav, tabBtn);
+    if (tabNumber == null) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+    gcSwitchTab(tabNumber);
+}
+
+function initGenchemProductTabs(doc) {
+    if (!doc || !doc.body) return;
+
+    const tabNav = doc.getElementById("demo-drone-tab");
+    if (!tabNav) return;
+
+    tabNav.querySelectorAll(".nav-link, button.nav-link").forEach((btn) => {
+        btn.type = "button";
+    });
+
+    if (doc.body.dataset.genchemProductTabsBound === "1") return;
+    doc.body.dataset.genchemProductTabsBound = "1";
+    doc.addEventListener("click", handleGenchemProductTabClick, true);
+}
+
 function getCmsPublicBase() {
     let base = (typeof app_url === "string" ? app_url : "").replace(/\/$/, "");
     const origin = window.location.origin;
@@ -1443,15 +1493,18 @@ function setupGenchemCanvas() {
     patchGenchemCanvasImages(doc);
     patchAllGenchemEditorComponents();
     initGenchemProductCards(doc);
+    initGenchemProductTabs(doc);
     window.setTimeout(() => {
         patchGenchemCanvasImages(doc);
         patchAllGenchemEditorComponents();
         initGenchemProductCards(doc);
+        initGenchemProductTabs(doc);
     }, 50);
     window.setTimeout(() => {
         patchGenchemCanvasImages(doc);
         patchAllGenchemEditorComponents();
         initGenchemProductCards(doc);
+        initGenchemProductTabs(doc);
     }, 300);
 
     doc.querySelectorAll(".video-wrap video").forEach((video) => {

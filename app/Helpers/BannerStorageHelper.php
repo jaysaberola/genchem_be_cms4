@@ -289,6 +289,61 @@ class BannerStorageHelper
         ];
     }
 
+    public static function resolvePageBannerUrl(?string $url): string
+    {
+        if (!$url || trim($url) === '') {
+            return '';
+        }
+
+        if (preg_match('#^data:#i', $url)) {
+            return $url;
+        }
+
+        $resolved = self::resolveExistingPublicPath($url);
+
+        return self::publicUrlForRelativePath($resolved);
+    }
+
+    public static function uploadPageBanner(UploadedFile $file): array
+    {
+        $folder = self::PUBLIC_BANNERS_DIR;
+        self::ensureDirectory($folder);
+
+        $fileName = self::sanitizeFileName($file->getClientOriginalName());
+        if (self::existsAtPublicPath($folder.'/'.$fileName)) {
+            $fileName = self::makeUniqueFileName($folder, $fileName);
+        }
+
+        $file->move(self::absolutePath($folder), $fileName);
+        $relativePath = $folder.'/'.$fileName;
+
+        return [
+            'path' => $relativePath,
+            'name' => $fileName,
+            'url' => self::publicUrlForRelativePath($relativePath),
+        ];
+    }
+
+    public static function deletePublicBanner(?string $path): void
+    {
+        if (!$path || trim($path) === '') {
+            return;
+        }
+
+        $relative = self::resolveExistingPublicPath($path);
+        $absolute = self::absolutePath($relative);
+        if (is_file($absolute)) {
+            File::delete($absolute);
+
+            return;
+        }
+
+        $storagePath = self::pathInStorage($path);
+        if ($storagePath !== '' && Storage::disk('public')->exists($storagePath)) {
+            Storage::disk('public')->delete($storagePath);
+        }
+    }
+
     public static function moveToBannersFolder(string $sourcePath, string $fileName): string
     {
         $folder = self::PUBLIC_BANNERS_DIR;

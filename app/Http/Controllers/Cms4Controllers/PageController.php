@@ -16,6 +16,7 @@ use App\Http\Requests\PagePost;
 
 use Facades\App\Helpers\ListingHelper;
 use Facades\App\Helpers\FileHelper;
+use App\Helpers\BannerStorageHelper;
 use App\Helpers\Setting;
 use App\Helpers\ModelHelper;
 
@@ -99,7 +100,7 @@ class PageController extends Controller
         $newData['user_id'] = auth()->id();
 
         if ($request->hasFile('image_url')) {
-            $newData['image_url'] = FileHelper::move_to_folder($request->file('image_url'), 'banners')['url'];
+            $newData['image_url'] = BannerStorageHelper::uploadPageBanner($request->file('image_url'))['url'];
         }
 
         Page::create($newData);
@@ -139,12 +140,13 @@ class PageController extends Controller
         $updateData['user_id'] = auth()->id();
 
         if ($request->banner_type == 'banner_slider' || $request->has('delete_image')) {
-            Storage::disk('public')->delete($page->get_image_url_storage_path());
+            BannerStorageHelper::deletePublicBanner($page->getRawOriginal('image_url'));
             $updateData['image_url'] = '';
         }
 
         if ($request->hasFile('image_url')) {
-            $updateData['image_url'] = FileHelper::move_to_folder($request->file('image_url'), 'banners')['url'];
+            BannerStorageHelper::deletePublicBanner($page->getRawOriginal('image_url'));
+            $updateData['image_url'] = BannerStorageHelper::uploadPageBanner($request->file('image_url'))['url'];
         }
 
         $page->update($updateData);
@@ -170,12 +172,13 @@ class PageController extends Controller
         $updateData['user_id'] = auth()->id();
 
         if ($request->banner_type == 'banner_slider' || $request->has('delete_image')) {
-            Storage::disk('public')->delete($page->get_image_url_storage_path());
+            BannerStorageHelper::deletePublicBanner($page->getRawOriginal('image_url'));
             $updateData['image_url'] = '';
         }
 
         if ($request->hasFile('image_url')) {
-            $updateData['image_url'] = FileHelper::move_to_folder($request->file('image_url'), 'banners')['url'];
+            BannerStorageHelper::deletePublicBanner($page->getRawOriginal('image_url'));
+            $updateData['image_url'] = BannerStorageHelper::uploadPageBanner($request->file('image_url'))['url'];
         }
 
         $page->update($updateData);
@@ -192,12 +195,13 @@ class PageController extends Controller
         $updateData['user_id'] = auth()->id();
 
         if ($request->banner_type == 'banner_slider' || $request->has('delete_image')) {
-            Storage::disk('public')->delete($page->get_image_url_storage_path());
+            BannerStorageHelper::deletePublicBanner($page->getRawOriginal('image_url'));
             $updateData['image_url'] = '';
         }
 
         if ($request->hasFile('image_url')) {
-            $updateData['image_url'] = FileHelper::move_to_folder($request->file('image_url'), 'banners')['url'];
+            BannerStorageHelper::deletePublicBanner($page->getRawOriginal('image_url'));
+            $updateData['image_url'] = BannerStorageHelper::uploadPageBanner($request->file('image_url'))['url'];
         }
 
         $page->update($updateData);

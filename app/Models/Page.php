@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Helpers\BannerStorageHelper;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
@@ -168,25 +170,38 @@ class Page extends Model
         }
     }
 
+    protected function imageUrl(): Attribute
+    {
+        return Attribute::make(
+            get: fn (?string $value) => self::normalizePageImageUrl($value),
+        );
+    }
+
+    public static function normalizePageImageUrl(?string $value): string
+    {
+        return BannerStorageHelper::resolvePageBannerUrl($value);
+    }
+
     public function get_image_url_storage_path()
     {
-        $delimiter = 'storage/';
-        if (strpos($this->image_url, $delimiter) !== false) {
-            $paths = explode($delimiter, $this->image_url);
-            return $paths[1];
+        $rawImageUrl = (string) ($this->attributes['image_url'] ?? '');
+        if ($rawImageUrl === '') {
+            return '';
         }
 
-        return '';
+        return BannerStorageHelper::pathInStorage($rawImageUrl);
     }
 
     public function get_image_file_name()
     {
-        $path = explode('/', $this->image_url);
+        $rawImageUrl = (string) ($this->attributes['image_url'] ?? '');
+        $path = explode('/', str_replace('\\', '/', $rawImageUrl));
         $nameIndex = count($path) - 1;
-        if ($nameIndex < 0)
+        if ($nameIndex < 0) {
             return '';
+        }
 
-        return $path[$nameIndex];
+        return rawurldecode($path[$nameIndex]);
     }
 
     public static function page_not_found()

@@ -31,7 +31,7 @@ class FileHelper
 
     public function move_to_folder($file, $folderPath)
     {
-        $fileName = $file->getClientOriginalName();
+        $fileName = BannerStorageHelper::sanitizeFileName($file->getClientOriginalName());
         if (Storage::disk('public')->exists($folderPath.'/'.$fileName)) {
             $fileName = $this->make_unique_file_name($folderPath, $fileName);
         }
@@ -107,12 +107,16 @@ class FileHelper
 
     private function make_unique_file_name($folder, $fileName)
     {
-        $fileNames = explode(".", $fileName);
+        $fileName = BannerStorageHelper::sanitizeFileName($fileName);
+        $parts = explode('.', $fileName);
+        $extension = count($parts) > 1 ? '.'.array_pop($parts) : '.jpg';
+        $base = implode('.', $parts);
         $count = 2;
-        $newFilename = $fileNames[0].' ('.$count.').'.$fileNames[1];
-        while(Storage::disk('public')->exists($folder.'/'.$newFilename)) {
+        $newFilename = $base.'_'.$count.$extension;
+
+        while (Storage::disk('public')->exists($folder.'/'.$newFilename)) {
             $count += 1;
-            $newFilename = $fileNames[0].' ('.$count.').'.$fileNames[1];
+            $newFilename = $base.'_'.$count.$extension;
         }
 
         return $newFilename;
