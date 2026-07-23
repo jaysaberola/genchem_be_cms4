@@ -392,18 +392,6 @@
                         @enderror
                     </div>
                 </div>
-                <div class="col-lg-12">
-                    <div class="form-group">
-                        <label class="d-block">Email Content *</label>
-                        <textarea name="content2" id="editor2" rows="10" cols="80" required>{{ old('content2', $settings->contact_us_email_layout) }}</textarea>
-                    </div>
-                    @error('content2')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                    <span class="invalid-feedback" role="alert" id="contentRequired2" style="display: none;">
-                        <strong>The content field is required</strong>
-                    </span>
-                </div>
                 <div>
                     <div class="form-group">
                         <label class="d-block">Page Visibility</label>
@@ -588,27 +576,6 @@
 @section('customjs')
     <script>
 
-        var CSRFToken = $('meta[name="csrf-token"]').attr('content');
-        var CKEditorOptions = {
-          filebrowserImageBrowseUrl: app__url_prefix+'/laravel-filemanager?type=Images',
-          filebrowserImageUploadUrl: app__url_prefix+'/laravel-filemanager/upload?type=Images&_token='+CSRFToken,
-          filebrowserBrowseUrl: app__url_prefix+'/laravel-filemanager?type=Files',
-          filebrowserUploadUrl: app__url_prefix+'/laravel-filemanager/upload?type=Files&_token='+CSRFToken,
-          allowedContent: true,
-        };
-
-        let editor2 = CKEDITOR.replace('content2', CKEditorOptions);
-        editor2.on('required', function (evt) {
-            if ($('.invalid-feedback').length == 1) {
-                $('#contentRequired').show();
-            }
-            $('#cke_editor1').addClass('is-invalid');
-            evt.cancel();
-        });
-        // Replace the <textarea id="editor1"> with a CKEditor
-        // instance, using default configuration.
-        
-
         function has_none_option(objectId, currentValue)
         {
             if (currentValue == "0" || currentValue == "" || currentValue == "null") {
@@ -723,7 +690,7 @@
         });
 
         $('#name').change(function(){
-            get_page_slug();ema
+            get_page_slug();
         });
 
 

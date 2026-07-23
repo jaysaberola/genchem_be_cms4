@@ -190,8 +190,7 @@ class PageController extends Controller
     {
         $updateData = $request->validated();
         $updateData['album_id'] = empty($updateData['album_id']) ? 0 : $updateData['album_id'];
-        // $updateData['status'] = $request->has('visibility') ? 'PUBLISHED' : 'PRIVATE';
-        $updateData['status'] = 'PUBLISHED';
+        $updateData['status'] = $request->has('visibility') ? 'PUBLISHED' : 'PRIVATE';
         $updateData['user_id'] = auth()->id();
 
         if ($request->banner_type == 'banner_slider' || $request->has('delete_image')) {
@@ -206,10 +205,12 @@ class PageController extends Controller
 
         $page->update($updateData);
 
-        $settings = \App\Models\Setting::find(1);
-        $settings->update([
-            'contact_us_email_layout' => $updateData['content2']
-        ]);
+        if (!empty($updateData['content2'])) {
+            $settings = \App\Models\Setting::find(1);
+            $settings->update([
+                'contact_us_email_layout' => $updateData['content2'],
+            ]);
+        }
 
         $this->add_and_remove_email_recipients($updateData['emails']);
 

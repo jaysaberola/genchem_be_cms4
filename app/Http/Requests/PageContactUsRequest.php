@@ -2,10 +2,26 @@
 
 namespace App\Http\Requests;
 
+use App\Helpers\ModelHelper;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PageContactUsRequest extends FormRequest
 {
+    protected function prepareForValidation(): void
+    {
+        if ($this->has('contents')) {
+            $this->merge([
+                'contents' => ModelHelper::patchCmsHtml((string) $this->input('contents')),
+            ]);
+        }
+
+        if ($this->filled('json')) {
+            $this->merge([
+                'json' => ModelHelper::patchCmsHtml((string) $this->input('json')),
+            ]);
+        }
+    }
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -41,7 +57,9 @@ class PageContactUsRequest extends FormRequest
             'album_id' => 'nullable',
             'name' => 'required|max:150',
             'label' => 'required|max:150',
-            'contents' => '',
+            'contents' => 'nullable',
+            'json' => '',
+            'styles' => '',
             'emails' => function ($attribute, $value, $fail) {
                 if (empty($value)) {
                     $fail('The email recipients field is required.');
@@ -69,7 +87,7 @@ class PageContactUsRequest extends FormRequest
                     }
                 }
             },
-            'content2' => 'required',
+            'content2' => 'nullable',
             'image_url' => 'nullable',
             'visibility' => '',
             'meta_title' => 'max:60',
