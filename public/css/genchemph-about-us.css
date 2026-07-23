@@ -158,12 +158,18 @@
 
 .cms-content .home-intro-hero ul.fs-4,
 .cms-content .home-intro-hero ul.fs-4 li,
+.cms-content .about-us-low[style*="background-image"] ul.fs-4,
+.cms-content .about-us-low[style*="background-image"] ul.fs-4 li,
 .cms-content #iz2p ul.fs-4,
 .cms-content #iz2p ul.fs-4 li,
 .public-page-content .home-intro-hero ul.fs-4,
 .public-page-content .home-intro-hero ul.fs-4 li,
+.public-page-content .about-us-low[style*="background-image"] ul.fs-4,
+.public-page-content .about-us-low[style*="background-image"] ul.fs-4 li,
 .public-page-content #iz2p ul.fs-4,
-.public-page-content #iz2p ul.fs-4 li {
+.public-page-content #iz2p ul.fs-4 li,
+.genchemph-canvas .about-us-low[style*="background-image"] ul.fs-4,
+.genchemph-canvas .about-us-low[style*="background-image"] ul.fs-4 li {
   font-size: 1.5rem !important;
   line-height: 1.65 !important;
 }
@@ -232,6 +238,47 @@
 .about-us-page ul.fs-5 {
   font-size: 1.25rem !important;
   line-height: 1.65;
+}
+
+/* Disc bullets — beat main.css global `ul, li { list-style-type: none }` */
+.about-us-page .about-us-high ul.text-dark,
+.about-us-page .about-us-high ul.ms-3,
+.cms-content .about-us-high ul.text-dark,
+.cms-content .about-us-high ul.ms-3,
+.public-page-content .about-us-high ul.text-dark,
+.public-page-content .about-us-high ul.ms-3,
+.genchemph-canvas .about-us-high ul.text-dark,
+.genchemph-canvas .about-us-high ul.ms-3 {
+  list-style: disc outside !important;
+  list-style-type: disc !important;
+  padding-left: 1.5rem !important;
+  margin: 0.25rem 0 0 !important;
+}
+
+.about-us-page .about-us-high ul.text-dark li,
+.about-us-page .about-us-high ul.ms-3 li,
+.cms-content .about-us-high ul.text-dark li,
+.cms-content .about-us-high ul.ms-3 li,
+.public-page-content .about-us-high ul.text-dark li,
+.public-page-content .about-us-high ul.ms-3 li,
+.genchemph-canvas .about-us-high ul.text-dark li,
+.genchemph-canvas .about-us-high ul.ms-3 li {
+  display: list-item !important;
+  list-style: disc outside !important;
+  list-style-type: disc !important;
+  margin-bottom: 0.2rem;
+  padding-left: 0.15rem;
+}
+
+.about-us-page .about-us-high ul.text-dark li::marker,
+.about-us-page .about-us-high ul.ms-3 li::marker,
+.cms-content .about-us-high ul.text-dark li::marker,
+.cms-content .about-us-high ul.ms-3 li::marker,
+.public-page-content .about-us-high ul.text-dark li::marker,
+.public-page-content .about-us-high ul.ms-3 li::marker,
+.genchemph-canvas .about-us-high ul.text-dark li::marker,
+.genchemph-canvas .about-us-high ul.ms-3 li::marker {
+  color: #333333;
 }
 
 .about-us-page h4.display-6 {
