@@ -62,6 +62,12 @@
                     <td width="30%"><strong>Name</strong></td>
                     <td>{{ $clientInfo['name'] }}</td>
                 </tr>
+                @if(!empty($clientInfo['company']))
+                <tr>
+                    <td><strong>Company</strong></td>
+                    <td>{{ $clientInfo['company'] }}</td>
+                </tr>
+                @endif
                 <tr>
                     <td><strong>Email</strong></td>
                     <td>{{ $clientInfo['email'] }}</td>
@@ -72,7 +78,7 @@
                 </tr>
                 <tr>
                     <td><strong>Message</strong></td>
-                    <td>{{ $clientInfo['message'] }}</td>
+                    <td>{!! nl2br(e($clientInfo['message'])) !!}</td>
                 </tr>
                 </tbody>
             </table>

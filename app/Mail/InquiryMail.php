@@ -35,7 +35,11 @@ class InquiryMail extends Mailable
      */
     public function build()
     {
+        $fromAddress = config('mail.from.address');
+        $fromName = $this->setting->company_name ?? config('mail.from.name', 'Genchem PH');
+
         return $this->view('mail.inquiry')
-            ->subject('Inquiry Received');
+            ->from($fromAddress, $fromName)
+            ->subject('We received your inquiry — ' . ($this->setting->company_name ?? 'Genchem PH'));
     }
 }

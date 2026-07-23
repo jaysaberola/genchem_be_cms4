@@ -1,10 +1,12 @@
-Dear {{ $adminInfo->firstname }},
+Dear {{ $adminInfo->name ?? 'Admin' }},
 
 {{ $clientInfo['name'] }} has sent an inquiry for your action.
 Please see details of the inquiry below.
 
-Subject: {{ $clientInfo['subject'] }}
 Name: {{ $clientInfo['name'] }}
+@if(!empty($clientInfo['company']))
+Company: {{ $clientInfo['company'] }}
+@endif
 Email: {{ $clientInfo['email'] }}
 Contact Number: {{ $clientInfo['contact'] }}
 Message: {{ $clientInfo['message'] }}

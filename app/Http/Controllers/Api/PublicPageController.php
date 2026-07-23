@@ -8,6 +8,7 @@ use App\Helpers\Setting;
 use App\Mail\InquiryAdminMail;
 use App\Mail\InquiryMail;
 use App\Models\Article;
+use App\Models\ContactInquiry;
 use App\Models\EmailRecipient;
 use App\Models\ArticleCategory;
 use App\Models\Menu;
@@ -394,13 +395,17 @@ class PublicPageController extends Controller
         ]);
 
         $client = array_merge($data, [
-            'subject'  => 'Contact Us' . (! empty($data['company']) ? ' — ' . $data['company'] : ''),
+            'subject'  => 'Contact Us',
             'services' => $data['company'] ?? 'Contact Us',
         ]);
 
-        if (! empty($data['company'])) {
-            $client['message'] = "Company: {$data['company']}\n\n" . $data['message'];
-        }
+        $inquiry = ContactInquiry::create([
+            'name'    => $data['name'],
+            'company' => $data['company'] ?? null,
+            'email'   => $data['email'],
+            'contact' => $data['contact'],
+            'message' => $data['message'],
+        ]);
 
         $setting = Setting::info();
         $emailRecipients = EmailRecipient::all();
@@ -412,19 +417,43 @@ class PublicPageController extends Controller
             }
         }
 
+        foreach ($emailRecipients as $recipient) {
+            $recipientEmail = trim((string) ($recipient->email ?? ''));
+            if ($recipientEmail === '' || ! filter_var($recipientEmail, FILTER_VALIDATE_EMAIL)) {
+                continue;
+            }
+
+            $adminInfo = (object) [
+                'name'  => $recipient->name ?? 'Admin',
+                'email' => $recipientEmail,
+            ];
+
+            try {
+                Mail::to($adminInfo->email)->send(new InquiryAdminMail($setting, $client, $adminInfo));
+                $inquiry->admin_notified = true;
+            } catch (\Throwable $e) {
+                report($e);
+                \Log::error('Contact form admin email failed', [
+                    'recipient' => $adminInfo->email,
+                    'inquiry_id' => $inquiry->id,
+                    'error' => $e->getMessage(),
+                ]);
+            }
+        }
+
         try {
             Mail::to($client['email'])->send(new InquiryMail($setting, $client));
-
-            foreach ($emailRecipients as $recipient) {
-                Mail::to($recipient->email)->send(new InquiryAdminMail($setting, $client, $recipient));
-            }
+            $inquiry->client_notified = true;
         } catch (\Throwable $e) {
             report($e);
-
-            return response()->json([
-                'message' => 'Failed to send your message. Please try again later.',
-            ], 500);
+            \Log::error('Contact form client email failed', [
+                'recipient' => $client['email'],
+                'inquiry_id' => $inquiry->id,
+                'error' => $e->getMessage(),
+            ]);
         }
+
+        $inquiry->save();
 
         return response()->json([
             'message' => 'Your message has been sent successfully.',

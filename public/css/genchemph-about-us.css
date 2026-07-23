@@ -413,3 +413,89 @@
 .cms-footer-content .footer-widgets-wrap > .bg-white img {
   background: transparent !important;
 }
+
+/* ——— Mobile: About Us image rows (fix overlapping absolute images) ——— */
+@media (max-width: 767.98px) {
+  .genchemph .cms-content .width-img-control,
+  .genchemph .public-page-content .width-img-control,
+  .about-us-page .width-img-control {
+    min-height: 0 !important;
+    padding-top: 0.5rem;
+    padding-bottom: 1.5rem;
+    overflow: visible !important;
+  }
+
+  .genchemph .cms-content .width-img-control > .d-flex.flex-row,
+  .genchemph .public-page-content .width-img-control > .d-flex.flex-row,
+  .about-us-page .width-img-control > .d-flex.flex-row {
+    flex-direction: column !important;
+    flex-wrap: wrap !important;
+    align-items: stretch !important;
+  }
+
+  .genchemph .cms-content .width-img-control > .d-flex.flex-row > [class*="col-md-6"],
+  .genchemph .public-page-content .width-img-control > .d-flex.flex-row > [class*="col-md-6"],
+  .about-us-page .width-img-control > .d-flex.flex-row > [class*="col-md-6"] {
+    flex: 0 0 100% !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .genchemph .cms-content .width-img-control .col-md-6.position-relative,
+  .genchemph .public-page-content .width-img-control .col-md-6.position-relative,
+  .about-us-page .width-img-control .col-md-6.position-relative {
+    position: relative !important;
+    min-height: 0;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .genchemph .cms-content .width-img-control .position-absolute,
+  .genchemph .public-page-content .width-img-control .position-absolute,
+  .about-us-page .width-img-control .position-absolute {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    margin: 0 auto 1rem !important;
+    display: flex !important;
+    justify-content: center;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .genchemph .cms-content .width-img-control .position-absolute img.shadow,
+  .genchemph .public-page-content .width-img-control .position-absolute img.shadow,
+  .about-us-page .width-img-control .position-absolute img.shadow {
+    max-width: min(100%, 320px);
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+  }
+
+  .genchemph .cms-content .width-img-control .about-us-high,
+  .genchemph .public-page-content .width-img-control .about-us-high,
+  .about-us-page .width-img-control .about-us-high {
+    position: relative !important;
+    z-index: 2;
+    padding: 0.75rem 1rem 0 !important;
+    overflow: visible !important;
+  }
+
+  .genchemph .cms-content .width-img-control .bg-dark-red,
+  .genchemph .public-page-content .width-img-control .bg-dark-red,
+  .about-us-page .width-img-control .bg-dark-red {
+    margin-bottom: 0.75rem;
+    border-radius: 0 0 12px 12px;
+  }
+
+  .about-us-page .floating-logo .floating-logo__mark,
+  .about-us-page .floating-logo--subpage .floating-logo__mark {
+    top: -48px;
+  }
+
+  .about-us-page .floating-logo img,
+  .about-us-page .floating-logo__img {
+    max-width: 160px;
+  }
+}

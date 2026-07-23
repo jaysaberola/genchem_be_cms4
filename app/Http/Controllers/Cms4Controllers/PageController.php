@@ -332,7 +332,10 @@ class PageController extends Controller
         $newEmails = array_diff($emails, $registeredEmails);
 
         foreach ($newEmails as $email) {
-            EmailRecipient::create(['email' => $email]);
+            EmailRecipient::create([
+                'email' => $email,
+                'name' => 'Admin',
+            ]);
         }
     }
 

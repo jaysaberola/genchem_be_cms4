@@ -41,7 +41,7 @@
             <img src="{{ Setting::get_company_logo_storage_path() }}" alt="company logo" width="175" />
         </div>
 
-        <p style="margin-top: 30px;"><strong>Dear {{ $adminInfo->name }},</strong></p>
+        <p style="margin-top: 30px;"><strong>Dear {{ $adminInfo->name ?? 'Admin' }},</strong></p>
         {{-- <p style="margin-top: 30px;"><strong>Dear {{ $adminInfo->firstname }},</strong></p> --}}
 
         <p>
@@ -57,13 +57,15 @@
         <table style="width:100%; padding: 20px;background: #f0f0f0;font-size: 14px;">
             <tbody>
             <tr>
-                <td width="30%"><strong>Subject</strong></td>
-                <td>{{ $clientInfo['subject'] }}</td>
-            </tr>
-            <tr>
                 <td width="30%"><strong>Name</strong></td>
                 <td>{{ $clientInfo['name'] }}</td>
             </tr>
+            @if(!empty($clientInfo['company']))
+            <tr>
+                <td><strong>Company</strong></td>
+                <td>{{ $clientInfo['company'] }}</td>
+            </tr>
+            @endif
             <tr>
                 <td><strong>Email</strong></td>
                 <td>{{ $clientInfo['email'] }}</td>
@@ -74,7 +76,7 @@
             </tr>
             <tr>
                 <td><strong>Message</strong></td>
-                <td>{{ $clientInfo['message'] }}</td>
+                <td>{!! nl2br(e($clientInfo['message'])) !!}</td>
             </tr>
             </tbody>
         </table>

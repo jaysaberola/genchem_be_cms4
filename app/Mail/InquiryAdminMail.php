@@ -38,8 +38,12 @@ class InquiryAdminMail extends Mailable
      */
     public function build()
     {
+        $fromAddress = config('mail.from.address');
+        $fromName = $this->setting->company_name ?? config('mail.from.name', 'Genchem PH');
+
         return $this->view('mail.inquiry-admin')
-            ->text('mail.inquiry-admin_plain')
-            ->subject('Receive an Inquiry');
+            ->from($fromAddress, $fromName)
+            ->replyTo($this->clientInfo['email'], $this->clientInfo['name'])
+            ->subject('Contact Us Inquiry — ' . ($this->clientInfo['name'] ?? 'Guest'));
     }
 }
