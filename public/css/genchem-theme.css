@@ -558,7 +558,34 @@ body {
   }
 
   .genchemph .header-misc {
-    display: none !important;
+    display: flex !important;
+    align-items: center;
+    flex-shrink: 1;
+    min-width: 0;
+    margin-right: 2px;
+  }
+
+  .genchemph #top-call {
+    gap: 0.35rem;
+    min-width: 0;
+  }
+
+  .genchemph #top-call .calling-icon {
+    width: 28px;
+  }
+
+  .genchemph #top-call .genchem-header-phones {
+    min-width: 0;
+  }
+
+  .genchemph #top-call .genchem-header-phone {
+    font-size: clamp(0.62rem, 2.6vw, 0.78rem);
+    line-height: 1.15;
+    white-space: nowrap;
+  }
+
+  .genchemph #top-call .genchem-header-phone:first-child {
+    margin-bottom: -2px;
   }
 
   .genchemph .genchem-mobile-menu-backdrop {
@@ -688,6 +715,17 @@ body {
 
   .genchemph .genchem-header-nav .sub-menu-container .menu-link.active {
     color: var(--genchem-nav-highlight) !important;
+  }
+
+  .genchemph .genchem-header-nav .genchem-menu-toggle {
+    width: 100%;
+    border: 0;
+    margin: 0;
+    background: transparent;
+    text-align: left;
+    cursor: pointer;
+    font: inherit;
+    appearance: none;
   }
 }
 

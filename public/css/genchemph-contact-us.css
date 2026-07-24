@@ -55,17 +55,55 @@
 }
 
 @media (max-width: 767.98px) {
+  /* Bootstrap .flex-row uses !important — stack form + contact info on mobile */
+  .genchem-contact-us-page .about-us-low > .bg-dark-red.flex-row,
+  .genchem-contact-us-page .about-us-low > .d-flex.bg-dark-red,
+  .genchemph-canvas .genchem-contact-us-page .about-us-low > .bg-dark-red.flex-row,
+  .genchemph-canvas .genchem-contact-us-page .about-us-low > .d-flex.bg-dark-red {
+    flex-direction: column !important;
+    flex-wrap: nowrap !important;
+  }
+
   .genchem-contact-us-page .about-us-low > .bg-dark-red > .col-md-4,
   .genchem-contact-us-page .about-us-low > .bg-dark-red > .col-lg-4,
+  .genchem-contact-us-page .about-us-low > .bg-dark-red > .col-12.col-md-4,
   .genchemph-canvas .genchem-contact-us-page .about-us-low > .bg-dark-red > .col-md-4,
-  .genchemph-canvas .genchem-contact-us-page .about-us-low > .bg-dark-red > .col-lg-4 {
-    margin-top: 0;
+  .genchemph-canvas .genchem-contact-us-page .about-us-low > .bg-dark-red > .col-lg-4,
+  .genchemph-canvas .genchem-contact-us-page .about-us-low > .bg-dark-red > .col-12.col-md-4 {
+    margin-top: 0 !important;
     flex: 0 0 100% !important;
     max-width: 100% !important;
     width: 100% !important;
     order: 2;
     padding: 1rem 1rem 2rem;
     gap: 1.75rem;
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    min-height: auto !important;
+  }
+
+  .genchem-contact-us-page .about-us-low > .bg-dark-red > .col-md-4 img,
+  .genchem-contact-us-page .about-us-low > .bg-dark-red > .col-12.col-md-4 img,
+  .genchemph-canvas .genchem-contact-us-page .about-us-low > .bg-dark-red > .col-md-4 img {
+    max-width: 56px;
+    width: 56px;
+    height: auto;
+  }
+
+  .genchem-contact-us-page .about-us-low > .bg-dark-red > .col-md-4 h4,
+  .genchem-contact-us-page .about-us-low > .bg-dark-red > .col-12.col-md-4 h4,
+  .genchemph-canvas .genchem-contact-us-page .about-us-low > .bg-dark-red > .col-md-4 h4 {
+    color: #ffffff !important;
+    text-align: center;
+  }
+
+  .genchem-contact-us-page .about-us-low > .bg-dark-red > .col-md-4 small,
+  .genchem-contact-us-page .about-us-low > .bg-dark-red > .col-12.col-md-4 small,
+  .genchemph-canvas .genchem-contact-us-page .about-us-low > .bg-dark-red > .col-md-4 small {
+    color: rgba(255, 255, 255, 0.92) !important;
+    text-align: center;
+    letter-spacing: 0.04em;
   }
 
   .genchem-contact-us-page .about-us-low > .bg-dark-red > .col-md-8,
