@@ -120,3 +120,82 @@
 		left: 50%;
 	}
 }
+
+/* Home — PVC Resins / PVC Stabilizers tab panels (mobile) */
+@media (max-width: 991.98px) {
+  .genchemph .cms-content:not(.genchem-products-page) #gc-tab-content > .tab-pane > .row,
+  .genchemph .public-page-content:not(.genchem-products-page) #gc-tab-content > .tab-pane > .row,
+  .genchemph-canvas #gc-tab-content > .tab-pane > .row:has(> .col-md-5.text-white) {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 1rem !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  .genchemph .cms-content:not(.genchem-products-page) #gc-tab-content > .tab-pane > .row > .col-md-5,
+  .genchemph .public-page-content:not(.genchem-products-page) #gc-tab-content > .tab-pane > .row > .col-md-5,
+  .genchemph-canvas #gc-tab-content > .tab-pane > .row:has(> .col-md-5.text-white) > .col-md-5 {
+    flex: 0 0 100% !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+
+  /* Same stack order for both tabs: text block first, image second */
+  .genchemph .cms-content:not(.genchem-products-page) #gc-tab-content > .tab-pane > .row > .col-md-5.text-white,
+  .genchemph .public-page-content:not(.genchem-products-page) #gc-tab-content > .tab-pane > .row > .col-md-5.text-white,
+  .genchemph-canvas #gc-tab-content > .tab-pane > .row > .col-md-5.text-white {
+    order: 1 !important;
+    text-align: center !important;
+  }
+
+  .genchemph .cms-content:not(.genchem-products-page) #gc-tab-content > .tab-pane > .row > .col-md-5:not(.text-white),
+  .genchemph .public-page-content:not(.genchem-products-page) #gc-tab-content > .tab-pane > .row > .col-md-5:not(.text-white),
+  .genchemph-canvas #gc-tab-content > .tab-pane > .row > .col-md-5:not(.text-white) {
+    order: 2 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+
+  .genchemph .cms-content:not(.genchem-products-page) #gc-tab-content > .tab-pane > .row > .col-md-5.text-white h1,
+  .genchemph .public-page-content:not(.genchem-products-page) #gc-tab-content > .tab-pane > .row > .col-md-5.text-white h1,
+  .genchemph-canvas #gc-tab-content > .tab-pane > .row > .col-md-5.text-white h1 {
+    text-align: center !important;
+    width: 100% !important;
+  }
+
+  .genchemph .cms-content:not(.genchem-products-page) #gc-tab-content > .tab-pane > .row > .col-md-5.text-white p.fs-5,
+  .genchemph .public-page-content:not(.genchem-products-page) #gc-tab-content > .tab-pane > .row > .col-md-5.text-white p.fs-5,
+  .genchemph-canvas #gc-tab-content > .tab-pane > .row > .col-md-5.text-white p.fs-5 {
+    text-align: justify !important;
+    width: 100% !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .genchemph .cms-content:not(.genchem-products-page) #gc-tab-content > .tab-pane > .row > .col-md-5.text-white .button,
+  .genchemph .public-page-content:not(.genchem-products-page) #gc-tab-content > .tab-pane > .row > .col-md-5.text-white .button,
+  .genchemph-canvas #gc-tab-content > .tab-pane > .row > .col-md-5.text-white .button {
+    display: inline-block !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .genchemph .cms-content:not(.genchem-products-page) #gc-tab-content > .tab-pane > .row > .col-md-5 img,
+  .genchemph .public-page-content:not(.genchem-products-page) #gc-tab-content > .tab-pane > .row > .col-md-5 img,
+  .genchemph-canvas #gc-tab-content > .tab-pane > .row > .col-md-5 img {
+    display: block !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    max-width: min(75%, 320px) !important;
+    width: auto !important;
+    height: auto !important;
+    transform: none !important;
+  }
+}

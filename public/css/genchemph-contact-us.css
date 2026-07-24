@@ -56,7 +56,9 @@
 
 @media (max-width: 767.98px) {
   .genchem-contact-us-page .about-us-low > .bg-dark-red > .col-md-4,
-  .genchem-contact-us-page .about-us-low > .bg-dark-red > .col-lg-4 {
+  .genchem-contact-us-page .about-us-low > .bg-dark-red > .col-lg-4,
+  .genchemph-canvas .genchem-contact-us-page .about-us-low > .bg-dark-red > .col-md-4,
+  .genchemph-canvas .genchem-contact-us-page .about-us-low > .bg-dark-red > .col-lg-4 {
     margin-top: 0;
     flex: 0 0 100% !important;
     max-width: 100% !important;
@@ -67,7 +69,9 @@
   }
 
   .genchem-contact-us-page .about-us-low > .bg-dark-red > .col-md-8,
-  .genchem-contact-us-page .about-us-low > .bg-dark-red > .col-lg-8 {
+  .genchem-contact-us-page .about-us-low > .bg-dark-red > .col-lg-8,
+  .genchemph-canvas .genchem-contact-us-page .about-us-low > .bg-dark-red > .col-md-8,
+  .genchemph-canvas .genchem-contact-us-page .about-us-low > .bg-dark-red > .col-lg-8 {
     flex: 0 0 100% !important;
     max-width: 100% !important;
     width: 100% !important;
@@ -75,11 +79,13 @@
     padding: 0 0.75rem;
   }
 
-  .genchem-contact-us-page .about-us-low > .bg-dark-red.d-flex {
+  .genchem-contact-us-page .about-us-low > .bg-dark-red.d-flex,
+  .genchemph-canvas .genchem-contact-us-page .about-us-low > .bg-dark-red.d-flex {
     overflow: visible !important;
   }
 
-  .genchem-contact-us-page .about-us-low .bg-dark-red .bg-white {
+  .genchem-contact-us-page .about-us-low .bg-dark-red .bg-white,
+  .genchemph-canvas .genchem-contact-us-page .about-us-low .bg-dark-red .bg-white {
     border-radius: 24px !important;
     margin: 0 0 1rem !important;
     padding: 1.5rem 1.25rem !important;
@@ -92,12 +98,15 @@
   }
 
   .genchem-contact-us-page h1.text-main-red,
-  .genchem-contact-us-page .text-main-red.display-4 {
+  .genchem-contact-us-page .text-main-red.display-4,
+  .genchemph-canvas .genchem-contact-us-page h1.text-main-red,
+  .genchemph-canvas .genchem-contact-us-page .text-main-red.display-4 {
     font-size: clamp(1.75rem, 8vw, 2.25rem) !important;
     margin-top: 0.5rem;
   }
 
-  .genchem-contact-us-page .about-us-low > .position-relative > .container {
+  .genchem-contact-us-page .about-us-low > .position-relative > .container,
+  .genchemph-canvas .genchem-contact-us-page .about-us-low > .position-relative > .container {
     padding-left: 1rem;
     padding-right: 1rem;
   }
@@ -249,4 +258,96 @@
   padding: 0.85rem 0;
   font-size: 0.85rem;
   text-align: center;
+}
+
+/* GrapesJS canvas — contact form must match public mobile layout */
+.genchemph-canvas .about-us-low > .d-flex.bg-dark-red,
+.genchemph-canvas.genchem-contact-us-page .about-us-low > .bg-dark-red.d-flex {
+  display: flex !important;
+  flex-direction: column !important;
+  flex-wrap: nowrap !important;
+  align-items: stretch !important;
+  width: 100% !important;
+  background-color: #9b2d1f !important;
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .genchemph-canvas .about-us-low > .d-flex.bg-dark-red.flex-row,
+  .genchemph-canvas.genchem-contact-us-page .about-us-low > .bg-dark-red.d-flex.flex-row {
+    flex-direction: row !important;
+  }
+
+  .genchemph-canvas .about-us-low > .d-flex.bg-dark-red > .col-md-4,
+  .genchemph-canvas .about-us-low > .d-flex.bg-dark-red > .col-lg-4,
+  .genchemph-canvas.genchem-contact-us-page .about-us-low > .bg-dark-red > .col-md-4,
+  .genchemph-canvas.genchem-contact-us-page .about-us-low > .bg-dark-red > .col-lg-4 {
+    flex: 0 0 33.333333% !important;
+    max-width: 33.333333% !important;
+    width: 33.333333% !important;
+  }
+
+  .genchemph-canvas .about-us-low > .d-flex.bg-dark-red > .col-md-8,
+  .genchemph-canvas .about-us-low > .d-flex.bg-dark-red > .col-lg-8,
+  .genchemph-canvas.genchem-contact-us-page .about-us-low > .bg-dark-red > .col-md-8,
+  .genchemph-canvas.genchem-contact-us-page .about-us-low > .bg-dark-red > .col-lg-8 {
+    flex: 0 0 66.666667% !important;
+    max-width: 66.666667% !important;
+    width: 66.666667% !important;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .genchemph-canvas .about-us-low > .d-flex.bg-dark-red,
+  .genchemph-canvas.genchem-contact-us-page .about-us-low > .bg-dark-red.d-flex {
+    flex-direction: column !important;
+    flex-wrap: wrap !important;
+    overflow: visible !important;
+  }
+
+  .genchemph-canvas .about-us-low > .d-flex.bg-dark-red > .col-md-4,
+  .genchemph-canvas .about-us-low > .d-flex.bg-dark-red > .col-lg-4,
+  .genchemph-canvas.genchem-contact-us-page .about-us-low > .bg-dark-red > .col-md-4,
+  .genchemph-canvas.genchem-contact-us-page .about-us-low > .bg-dark-red > .col-lg-4 {
+    margin-top: 0 !important;
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    order: 2 !important;
+    padding: 1rem 1rem 2rem !important;
+  }
+
+  .genchemph-canvas .about-us-low > .d-flex.bg-dark-red > .col-md-8,
+  .genchemph-canvas .about-us-low > .d-flex.bg-dark-red > .col-lg-8,
+  .genchemph-canvas.genchem-contact-us-page .about-us-low > .bg-dark-red > .col-md-8,
+  .genchemph-canvas.genchem-contact-us-page .about-us-low > .bg-dark-red > .col-lg-8 {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    order: 1 !important;
+    padding: 0 0.75rem !important;
+  }
+
+  .genchemph-canvas .about-us-low > .d-flex.bg-dark-red .bg-white,
+  .genchemph-canvas.genchem-contact-us-page .about-us-low .bg-dark-red .bg-white {
+    border-radius: 24px !important;
+    margin: 0 0 1rem !important;
+    padding: 1.5rem 1.25rem !important;
+    min-height: auto !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 5 !important;
+    width: 100% !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+}
+
+.genchemph-canvas .about-us-low > .d-flex.bg-dark-red .bg-white .input-styled,
+.genchemph-canvas .about-us-low > .d-flex.bg-dark-red .bg-white input,
+.genchemph-canvas .about-us-low > .d-flex.bg-dark-red .bg-white textarea {
+  display: block !important;
+  visibility: visible !important;
+  width: 100% !important;
 }

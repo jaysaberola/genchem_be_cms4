@@ -119,14 +119,14 @@ const editor = grapesjs.init({
             app_url + "/theme/css/fonts.css",
             app_url + "/theme/css/cafe.css",  
             app_url + "/theme/css/custom.css",
-            app_url + "/css/genchemph-drone.css",
+            app_url + "/css/genchemph-drone.css?v=2",
             app_url + "/css/genchemph-design.css",
-            app_url + "/css/genchemph-about-us.css?v=3",
-            app_url + "/css/genchemph-products.css?v=12",
+            app_url + "/css/genchemph-about-us.css?v=8",
+            app_url + "/css/genchemph-products.css?v=15",
             app_url + "/css/genchemph-home-intro.css?v=10",
-            app_url + "/css/genchemph-contact-us.css",
-            app_url + "/css/genchem-theme.css",
-            app_url + "/css/genchemph-grapesjs.css?v=3",
+            app_url + "/css/genchemph-contact-us.css?v=4",
+            app_url + "/css/genchem-theme.css?v=4",
+            app_url + "/css/genchemph-grapesjs.css?v=4",
             app_url + "/css/genchemph-cms-typography.css?v=3",
             app_url + "/css/cms-footer.css?v=8",
         ],
@@ -153,8 +153,8 @@ const editor = grapesjs.init({
             },
             {
                 name: "Mobile",
-                width: "320px",
-                widthMedia: "480px",
+                width: "390px",
+                widthMedia: "768px",
             },
         ],
     },
@@ -1008,8 +1008,6 @@ editor.on("change:device", () => {
         .querySelector(".device-type.bg-neutral-first")
         .classList.remove("bg-neutral-first");
 
-    // console.log(editor.getDevice());
-
     switch (editor.getDevice()) {
         case "Tablet":
             document
@@ -1028,6 +1026,12 @@ editor.on("change:device", () => {
             break;
         default:
     }
+
+    window.setTimeout(() => {
+        const doc = editor.Canvas.getDocument();
+        initGenchemProductCards(doc);
+        editor.refresh();
+    }, 100);
 });
 
 editor.on("run:sw-visibility", () => {
@@ -1036,6 +1040,24 @@ editor.on("run:sw-visibility", () => {
 editor.on("stop:sw-visibility", () => {
     document.querySelector("#sw-visibility").classList.remove("active");
 });
+
+function isGenchemCanvasMobileLayout(doc) {
+    const canvasDoc = doc || (typeof editor !== "undefined" && editor.Canvas ? editor.Canvas.getDocument() : null);
+    const width = canvasDoc && canvasDoc.documentElement
+        ? canvasDoc.documentElement.clientWidth
+        : 0;
+
+    if (width > 0 && width < 992) {
+        return true;
+    }
+
+    if (typeof editor !== "undefined" && editor.getDevice) {
+        const device = editor.getDevice();
+        return device === "Mobile" || device === "Tablet";
+    }
+
+    return false;
+}
 
 function bindGenchemProductImageHover(img, link) {
     if (!img || img.dataset.genchemHoverBound === "1") return;
@@ -1058,6 +1080,9 @@ function initGenchemProductCards(root) {
     const scope = root && root.querySelectorAll ? root : editor.Canvas.getDocument();
     if (!scope || !scope.querySelectorAll) return;
 
+    const canvasDoc = scope.documentElement ? scope : scope.ownerDocument;
+    const mobileLayout = isGenchemCanvasMobileLayout(canvasDoc);
+
     const cards = scope.querySelectorAll(
         ".bg-dark-red .border-2-white.position-relative, .bg-dark-red .rounded-lg.border-2-white",
     );
@@ -1075,6 +1100,19 @@ function initGenchemProductCards(root) {
         card.classList.add("width-img-control");
 
         const link = card.querySelector("a");
+        const img = card.querySelector("img");
+        if (!img) return;
+
+        if (mobileLayout) {
+            if (link) {
+                link.removeAttribute("style");
+            }
+            img.removeAttribute("style");
+            img.classList.add("-hover-scale");
+            bindGenchemProductImageHover(img, link);
+            return;
+        }
+
         if (link) {
             link.style.position = "absolute";
             link.style.bottom = "0";
@@ -1084,9 +1122,6 @@ function initGenchemProductCards(root) {
             link.style.textDecoration = "none";
             link.style.pointerEvents = "auto";
         }
-
-        const img = card.querySelector("img");
-        if (!img) return;
 
         const inline = img.getAttribute("style") || "";
         const rightFromInline = /right\s*:\s*-?\d/i.test(inline);
@@ -1526,6 +1561,15 @@ function setupGenchemCanvas() {
         doc.body.classList.add("genchem-products-active");
     }
 
+    if (
+        doc.querySelector('#name, [id="name"]') &&
+        doc.querySelector(".about-us-low .bg-white")
+    ) {
+        doc.body.classList.add("genchem-contact-us-page");
+    } else {
+        doc.body.classList.remove("genchem-contact-us-page");
+    }
+
     patchGenchemCanvasImages(doc);
     patchAllGenchemEditorComponents();
     initGenchemProductCards(doc);
@@ -1588,6 +1632,9 @@ function setupGenchemCanvas() {
 
 editor.on("load", setupGenchemCanvas);
 editor.on("canvas:frame:load", setupGenchemCanvas);
+editor.on("change:device", () => {
+    window.setTimeout(setupGenchemCanvas, 0);
+});
 editor.on("component:update", () => {
     const doc = editor.Canvas.getDocument();
     window.setTimeout(() => {

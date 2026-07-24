@@ -1,6 +1,17 @@
 /* GrapesJS canvas + public frontend — identical Cooper typography */
 
 .genchemph-canvas-root,
+body.genchemph-canvas {
+  width: 100% !important;
+  min-width: 0 !important;
+  overflow-x: hidden;
+}
+
+html.genchemph-canvas-root {
+  -webkit-text-size-adjust: 100%;
+}
+
+.genchemph-canvas-root,
 .genchemph-canvas,
 .genchemph-canvas *,
 .genchemph .about-us-page #content,

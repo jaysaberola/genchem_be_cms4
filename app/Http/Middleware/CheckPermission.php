@@ -2,10 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\ViewPermissions;
 use Closure;
 use Illuminate\Http\Request;
-
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class CheckPermission
 {
@@ -14,29 +14,22 @@ class CheckPermission
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
+     * @param  string  $permission_name
      * @return mixed
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next, $permission_name)
     {
         if (Auth::user()->is_an_admin()) {
             return $next($request);
         }
 
-        $role_id = Auth::user()->role_id;
-
-        ## check permission
-        $rolepermission = ViewPermissions::where('role', $role_id)->first();
-
-        $array_permissions = [];
-
-        if($rolepermission) {
-            $array_permissions = explode('|', $rolepermission->permissions);
-        }
-
-        if(in_array($permission_name, $array_permissions)){
+        if (ViewPermissions::check_permission(Auth::user()->role_id, $permission_name) == 1) {
             return $next($request);
-        } else {
-            return response('Unauthorized Access. <a href="'.route('dashboard').'">Go back to dashboard</a>', 401);
         }
+
+        return response(
+            'Unauthorized Access. <a href="' . route('dashboard') . '">Go back to dashboard</a>',
+            401
+        );
     }
 }

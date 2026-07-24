@@ -629,27 +629,61 @@ body {
     font-weight: 400 !important;
   }
 
-  .genchemph .genchem-header-nav .sub-menu-container {
-    position: static;
-    opacity: 1;
-    visibility: visible;
-    transform: none;
+  .genchemph .genchem-header-nav .sub-menu-container,
+  .genchemph .genchem-header-nav.primary-menu .menu-container > .menu-item > .sub-menu-container {
+    position: static !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
     display: none;
-    box-shadow: none;
-    background: rgba(0, 0, 0, 0.03);
-    border-radius: 0;
-    padding: 0;
-    margin: 0;
+    box-shadow: none !important;
+    background: rgba(155, 45, 31, 0.05) !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    z-index: auto !important;
   }
 
-  .genchemph .genchem-header-nav .menu-item.open > .sub-menu-container {
-    display: block;
+  .genchemph .genchem-header-nav .menu-item.open > .sub-menu-container,
+  .genchemph .genchem-header-nav.primary-menu .menu-item.open > .sub-menu-container {
+    display: block !important;
+  }
+
+  .genchemph .genchem-header-nav .menu-item:not(.open) > .sub-menu-container,
+  .genchemph .primary-menu .menu-item:not(.open):hover > .sub-menu-container {
+    display: none !important;
   }
 
   .genchemph .genchem-header-nav .sub-menu-container .menu-link {
-    padding-left: 32px !important;
+    padding: 12px 16px 12px 28px !important;
     color: #555555 !important;
     border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .genchemph .genchem-header-nav .sub-menu-container .menu-item:last-child .menu-link {
+    border-bottom: 0;
+  }
+
+  .genchemph .genchem-header-nav .menu-item.open > .menu-link {
+    color: var(--genchem-nav-highlight) !important;
+    border-bottom-color: transparent;
+  }
+
+  .genchemph .genchem-header-nav .menu-item.open > .menu-link div::after {
+    transform: rotate(180deg);
+  }
+
+  .genchemph .genchem-header-nav .menu-link div::after {
+    transition: transform 0.2s ease;
   }
 
   .genchemph .genchem-header-nav .sub-menu-container .menu-link.active {

@@ -566,7 +566,7 @@
     <script src="{{ asset('lib/custom-grapesjs/grapesjs-plugins/grapesjs-plugin-animation.js') }}"></script>
     <script src="{{ asset('lib/custom-grapesjs/grapesjs-plugins/grapesjs-swiper-slider.min.js') }}"></script>
     <script src="{{ asset('lib/custom-grapesjs/ckeditor/ckeditor.js') }}"></script>
-    <script src="{{ asset('lib/custom-grapesjs/assets/js/custom-grapesjs.js') }}?v=15"></script>
+    <script src="{{ asset('lib/custom-grapesjs/assets/js/custom-grapesjs.js') }}?v=17"></script>
     <script src="{{ asset('lib/custom-grapesjs/assets/js/bamburgh.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.0/typed.min.js"></script>
     <script src="{{ asset('lib/bootstrap-tagsinput/bootstrap-tagsinput.min.js') }}"></script>

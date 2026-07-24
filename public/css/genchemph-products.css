@@ -53,8 +53,18 @@ body.genchemph-canvas.genchem-products-active {
   max-width: 1320px !important;
   margin-left: auto !important;
   margin-right: auto !important;
-  padding-left: 110px !important;
-  padding-right: 110px !important;
+}
+
+@media (min-width: 992px) {
+  .genchem-products-page #products-tabbings,
+  .genchem-products-page #products-tabbings.container,
+  .genchem-products-page .bg-dark-red > .container,
+  .genchemph-canvas #products-tabbings,
+  .genchemph-canvas #products-tabbings.container,
+  .genchemph-canvas .bg-dark-red > .container {
+    padding-left: 110px !important;
+    padding-right: 110px !important;
+  }
 }
 
 .genchem-products-page .bg-dark-red {
@@ -83,7 +93,6 @@ body.genchemph-canvas.genchem-products-active {
   margin-bottom: 2.5rem !important;
   box-sizing: border-box;
 }
-
 .genchem-products-page .bg-dark-red .tab-content .row > .border-2-white:last-child,
 .genchem-products-page .bg-dark-red .width-img-control:last-child {
   margin-bottom: 0 !important;
@@ -102,6 +111,7 @@ body.genchemph-canvas.genchem-products-active {
 }
 
 /* Product bag — outside the box edge (reference inline styles) */
+@media (min-width: 992px) {
 .genchem-products-page .bg-dark-red .border-2-white > a,
 .genchemph-canvas .bg-dark-red .border-2-white > a {
   position: absolute;
@@ -179,6 +189,7 @@ body.genchemph-canvas.genchem-products-active {
   width: auto !important;
   min-width: 0;
 }
+}
 
 .genchem-products-page .bg-dark-red .border-2-white .col-md-10 p,
 .genchem-products-page .bg-dark-red .border-2-white .col-md-10 ul,
@@ -240,7 +251,8 @@ body.genchemph-canvas.genchem-products-active {
 @media (max-width: 991px) {
   html:has(.genchem-products-page),
   body:has(.genchem-products-page),
-  body.genchem-products-active {
+  body.genchem-products-active,
+  body.genchemph-canvas.genchem-products-active {
     overflow-x: hidden !important;
   }
 
@@ -249,26 +261,36 @@ body.genchemph-canvas.genchem-products-active {
   .genchem-products-page .bg-dark-red > .container,
   .genchem-products-page .bg-dark-red .tab-content,
   .genchem-products-page .bg-dark-red .tab-pane,
-  .genchem-products-page .bg-dark-red .tab-content .row {
+  .genchem-products-page .bg-dark-red .tab-content .row,
+  .genchemph-canvas .about-us-low,
+  .genchemph-canvas .bg-dark-red,
+  .genchemph-canvas .bg-dark-red > .container,
+  .genchemph-canvas .bg-dark-red .tab-content,
+  .genchemph-canvas .bg-dark-red .tab-pane,
+  .genchemph-canvas .bg-dark-red .tab-content .row {
     width: 100% !important;
     max-width: 100% !important;
     overflow-x: hidden !important;
   }
 
   .genchem-products-page #products-tabbings,
-  .genchem-products-page .bg-dark-red > .container {
+  .genchem-products-page .bg-dark-red > .container,
+  .genchemph-canvas #products-tabbings,
+  .genchemph-canvas .bg-dark-red > .container {
     max-width: 100% !important;
     padding-left: 0.75rem !important;
     padding-right: 0.75rem !important;
   }
 
-  .genchem-products-page .display-4 {
+  .genchem-products-page .display-4,
+  .genchemph-canvas .display-4 {
     font-size: clamp(1.35rem, 5.5vw, 1.85rem) !important;
     min-width: 0 !important;
     width: 100% !important;
   }
 
-  .genchem-products-page #demo-drone-tab {
+  .genchem-products-page #demo-drone-tab,
+  .genchemph-canvas #demo-drone-tab {
     display: flex !important;
     flex-wrap: wrap !important;
     gap: 0.5rem !important;
@@ -279,7 +301,8 @@ body.genchemph-canvas.genchem-products-active {
     margin-bottom: 0.5rem !important;
   }
 
-  .genchem-products-page #demo-drone-tab .nav-item {
+  .genchem-products-page #demo-drone-tab .nav-item,
+  .genchemph-canvas #demo-drone-tab .nav-item {
     flex: 1 1 calc(50% - 0.25rem) !important;
     min-width: 0 !important;
     max-width: calc(50% - 0.25rem) !important;
@@ -288,7 +311,8 @@ body.genchemph-canvas.genchem-products-active {
   }
 
   .genchem-products-page #demo-drone-tab .nav-link,
-  .genchemph .genchem-products-page #demo-drone-tab .nav-link {
+  .genchemph .genchem-products-page #demo-drone-tab .nav-link,
+  .genchemph-canvas #demo-drone-tab .nav-link {
     width: 100% !important;
     padding: 0 !important;
     margin: 0 !important;
@@ -302,7 +326,10 @@ body.genchemph-canvas.genchem-products-active {
   .genchemph .genchem-products-page #demo-drone-tab .nav-link .text-uppercase,
   .genchem-products-page #demo-drone-tab .nav-link h3,
   .genchem-products-page #demo-drone-tab .nav-link h4,
-  .genchem-products-page #demo-drone-tab .nav-link .text-uppercase {
+  .genchem-products-page #demo-drone-tab .nav-link .text-uppercase,
+  .genchemph-canvas #demo-drone-tab .nav-link h3,
+  .genchemph-canvas #demo-drone-tab .nav-link h4,
+  .genchemph-canvas #demo-drone-tab .nav-link .text-uppercase {
     min-width: 0 !important;
     width: 100% !important;
     max-width: 100% !important;
@@ -321,57 +348,110 @@ body.genchemph-canvas.genchem-products-active {
     display: block !important;
   }
 
-  .genchem-products-page .bg-dark-red .tab-content {
-    padding-top: 1.25rem !important;
-    padding-bottom: 1.5rem !important;
+  .genchem-products-page .bg-dark-red .width-img-control,
+  .genchem-products-page .bg-dark-red .border-2-white.position-relative,
+  .genchemph-canvas .bg-dark-red .width-img-control,
+  .genchemph-canvas .bg-dark-red .border-2-white.position-relative {
+    margin-bottom: 1rem !important;
   }
 
   .genchem-products-page .bg-dark-red .border-2-white,
-  .genchem-products-page .bg-dark-red .rounded-lg.border-2-white {
+  .genchem-products-page .bg-dark-red .rounded-lg.border-2-white,
+  .genchemph-canvas .bg-dark-red .border-2-white,
+  .genchemph-canvas .bg-dark-red .rounded-lg.border-2-white {
     width: 100% !important;
     max-width: 100% !important;
     margin-left: 0 !important;
     margin-right: 0 !important;
-    padding: 1rem 0.85rem !important;
+    padding: 0.75rem 0.85rem 0.85rem !important;
   }
 
   .genchem-products-page .bg-dark-red .tab-pane > .row > .border-2-white:nth-child(odd) > a,
   .genchem-products-page .bg-dark-red .tab-pane > .row > .border-2-white:nth-child(odd) img,
   .genchem-products-page .bg-dark-red .tab-pane > .row > .border-2-white:nth-child(even) > a,
-  .genchem-products-page .bg-dark-red .tab-pane > .row > .border-2-white:nth-child(even) img {
+  .genchem-products-page .bg-dark-red .tab-pane > .row > .border-2-white:nth-child(even) img,
+  .genchemph-canvas .bg-dark-red .tab-pane > .row > .border-2-white:nth-child(odd) > a,
+  .genchemph-canvas .bg-dark-red .tab-pane > .row > .border-2-white:nth-child(odd) img,
+  .genchemph-canvas .bg-dark-red .tab-pane > .row > .border-2-white:nth-child(even) > a,
+  .genchemph-canvas .bg-dark-red .tab-pane > .row > .border-2-white:nth-child(even) img {
     left: auto !important;
     right: auto !important;
   }
 
-  .genchem-products-page .bg-dark-red .border-2-white > a {
+  .genchem-products-page .bg-dark-red .border-2-white > a,
+  .genchemph-canvas .bg-dark-red .border-2-white > a {
     position: relative !important;
     display: flex !important;
     justify-content: center !important;
     width: 100% !important;
     height: auto !important;
-    margin: 0 auto 0.75rem !important;
+    margin: 0 auto 0.5rem !important;
   }
 
-  .genchem-products-page .bg-dark-red .border-2-white img {
+  .genchem-products-page .bg-dark-red .border-2-white img,
+  .genchemph-canvas .bg-dark-red .border-2-white img {
     position: relative !important;
     display: block !important;
     max-width: min(200px, 62vw) !important;
     width: auto !important;
     height: auto !important;
-    margin: 0 auto 0.75rem !important;
+    margin: 0 auto 0.5rem !important;
     left: auto !important;
     right: auto !important;
     bottom: auto !important;
   }
 
-  .genchem-products-page .bg-dark-red .border-2-white .d-flex.flex-row {
+  .genchem-products-page .bg-dark-red .border-2-white .d-flex.flex-row,
+  .genchemph-canvas .bg-dark-red .border-2-white .d-flex.flex-row {
     flex-direction: column !important;
     align-items: stretch !important;
-    gap: 0.5rem !important;
-    text-align: center;
+    gap: 0.35rem !important;
+    text-align: left !important;
   }
 
-  .genchem-products-page .bg-dark-red .border-2-white .col-md-2 {
+  .genchem-products-page .bg-dark-red .border-2-white .col-md-10,
+  .genchemph-canvas .bg-dark-red .border-2-white .col-md-10 {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    text-align: left !important;
+  }
+
+  .genchem-products-page .bg-dark-red .border-2-white .col-md-10 p,
+  .genchem-products-page .bg-dark-red .border-2-white .col-md-10 ul,
+  .genchem-products-page .bg-dark-red .border-2-white .col-md-10 li,
+  .genchem-products-page .bg-dark-red .border-2-white p,
+  .genchemph-canvas .bg-dark-red .border-2-white .col-md-10 p,
+  .genchemph-canvas .bg-dark-red .border-2-white .col-md-10 ul,
+  .genchemph-canvas .bg-dark-red .border-2-white .col-md-10 li,
+  .genchemph-canvas .bg-dark-red .border-2-white p {
+    text-align: left !important;
+  }
+
+  .genchem-products-page .bg-dark-red .border-2-white .col-md-10 > p:not(:first-of-type),
+  .genchemph-canvas .bg-dark-red .border-2-white .col-md-10 > p:not(:first-of-type) {
+    text-align: left !important;
+  }
+
+  .genchem-products-page .bg-dark-red .border-2-white .col-md-10 h4,
+  .genchem-products-page .bg-dark-red .border-2-white h4.display-6,
+  .genchemph-canvas .bg-dark-red .border-2-white .col-md-10 h4,
+  .genchemph-canvas .bg-dark-red .border-2-white h4.display-6 {
+    text-align: center !important;
+    margin-bottom: 0.15rem !important;
+    font-size: clamp(1rem, 4.5vw, 1.35rem) !important;
+  }
+
+  .genchem-products-page .bg-dark-red .border-2-white .col-md-10 > p:first-of-type,
+  .genchemph-canvas .bg-dark-red .border-2-white .col-md-10 > p:first-of-type {
+    text-align: center !important;
+    margin-bottom: 0.35rem !important;
+  }
+
+  .genchem-products-page .bg-dark-red .border-2-white .col-md-2,
+  .genchemph-canvas .bg-dark-red .border-2-white .col-md-2 {
     display: none !important;
     flex: 0 0 0 !important;
     max-width: 0 !important;
@@ -380,37 +460,37 @@ body.genchemph-canvas.genchem-products-active {
     margin: 0 !important;
   }
 
-  .genchem-products-page .bg-dark-red .border-2-white .col-md-10 {
-    flex: 0 0 100% !important;
-    max-width: 100% !important;
-    width: 100% !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-
   .genchem-products-page .bg-dark-red .border-2-white .ps-3,
-  .genchem-products-page .bg-dark-red .border-2-white .ps-5 {
+  .genchem-products-page .bg-dark-red .border-2-white .ps-5,
+  .genchemph-canvas .bg-dark-red .border-2-white .ps-3,
+  .genchemph-canvas .bg-dark-red .border-2-white .ps-5 {
     padding-left: 0 !important;
   }
 
-  .genchem-products-page .bg-dark-red .border-2-white h4.display-6 {
-    font-size: clamp(1rem, 4.5vw, 1.35rem) !important;
+  .genchem-products-page .bg-dark-red .tab-content,
+  .genchemph-canvas .bg-dark-red .tab-content {
+    padding-top: 0.75rem !important;
+    padding-bottom: 1rem !important;
   }
 }
 
 @media (max-width: 575px) {
   .genchem-products-page #products-tabbings,
-  .genchem-products-page .bg-dark-red > .container {
+  .genchem-products-page .bg-dark-red > .container,
+  .genchemph-canvas #products-tabbings,
+  .genchemph-canvas .bg-dark-red > .container {
     padding-left: 0.5rem !important;
     padding-right: 0.5rem !important;
   }
 
-  .genchem-products-page #demo-drone-tab {
+  .genchem-products-page #demo-drone-tab,
+  .genchemph-canvas #demo-drone-tab {
     flex-direction: column !important;
     gap: 0.65rem !important;
   }
 
-  .genchem-products-page #demo-drone-tab .nav-item {
+  .genchem-products-page #demo-drone-tab .nav-item,
+  .genchemph-canvas #demo-drone-tab .nav-item {
     flex: 1 1 100% !important;
     max-width: 100% !important;
     width: 100% !important;
@@ -421,13 +501,17 @@ body.genchemph-canvas.genchem-products-active {
   .genchemph .genchem-products-page #demo-drone-tab .nav-link .text-uppercase,
   .genchem-products-page #demo-drone-tab .nav-link h3,
   .genchem-products-page #demo-drone-tab .nav-link h4,
-  .genchem-products-page #demo-drone-tab .nav-link .text-uppercase {
+  .genchem-products-page #demo-drone-tab .nav-link .text-uppercase,
+  .genchemph-canvas #demo-drone-tab .nav-link h3,
+  .genchemph-canvas #demo-drone-tab .nav-link h4,
+  .genchemph-canvas #demo-drone-tab .nav-link .text-uppercase {
     font-size: 0.9rem !important;
     padding: 0.7rem 1rem !important;
     line-height: 1.25 !important;
   }
 
-  .genchem-products-page .bg-dark-red .border-2-white img {
+  .genchem-products-page .bg-dark-red .border-2-white img,
+  .genchemph-canvas .bg-dark-red .border-2-white img {
     max-width: min(180px, 58vw) !important;
   }
 }
