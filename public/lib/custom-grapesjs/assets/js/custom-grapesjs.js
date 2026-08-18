@@ -1364,8 +1364,8 @@ function normalizeGenchemCanvasPath(url) {
         if (/logo/i.test(url) || url.endsWith(".ico")) {
             return "/images/genchemph/logos/" + url;
         }
-        if (url === "video.mp4") {
-            return "/images/genchemph/video.mp4";
+        if (url === "video.mp4" || url === "genchem_video.mp4") {
+            return "/images/genchemph/genchem_video.mp4";
         }
         return "/images/genchemph/products/" + url;
     }
@@ -1619,7 +1619,7 @@ function setupGenchemCanvas() {
 
         const raw = source.getAttribute("src") || "";
         if (!raw || raw.startsWith("data:") || raw.includes("video.mp4")) {
-            source.src = getCmsPublicBase() + "/images/genchemph/video.mp4";
+            source.src = getCmsPublicBase() + "/images/genchemph/genchem_video.mp4";
             source.setAttribute("type", "video/mp4");
         } else if (raw.startsWith("/images/")) {
             source.src = getCmsPublicBase() + raw;

@@ -115,8 +115,8 @@ class ModelHelper
             return '/images/genchemph/logos/'.$filename;
         }
 
-        if ($filename === 'video.mp4') {
-            return '/images/genchemph/video.mp4';
+        if ($filename === 'video.mp4' || $filename === 'genchem_video.mp4') {
+            return '/images/genchemph/genchem_video.mp4';
         }
 
         return '/images/genchemph/products/'.$filename;
@@ -205,6 +205,12 @@ class ModelHelper
                 $output
             ) ?? $output;
         }
+
+        $output = preg_replace(
+            '#(?<!genchem_)/images/genchemph/video\.mp4#i',
+            '/images/genchemph/genchem_video.mp4',
+            $output
+        ) ?? $output;
 
         return $output;
     }

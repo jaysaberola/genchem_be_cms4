@@ -218,7 +218,7 @@ class GenchemphDesignSeeder extends Seeder
 
         $html = preg_replace(
             '/<source\s+src=(["\'])[^"\']*video\.mp4\1/i',
-            '<source src="/images/genchemph/video.mp4"',
+            '<source src="/images/genchemph/genchem_video.mp4"',
             $html
         );
 
